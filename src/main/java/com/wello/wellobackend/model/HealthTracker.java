@@ -14,9 +14,9 @@ public abstract class HealthTracker {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "date_tracker")
+    @Column(name = "date_tracker", nullable = false)
     private LocalDateTime date;
     @OneToOne
-    @JoinColumn(name = "id_user")
+    @JoinColumn(name = "id_user", nullable = false)
     private User user;
 }

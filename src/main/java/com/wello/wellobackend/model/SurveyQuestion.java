@@ -16,7 +16,7 @@ public class SurveyQuestion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idQuestion;
 
-    @Column(name = "question")
+    @Column(name = "question",nullable = false)
     private String question;
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)

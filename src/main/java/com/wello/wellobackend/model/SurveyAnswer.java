@@ -14,7 +14,7 @@ public class SurveyAnswer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idAnswer;
 
-    @Column(name = "answer")
+    @Column(name = "answer", nullable = false)
     private String answer;
 
     @ManyToOne

@@ -8,16 +8,18 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class NutritionTracker extends HealthTracker{
-    @Column(name = "calories_consumed")
+    @Column(name = "calories_consumed", nullable = false)
     private int caloriesConsumed;
 
-    @Column(name = "calories_burned")
+    @Column(name = "calories_burned", nullable = false)
     private int caloriesBurned;
 
-    @Column(name = "carbs")
+    @Column(name = "carbs", nullable = false)
     private int carbs;
-    @Column(name = "protein")
+
+    @Column(name = "protein", nullable = false)
     private int protein;
-    @Column(name = "carbs")
+
+    @Column(name = "fat", nullable = false)
     private int fat;
 }

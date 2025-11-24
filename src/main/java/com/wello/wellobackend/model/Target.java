@@ -15,19 +15,19 @@ public class Target {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idTarget;
 
-    @Column(name = "start_date")
+    @Column(name = "start_date", nullable = false)
     private LocalDateTime startDate;
 
-    @Column(name = "end_date")
+    @Column(name = "end_date", nullable = false)
     private LocalDateTime endDate;
 
-    @Column(name = "calories_target")
+    @Column(name = "calories_target", nullable = false)
     private int caloriesTarget;
 
-    @Column(name = "carb_target")
+    @Column(name = "carb_target", nullable = false)
     private int carbTarget;
 
-    @Column(name = "fat_target")
+    @Column(name = "fat_target", nullable = false)
     private int fatTarget;
 
     @ManyToOne(fetch = FetchType.LAZY)

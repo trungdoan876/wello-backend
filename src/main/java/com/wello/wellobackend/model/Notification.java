@@ -16,13 +16,12 @@ public class Notification {
     @Id
     @Column(name = "id_noti")
     private int idNoti;
-    @Column(name = "date_send")
+    @Column(name = "date_send", nullable = false)
     private LocalDateTime dateSend;
-    @Column(name = "title")
+    @Column(name = "title", nullable = false)
     private String title;
-    @Column(name = "content")
+    @Column(name = "content", nullable = false)
     private String content;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_user")
     private User user;

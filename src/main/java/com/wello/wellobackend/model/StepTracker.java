@@ -8,8 +8,8 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class StepTracker extends HealthTracker{
-    @Column(name = "steps")
+    @Column(name = "steps", nullable = false)
     private int steps;
-    @Column(name = "distance")
+    @Column(name = "distance", nullable = false)
     private double distance;
 }

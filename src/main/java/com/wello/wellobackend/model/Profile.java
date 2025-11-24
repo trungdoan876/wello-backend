@@ -18,34 +18,34 @@ public class Profile {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idProfile;
 
-    @Column(name = "full_name")
+    @Column(name = "full_name", nullable = false)
     private String fullname;
 
-    @Column(name = "gender")
+    @Column(name = "gender", nullable = false)
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
-    @Column(name = "age")
+    @Column(name = "age", nullable = false)
     private int age;
 
-    @Column(name = "height")
+    @Column(name = "height", nullable = false)
     private int height;
 
-    @Column(name="weight")
+    @Column(name="weight", nullable = false)
     private int weight;
 
-    @Column(name="target_goal")
+    @Column(name="target_goal", nullable = false)
     @Enumerated(EnumType.STRING)
     private Goal goal;
 
-    @Column(name="activity_level")
+    @Column(name="activity_level",nullable = false)
     @Enumerated(EnumType.STRING)
     private ActivityLevel activityLevel;
 
-    @Column(name = "survey_date")
+    @Column(name = "survey_date", nullable = false)
     private LocalDateTime surveyDate;
 
     @OneToOne
-    @JoinColumn(name = "id_user")
+    @JoinColumn(name = "id_user", nullable = false)
     private User user;
 }
