@@ -7,18 +7,25 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "health_tracker")
-@Inheritance(strategy = InheritanceType.JOINED)
+@Table(name = "survey_progress")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public abstract class HealthTracker implements Serializable {
+public class SurveyProgress implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    @Column(name = "date_tracker", nullable = false)
-    private LocalDateTime date;
+    private int idProgress;
+
     @OneToOne
     @JoinColumn(name = "id_user", nullable = false)
     private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "current_question", nullable = false)
+    private SurveyQuestion currentQuestion;
+    
+    @Column(name = "updated_at", nullable = false)
+    private LocalDateTime updatedAt;
+
 }

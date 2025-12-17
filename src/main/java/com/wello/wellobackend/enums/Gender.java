@@ -2,7 +2,8 @@ package com.wello.wellobackend.enums;
 
 public enum Gender {
     MALE("Nam"),
-    FEMALE("Nữ");
+    FEMALE("Nữ"),
+    OTHER("Khác");
 
     private final String moTa;
 
