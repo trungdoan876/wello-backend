@@ -7,7 +7,7 @@ import lombok.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class NutritionTracker extends HealthTracker{
+public class NutritionTracker extends HealthTracker {
     @Column(name = "calories_consumed", nullable = false)
     private int caloriesConsumed;
 
