@@ -41,8 +41,8 @@ public class User implements Serializable {
     // cascade = CascadeType.ALL: Lưu User -> tự lưu Tracker. Xóa User -> tự xóa
     // Tracker.
     // orphanRemoval = true: Nếu setUser(null) -> Xóa dòng Tracker trong DB.
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private HealthTracker healthTracker;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<HealthTracker> healthTrackers;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Profile profile;
