@@ -18,7 +18,7 @@ public abstract class HealthTracker implements Serializable {
     private int id;
     @Column(name = "date_tracker", nullable = false)
     private LocalDateTime date;
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_user", nullable = false)
     private User user;
 }
