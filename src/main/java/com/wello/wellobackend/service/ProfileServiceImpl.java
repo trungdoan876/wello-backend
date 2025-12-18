@@ -1,15 +1,5 @@
 package com.wello.wellobackend.service;
 
-<<<<<<< HEAD
-import com.wello.wellobackend.dto.responses.ProfileResponse;
-import com.wello.wellobackend.model.Profile;
-import com.wello.wellobackend.model.User;
-import com.wello.wellobackend.repository.AuthRepository;
-import com.wello.wellobackend.repository.ProfileRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-=======
 import com.wello.wellobackend.dto.responses.UserProfileResponse;
 import com.wello.wellobackend.model.NutritionTracker;
 import com.wello.wellobackend.model.Profile;
@@ -26,20 +16,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
->>>>>>> 93df018a042264074b6de4041cb76a3dbf55cb85
 @Service
 public class ProfileServiceImpl implements ProfileService {
 
     @Autowired
-<<<<<<< HEAD
-    private ProfileRepository profileRepository;
-
-    @Autowired
-    private AuthRepository authRepository;
-
-    @Override
-    public ProfileResponse getProfileByUserId(int userId) {
-=======
     private AuthRepository authRepository;
 
     @Autowired
@@ -53,31 +33,10 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Override
     public UserProfileResponse getUserProfile(int userId) {
->>>>>>> 93df018a042264074b6de4041cb76a3dbf55cb85
         User user = authRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         Profile profile = profileRepository.findByUser(user);
-<<<<<<< HEAD
-        if (profile == null) {
-            return null;
-        }
-
-        return ProfileResponse.builder()
-                .idProfile(profile.getIdProfile())
-                .userId(user.getIdUser())
-                .fullname(profile.getFullname())
-                .gender(profile.getGender() != null ? profile.getGender().name() : null)
-                .age(profile.getAge())
-                .height(profile.getHeight())
-                .weight(profile.getWeight())
-                .goal(profile.getGoal() != null ? profile.getGoal().name() : null)
-                .activityLevel(profile.getActivityLevel() != null ? profile.getActivityLevel().name() : null)
-                .avatarUrl(profile.getAvatarUrl())
-                .surveyDate(profile.getSurveyDate())
-                .build();
-    }
-=======
         Target target = targetRepository.findByUser(user);
 
         LocalDateTime todayStart = LocalDateTime.of(LocalDate.now(), LocalTime.MIN);
@@ -134,5 +93,4 @@ public class ProfileServiceImpl implements ProfileService {
                     .build();
         }
     }
->>>>>>> 93df018a042264074b6de4041cb76a3dbf55cb85
 }
