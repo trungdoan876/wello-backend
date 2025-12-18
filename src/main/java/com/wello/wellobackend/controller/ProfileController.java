@@ -1,6 +1,6 @@
 package com.wello.wellobackend.controller;
 
-import com.wello.wellobackend.dto.responses.ProfileResponse;
+import com.wello.wellobackend.dto.responses.UserProfileResponse;
 import com.wello.wellobackend.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,7 +20,7 @@ public class ProfileController {
     @GetMapping("/{userId}")
     public ResponseEntity<?> getProfile(@PathVariable int userId) {
         try {
-            ProfileResponse response = profileService.getProfileByUserId(userId);
+            UserProfileResponse response = profileService.getUserProfile(userId);
             if (response == null) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND)
                         .body("Profile not found for userId=" + userId);
