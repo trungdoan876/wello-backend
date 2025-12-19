@@ -36,6 +36,9 @@ public class SurveyServiceImpl implements SurveyService {
     @Autowired
     private TargetRepository targetRepository;
 
+    @Autowired
+    private com.wello.wellobackend.repository.HistoryRepository historyRepository;
+
     @Override
     public List<QuestionResponse> getListSurveyQuestion() {
         return surveyQuestionRepository.findAll()
@@ -89,7 +92,20 @@ public class SurveyServiceImpl implements SurveyService {
         profile.setActivityLevel(request.getActivityLevel());
         profile.setSurveyDate(LocalDateTime.now());
 
-        return profileRepository.save(profile);
+        Profile savedProfile = profileRepository.save(profile);
+
+        // 2. Lưu vào Lịch sử (Snapshot)
+        com.wello.wellobackend.model.History history = com.wello.wellobackend.model.History.builder()
+                .user(user)
+                .weight(savedProfile.getWeight())
+                .height(savedProfile.getHeight())
+                .goal(savedProfile.getGoal())
+                .activityLevel(savedProfile.getActivityLevel())
+                .recordedAt(LocalDateTime.now())
+                .build();
+        historyRepository.save(history);
+
+        return savedProfile;
     }
 
     private TargetResponse calculateTarget(Profile profile) {

@@ -28,4 +28,10 @@ public class UserController {
             return ResponseEntity.status(404).body(response);
         }
     }
+
+    @GetMapping("/profile/history")
+    public ResponseEntity<java.util.List<com.wello.wellobackend.model.History>> getProfileHistory(
+            @RequestParam int userId) {
+        return ResponseEntity.ok(profileService.getProfileHistory(userId));
+    }
 }
