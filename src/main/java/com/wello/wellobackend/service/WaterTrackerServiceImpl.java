@@ -1,5 +1,6 @@
 package com.wello.wellobackend.service;
 
+import com.wello.wellobackend.dto.requests.AddWaterIntakeRequest;
 import com.wello.wellobackend.dto.responses.DailyNutritionResponse;
 import com.wello.wellobackend.model.Target;
 import com.wello.wellobackend.model.User;
@@ -48,7 +49,7 @@ public class WaterTrackerServiceImpl implements WaterTrackerService {
         }
 
         @Override
-        public void addWaterIntake(com.wello.wellobackend.dto.requests.AddWaterIntakeRequest request) {
+        public void addWaterIntake(AddWaterIntakeRequest request) {
                 User user = authRepository.findById(request.getUserId())
                                 .orElseThrow(() -> new RuntimeException("User not found"));
 
@@ -68,5 +69,37 @@ public class WaterTrackerServiceImpl implements WaterTrackerService {
                 }
 
                 waterTrackerRepository.save(water);
+        }
+
+        @Override
+        public void deleteWaterIntake(AddWaterIntakeRequest request) {
+                User user = authRepository.findById(request.getUserId())
+                                .orElseThrow(() -> new RuntimeException("User not found"));
+
+                LocalDateTime startOfDay = LocalDateTime.of(request.getDate(), LocalTime.MIN);
+                LocalDateTime endOfDay = LocalDateTime.of(request.getDate(), LocalTime.MAX);
+
+                WaterTracker water = waterTrackerRepository.findByUserAndDate(user, startOfDay, endOfDay)
+                                .orElse(null);
+
+                if (water == null) {
+                        throw new RuntimeException("Water intake record not found for the given date");
+                } else {
+                        int newAmount = water.getAmountMl() - 250;
+                        if (newAmount < 0) {
+                                newAmount = 0;
+                        }
+                        water.setAmountMl(newAmount);
+                }
+
+                waterTrackerRepository.save(water);
+        }
+
+        @Override
+        public void deleteWaterIntakeById(int waterTrackerId) {
+                WaterTracker water = waterTrackerRepository.findById(waterTrackerId)
+                                .orElseThrow(() -> new RuntimeException("Water intake record not found"));
+
+                waterTrackerRepository.delete(water);
         }
 }

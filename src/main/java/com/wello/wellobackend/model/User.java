@@ -1,5 +1,6 @@
 package com.wello.wellobackend.model;
 
+import com.wello.wellobackend.enums.AuthProvider;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -29,7 +30,10 @@ public class User implements Serializable {
 
     @Column(name = "auth_provider")
     @Enumerated(EnumType.STRING)
-    private com.wello.wellobackend.enums.AuthProvider authProvider;
+    private AuthProvider authProvider;
+
+    @Column(name = "fcm_token")
+    private String fcmToken;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Notification> notifications;

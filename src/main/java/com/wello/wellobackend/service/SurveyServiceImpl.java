@@ -4,10 +4,13 @@ import com.wello.wellobackend.dto.requests.SurveyRequest;
 import com.wello.wellobackend.dto.responses.AnswerOptionResponse;
 import com.wello.wellobackend.dto.responses.QuestionResponse;
 import com.wello.wellobackend.dto.responses.TargetResponse;
+import com.wello.wellobackend.enums.ActivityLevel;
+import com.wello.wellobackend.model.History;
 import com.wello.wellobackend.model.Profile;
 import com.wello.wellobackend.model.Target;
 import com.wello.wellobackend.model.User;
 import com.wello.wellobackend.repository.AuthRepository;
+import com.wello.wellobackend.repository.HistoryRepository;
 import com.wello.wellobackend.repository.ProfileRepository;
 import com.wello.wellobackend.repository.SurveyQuestionRepository;
 import com.wello.wellobackend.repository.TargetRepository;
@@ -35,6 +38,9 @@ public class SurveyServiceImpl implements SurveyService {
 
     @Autowired
     private TargetRepository targetRepository;
+
+    @Autowired
+    private HistoryRepository historyRepository;
 
     @Override
     public List<QuestionResponse> getListSurveyQuestion() {
@@ -89,7 +95,20 @@ public class SurveyServiceImpl implements SurveyService {
         profile.setActivityLevel(request.getActivityLevel());
         profile.setSurveyDate(LocalDateTime.now());
 
-        return profileRepository.save(profile);
+        Profile savedProfile = profileRepository.save(profile);
+
+        // 2. Lưu vào Lịch sử (Snapshot)
+        History history = History.builder()
+                .user(user)
+                .weight(savedProfile.getWeight())
+                .height(savedProfile.getHeight())
+                .goal(savedProfile.getGoal())
+                .activityLevel(savedProfile.getActivityLevel())
+                .recordedAt(LocalDateTime.now())
+                .build();
+        historyRepository.save(history);
+
+        return savedProfile;
     }
 
     private TargetResponse calculateTarget(Profile profile) {
@@ -145,7 +164,7 @@ public class SurveyServiceImpl implements SurveyService {
                 .build();
     }
 
-    private double getActivityMultiplier(com.wello.wellobackend.enums.ActivityLevel level) {
+    private double getActivityMultiplier(ActivityLevel level) {
         switch (level) {
             case SEDENTARY:
                 return 1.2;

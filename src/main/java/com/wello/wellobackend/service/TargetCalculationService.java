@@ -39,4 +39,15 @@ public interface TargetCalculationService {
      * @return recommended water intake in milliliters
      */
     int calculateDailyWaterIntake(double weight, double activityLevel);
+
+    /**
+     * Calculate calories burned from exercise
+     * Formula: MET * weight (kg) * (duration (mins) / 60.0)
+     * 
+     * @param met             Metabolic Equivalent of Task
+     * @param weight          in kilograms
+     * @param durationMinutes duration of exercise in minutes
+     * @return calories burned
+     */
+    int calculateExerciseCalories(double met, double weight, int durationMinutes);
 }

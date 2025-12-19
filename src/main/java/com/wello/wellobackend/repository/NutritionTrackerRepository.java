@@ -14,8 +14,5 @@ import java.util.Optional;
 public interface NutritionTrackerRepository extends JpaRepository<NutritionTracker, Integer> {
 
     @Query("SELECT n FROM NutritionTracker n WHERE n.user = :user AND n.date >= :startDate AND n.date < :endDate")
-    Optional<NutritionTracker> findByUserAndDate(User user, LocalDateTime startDate, LocalDateTime endDate);
-
-    @Query("SELECT n FROM NutritionTracker n WHERE n.user = :user AND n.date >= :startDate AND n.date < :endDate")
     List<NutritionTracker> findByUserAndDateRange(User user, LocalDateTime startDate, LocalDateTime endDate);
 }

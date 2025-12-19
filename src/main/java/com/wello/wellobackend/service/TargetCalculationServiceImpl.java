@@ -66,4 +66,9 @@ public class TargetCalculationServiceImpl implements TargetCalculationService {
 
         return (int) (weight * coefficient);
     }
+
+    @Override
+    public int calculateExerciseCalories(double met, double weight, int durationMinutes) {
+        return (int) (met * weight * (durationMinutes / 60.0));
+    }
 }

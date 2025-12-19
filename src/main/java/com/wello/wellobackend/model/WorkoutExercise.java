@@ -19,5 +19,5 @@ public class WorkoutExercise implements Serializable {
     @Column(name = "name")
     private String exerciseName;
     @Column(name = "met_value")
-    private int metValue; //Calo = met * cân nặng * giờ
+    private double metValue; // Calo = met * cân nặng * giờ
 }
