@@ -1,6 +1,8 @@
 package com.wello.wellobackend.service;
 
 import com.wello.wellobackend.dto.requests.WorkoutLogRequest;
+import com.wello.wellobackend.dto.responses.ExerciseResponse;
+import com.wello.wellobackend.dto.responses.WorkoutCalculationResponse;
 import com.wello.wellobackend.dto.responses.WorkoutLogResponse;
 import com.wello.wellobackend.model.*;
 import com.wello.wellobackend.repository.*;
@@ -10,6 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class WorkoutServiceImpl implements WorkoutService {
@@ -94,18 +98,18 @@ public class WorkoutServiceImpl implements WorkoutService {
         }
 
         @Override
-        public java.util.List<com.wello.wellobackend.dto.responses.ExerciseResponse> getAllExercises() {
+        public List<ExerciseResponse> getAllExercises() {
                 return workoutExerciseRepository.findAll().stream()
-                                .map(e -> com.wello.wellobackend.dto.responses.ExerciseResponse.builder()
+                                .map(e -> ExerciseResponse.builder()
                                                 .id(e.getIdExercise())
                                                 .name(e.getExerciseName())
                                                 .metValue(e.getMetValue())
                                                 .build())
-                                .collect(java.util.stream.Collectors.toList());
+                                .collect(Collectors.toList());
         }
 
         @Override
-        public com.wello.wellobackend.dto.responses.WorkoutCalculationResponse calculateCalories(int userId,
+        public WorkoutCalculationResponse calculateCalories(int userId,
                         int exerciseId, int durationMinutes) {
                 User user = authRepository.findById(userId)
                                 .orElseThrow(() -> new RuntimeException("User not found"));
@@ -121,7 +125,7 @@ public class WorkoutServiceImpl implements WorkoutService {
                                 weight,
                                 durationMinutes);
 
-                return com.wello.wellobackend.dto.responses.WorkoutCalculationResponse.builder()
+                return WorkoutCalculationResponse.builder()
                                 .caloriesBurned(caloriesBurned)
                                 .metValue(exercise.getMetValue())
                                 .userWeight(weight)
