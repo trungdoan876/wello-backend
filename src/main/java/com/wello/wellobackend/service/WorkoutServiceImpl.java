@@ -84,16 +84,16 @@ public class WorkoutServiceImpl implements WorkoutService {
                 tracker.setTotalCaloriesBurned(tracker.getTotalCaloriesBurned() + caloriesBurned);
                 workoutTrackerRepository.save(tracker);
 
-                // 4. Update NutritionTracker
-                NutritionTracker nutrition = nutritionTrackerRepository.findByUserAndDate(user, startOfDay, endOfDay)
-                                .orElseGet(() -> {
-                                        NutritionTracker newNutrition = new NutritionTracker();
-                                        newNutrition.setUser(user);
-                                        newNutrition.setDate(LocalDateTime.of(request.getDate(), LocalTime.now()));
-                                        return newNutrition;
-                                });
+                // 4. Create new NutritionTracker entry for workout calories
+                NutritionTracker nutrition = new NutritionTracker();
+                nutrition.setUser(user);
+                nutrition.setDate(LocalDateTime.of(request.getDate(), LocalTime.now()));
+                nutrition.setCaloriesBurned(caloriesBurned);
+                nutrition.setCaloriesConsumed(0);
+                nutrition.setCarbs(0);
+                nutrition.setProtein(0);
+                nutrition.setFat(0);
 
-                nutrition.setCaloriesBurned(nutrition.getCaloriesBurned() + caloriesBurned);
                 nutritionTrackerRepository.save(nutrition);
 
                 return WorkoutLogResponse.builder()

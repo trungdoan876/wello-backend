@@ -4,6 +4,8 @@ import com.wello.wellobackend.dto.requests.SurveyRequest;
 import com.wello.wellobackend.dto.responses.AnswerOptionResponse;
 import com.wello.wellobackend.dto.responses.QuestionResponse;
 import com.wello.wellobackend.dto.responses.TargetResponse;
+import com.wello.wellobackend.enums.ActivityLevel;
+import com.wello.wellobackend.model.History;
 import com.wello.wellobackend.model.Profile;
 import com.wello.wellobackend.model.Target;
 import com.wello.wellobackend.model.User;
@@ -96,7 +98,7 @@ public class SurveyServiceImpl implements SurveyService {
         Profile savedProfile = profileRepository.save(profile);
 
         // 2. Lưu vào Lịch sử (Snapshot)
-        com.wello.wellobackend.model.History history = com.wello.wellobackend.model.History.builder()
+        History history = History.builder()
                 .user(user)
                 .weight(savedProfile.getWeight())
                 .height(savedProfile.getHeight())
@@ -162,7 +164,7 @@ public class SurveyServiceImpl implements SurveyService {
                 .build();
     }
 
-    private double getActivityMultiplier(com.wello.wellobackend.enums.ActivityLevel level) {
+    private double getActivityMultiplier(ActivityLevel level) {
         switch (level) {
             case SEDENTARY:
                 return 1.2;

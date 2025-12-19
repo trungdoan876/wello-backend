@@ -1,4 +1,6 @@
 package com.wello.wellobackend.model;
+
+import com.wello.wellobackend.enums.MealType;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -11,8 +13,8 @@ public class NutritionTracker extends HealthTracker {
     @Column(name = "calories_consumed", nullable = false)
     private int caloriesConsumed;
 
-    @Column(name = "calories_burned", nullable = false)
-    private int caloriesBurned;
+    @Column(name = "calories_burned")
+    private int caloriesBurned; // Will be 0 for food logs
 
     @Column(name = "carbs", nullable = false)
     private int carbs;
@@ -22,4 +24,15 @@ public class NutritionTracker extends HealthTracker {
 
     @Column(name = "fat", nullable = false)
     private int fat;
+
+    @Column(name = "amount_grams")
+    private int amountGrams;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "meal_type")
+    private MealType mealType;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_food")
+    private Food food;
 }

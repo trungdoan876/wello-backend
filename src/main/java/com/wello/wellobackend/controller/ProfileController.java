@@ -223,6 +223,44 @@ public class ProfileController {
             System.err.println("Update activity level error: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Failed to update activity level: " + e.getMessage());
+    @PostMapping("/{userId}/fcm-token")
+    public ResponseEntity<?> updateFcmToken(@PathVariable int userId, @RequestParam String fcmToken) {
+        try {
+            profileService.updateFcmToken(userId, fcmToken);
+            return ResponseEntity.ok("FCM token updated successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to update FCM token");
+        }
+    }
+
+    @PostMapping("/{userId}/water-reminder-settings")
+    public ResponseEntity<?> updateWaterReminderSettings(
+            @PathVariable int userId,
+            @RequestParam boolean enabled,
+            @RequestParam int startHour,
+            @RequestParam int endHour,
+            @RequestParam int interval) {
+        try {
+            profileService.updateWaterReminderSettings(userId, enabled, startHour, endHour, interval);
+            return ResponseEntity.ok("Water reminder settings updated successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to update reminder settings");
+        }
+    }
+
+    @GetMapping("/test-noti/{userId}")
+    public ResponseEntity<?> testNotification(@PathVariable int userId) {
+        try {
+            UserInfoResponse user = profileService.getUserInfo(userId);
+            String token = user.getFcmToken();
+            if (token == null || token.isEmpty()) {
+                return ResponseEntity.badRequest()
+                        .body("User does not have an FCM token. Please update it first via /fcm-token endpoint.");
+            }
+            profileService.testPushNotification(userId);
+            return ResponseEntity.ok("Test notification sent to user " + userId);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error: " + e.getMessage());
         }
     }
 }
