@@ -1,6 +1,7 @@
 package com.wello.wellobackend.service;
 
 import com.wello.wellobackend.dto.requests.WorkoutLogRequest;
+import com.wello.wellobackend.dto.responses.DailyWorkoutSummaryResponse;
 import com.wello.wellobackend.dto.responses.ExerciseResponse;
 import com.wello.wellobackend.dto.responses.WorkoutCalculationResponse;
 import com.wello.wellobackend.dto.responses.WorkoutLogResponse;
@@ -10,8 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -74,7 +77,12 @@ public class WorkoutServiceImpl implements WorkoutService {
                 detail.setWorkoutTracker(tracker);
                 detail.setWorkoutExercise(exercise);
                 detail.setDurationMinutes(request.getDurationMinutes());
+                detail.setCaloriesBurned(caloriesBurned);
                 workoutDetailRepository.save(detail);
+
+                // Update total in Tracker
+                tracker.setTotalCaloriesBurned(tracker.getTotalCaloriesBurned() + caloriesBurned);
+                workoutTrackerRepository.save(tracker);
 
                 // 4. Update NutritionTracker
                 NutritionTracker nutrition = nutritionTrackerRepository.findByUserAndDate(user, startOfDay, endOfDay)
@@ -130,6 +138,42 @@ public class WorkoutServiceImpl implements WorkoutService {
                                 .metValue(exercise.getMetValue())
                                 .userWeight(weight)
                                 .durationMinutes(durationMinutes)
+                                .build();
+        }
+
+        @Override
+        public DailyWorkoutSummaryResponse getDailyWorkouts(int userId,
+                        LocalDate date) {
+                User user = authRepository.findById(userId)
+                                .orElseThrow(() -> new RuntimeException("User not found"));
+
+                LocalDateTime startOfDay = LocalDateTime.of(date, LocalTime.MIN);
+                LocalDateTime endOfDay = LocalDateTime.of(date, LocalTime.MAX);
+
+                WorkoutTracker tracker = workoutTrackerRepository.findByUserAndDate(user, startOfDay, endOfDay)
+                                .orElse(null);
+
+                if (tracker == null) {
+                        return DailyWorkoutSummaryResponse.builder()
+                                        .totalCaloriesBurned(0)
+                                        .workouts(new ArrayList<>())
+                                        .build();
+                }
+
+                List<DailyWorkoutSummaryResponse.WorkoutDetailResponse> detailResponses = tracker
+                                .getDetails().stream()
+                                .map(d -> DailyWorkoutSummaryResponse.WorkoutDetailResponse
+                                                .builder()
+                                                .id(d.getId())
+                                                .exerciseName(d.getWorkoutExercise().getExerciseName())
+                                                .durationMinutes(d.getDurationMinutes())
+                                                .caloriesBurned(d.getCaloriesBurned())
+                                                .build())
+                                .collect(Collectors.toList());
+
+                return DailyWorkoutSummaryResponse.builder()
+                                .totalCaloriesBurned(tracker.getTotalCaloriesBurned())
+                                .workouts(detailResponses)
                                 .build();
         }
 }

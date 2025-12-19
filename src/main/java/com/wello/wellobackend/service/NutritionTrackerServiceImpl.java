@@ -2,14 +2,12 @@ package com.wello.wellobackend.service;
 
 import com.wello.wellobackend.dto.responses.DailyNutritionResponse;
 import com.wello.wellobackend.dto.responses.WeeklyOverviewResponse;
+import com.wello.wellobackend.model.Food;
 import com.wello.wellobackend.model.NutritionTracker;
 import com.wello.wellobackend.model.Target;
 import com.wello.wellobackend.model.User;
 import com.wello.wellobackend.model.WaterTracker;
-import com.wello.wellobackend.repository.AuthRepository;
-import com.wello.wellobackend.repository.NutritionTrackerRepository;
-import com.wello.wellobackend.repository.TargetRepository;
-import com.wello.wellobackend.repository.WaterTrackerRepository;
+import com.wello.wellobackend.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,6 +37,9 @@ public class NutritionTrackerServiceImpl implements NutritionTrackerService {
         @Autowired
         private WaterTrackerRepository waterTrackerRepository;
 
+        @Autowired
+        private FoodRepository foodRepository;
+
         @Override
         public DailyNutritionResponse getDailySummary(int userId, LocalDate date) {
                 User user = authRepository.findById(userId)
@@ -61,8 +62,7 @@ public class NutritionTrackerServiceImpl implements NutritionTrackerService {
                                 .caloriesConsumed(nutrition.getCaloriesConsumed())
                                 .caloriesBurned(nutrition.getCaloriesBurned())
                                 .caloriesRemaining(
-                                                Math.max(0, targetCals - nutrition.getCaloriesConsumed()
-                                                                + nutrition.getCaloriesBurned()))
+                                                Math.max(0, targetCals - nutrition.getCaloriesConsumed()))
                                 .macros(DailyNutritionResponse.Macros.builder()
                                                 .carb(DailyNutritionResponse.MacroDetail.builder()
                                                                 .consumed(nutrition.getCarbs())
@@ -117,6 +117,51 @@ public class NutritionTrackerServiceImpl implements NutritionTrackerService {
                 return WeeklyOverviewResponse.builder()
                                 .weekData(weekData)
                                 .currentDate(LocalDate.now())
+                                .build();
+        }
+
+        @Override
+        @org.springframework.transaction.annotation.Transactional
+        public com.wello.wellobackend.dto.responses.LogFoodResponse logFood(
+                        com.wello.wellobackend.dto.requests.LogFoodRequest request) {
+                User user = authRepository.findById(request.getUserId())
+                                .orElseThrow(() -> new RuntimeException("User not found"));
+
+                Food food = foodRepository.findById(request.getFoodId())
+                                .orElseThrow(() -> new RuntimeException("Food not found"));
+
+                LocalDateTime startOfDay = LocalDateTime.of(request.getDate(), LocalTime.MIN);
+                LocalDateTime endOfDay = LocalDateTime.of(request.getDate(), LocalTime.MAX);
+
+                NutritionTracker tracker = nutritionTrackerRepository.findByUserAndDate(user, startOfDay, endOfDay)
+                                .orElseGet(() -> {
+                                        NutritionTracker newTracker = new NutritionTracker();
+                                        newTracker.setUser(user);
+                                        newTracker.setDate(LocalDateTime.of(request.getDate(), LocalTime.now()));
+                                        return nutritionTrackerRepository.save(newTracker);
+                                });
+
+                // Calculate nutrients based on amount (per 100g)
+                double factor = request.getAmountGrams() / 100.0;
+                int calories = (int) (food.getCaloriesPer100g() * factor);
+                double protein = food.getProteinPer100g() * factor;
+                double carbs = food.getCarbsPer100g() * factor;
+                double fat = food.getFatPer100g() * factor;
+
+                // Update tracker totals
+                tracker.setCaloriesConsumed(tracker.getCaloriesConsumed() + calories);
+                tracker.setProtein(tracker.getProtein() + (int) Math.round(protein));
+                tracker.setCarbs(tracker.getCarbs() + (int) Math.round(carbs));
+                tracker.setFat(tracker.getFat() + (int) Math.round(fat));
+                nutritionTrackerRepository.save(tracker);
+
+                return com.wello.wellobackend.dto.responses.LogFoodResponse.builder()
+                                .foodName(food.getFoodName())
+                                .calories(calories)
+                                .protein(protein)
+                                .carbs(carbs)
+                                .fat(fat)
+                                .message("Food logged successfully")
                                 .build();
         }
 
