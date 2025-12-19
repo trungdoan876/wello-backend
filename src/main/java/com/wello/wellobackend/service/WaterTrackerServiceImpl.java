@@ -1,5 +1,6 @@
 package com.wello.wellobackend.service;
 
+import com.wello.wellobackend.dto.requests.AddWaterIntakeRequest;
 import com.wello.wellobackend.dto.responses.DailyNutritionResponse;
 import com.wello.wellobackend.model.Target;
 import com.wello.wellobackend.model.User;
@@ -48,7 +49,7 @@ public class WaterTrackerServiceImpl implements WaterTrackerService {
         }
 
         @Override
-        public void addWaterIntake(com.wello.wellobackend.dto.requests.AddWaterIntakeRequest request) {
+        public void addWaterIntake(AddWaterIntakeRequest request) {
                 User user = authRepository.findById(request.getUserId())
                                 .orElseThrow(() -> new RuntimeException("User not found"));
 
@@ -71,7 +72,7 @@ public class WaterTrackerServiceImpl implements WaterTrackerService {
         }
 
         @Override
-        public void deleteWaterIntake(com.wello.wellobackend.dto.requests.AddWaterIntakeRequest request) {
+        public void deleteWaterIntake(AddWaterIntakeRequest request) {
                 User user = authRepository.findById(request.getUserId())
                                 .orElseThrow(() -> new RuntimeException("User not found"));
 

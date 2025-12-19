@@ -1,5 +1,6 @@
 package com.wello.wellobackend.controller;
 
+import com.wello.wellobackend.dto.requests.AddWaterIntakeRequest;
 import com.wello.wellobackend.dto.responses.DailyNutritionResponse;
 import com.wello.wellobackend.service.WaterTrackerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,14 +26,14 @@ public class WaterIntakeController {
 
     @PostMapping("/add")
     public ResponseEntity<String> addWaterIntake(
-            @RequestBody com.wello.wellobackend.dto.requests.AddWaterIntakeRequest request) {
+            @RequestBody AddWaterIntakeRequest request) {
         waterTrackerService.addWaterIntake(request);
         return ResponseEntity.ok("Water intake added successfully");
     }
 
     @PostMapping("/delete")
     public ResponseEntity<String> deleteWaterIntake(
-            @RequestBody com.wello.wellobackend.dto.requests.AddWaterIntakeRequest request) {
+            @RequestBody AddWaterIntakeRequest request) {
         try {
             waterTrackerService.deleteWaterIntake(request);
             return ResponseEntity.ok("250ml water intake removed successfully");

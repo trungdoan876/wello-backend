@@ -2,18 +2,15 @@ package com.wello.wellobackend.service;
 
 import com.wello.wellobackend.dto.responses.UserProfileResponse;
 import com.wello.wellobackend.dto.responses.UserInfoResponse;
-import com.wello.wellobackend.model.NutritionTracker;
-import com.wello.wellobackend.model.Profile;
-import com.wello.wellobackend.model.Target;
-import com.wello.wellobackend.model.User;
-import com.wello.wellobackend.repository.AuthRepository;
-import com.wello.wellobackend.repository.NutritionTrackerRepository;
-import com.wello.wellobackend.repository.ProfileRepository;
-import com.wello.wellobackend.repository.TargetRepository;
+import com.wello.wellobackend.dto.responses.UserVerificationResponse;
+import com.wello.wellobackend.enums.Goal;
+import com.wello.wellobackend.model.*;
+import com.wello.wellobackend.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -22,6 +19,9 @@ import java.util.Base64;
 
 @Service
 public class ProfileServiceImpl implements ProfileService {
+
+    @Autowired
+    private FcmService fcmService;
 
     @Autowired
     private AuthRepository authRepository;
@@ -36,7 +36,7 @@ public class ProfileServiceImpl implements ProfileService {
     private NutritionTrackerRepository nutritionTrackerRepository;
 
     @Autowired
-    private com.wello.wellobackend.repository.HistoryRepository historyRepository;
+    private HistoryRepository historyRepository;
 
     @Override
     public UserProfileResponse getUserProfile(int userId) {
@@ -49,8 +49,9 @@ public class ProfileServiceImpl implements ProfileService {
         LocalDateTime todayStart = LocalDateTime.of(LocalDate.now(), LocalTime.MIN);
         LocalDateTime todayEnd = LocalDateTime.of(LocalDate.now(), LocalTime.MAX);
 
-        NutritionTracker nutritionTracker = nutritionTrackerRepository.findByUserAndDate(user, todayStart, todayEnd)
-                .orElse(new NutritionTracker());
+        List<NutritionTracker> nutritionLogs = nutritionTrackerRepository.findByUserAndDateRange(user, todayStart,
+                todayEnd);
+        int totalCaloriesBurned = nutritionLogs.stream().mapToInt(NutritionTracker::getCaloriesBurned).sum();
 
         double currentWeight = profile != null ? profile.getWeight() : 0;
         double targetWeight = calculateTargetWeight(currentWeight, profile != null ? profile.getGoal() : null);
@@ -62,7 +63,7 @@ public class ProfileServiceImpl implements ProfileService {
                 .startDate(target != null && target.getStartDate() != null ? target.getStartDate().toLocalDate() : null)
                 .goalType(profile != null ? profile.getGoal() : null)
                 .dailyCalorieTarget(target != null ? target.getCaloriesTarget() : 0)
-                .dailyCalorieBurned(nutritionTracker.getCaloriesBurned())
+                .dailyCalorieBurned(totalCaloriesBurned)
                 .dailyWaterTarget(target != null ? target.getWaterIntakeMl() : 0)
                 .macroTargets(UserProfileResponse.MacroTargets.builder()
                         .carb(target != null ? target.getCarbTarget() : 0)
@@ -72,21 +73,22 @@ public class ProfileServiceImpl implements ProfileService {
                 .build();
     }
 
-            @Override
-            public UserInfoResponse getUserInfo(int userId) {
-            User user = authRepository.findById(userId)
+    @Override
+    public UserInfoResponse getUserInfo(int userId) {
+        User user = authRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-            Profile profile = profileRepository.findByUser(user);
+        Profile profile = profileRepository.findByUser(user);
 
-            UserInfoResponse.UserInfoResponseBuilder builder = UserInfoResponse.builder()
+        UserInfoResponse.UserInfoResponseBuilder builder = UserInfoResponse.builder()
                 .userId(user.getIdUser())
                 .email(user.getEmail())
                 .authProvider(user.getAuthProvider())
-                .googleId(user.getGoogleId());
+                .googleId(user.getGoogleId())
+                .fcmToken(user.getFcmToken());
 
-            if (profile != null) {
-                builder
+        if (profile != null) {
+            builder
                     .fullname(profile.getFullname())
                     .gender(profile.getGender())
                     .age(profile.getAge())
@@ -96,12 +98,12 @@ public class ProfileServiceImpl implements ProfileService {
                     .activityLevel(profile.getActivityLevel())
                     .avatarUrl(profile.getAvatarUrl())
                     .surveyDate(profile.getSurveyDate());
-            }
+        }
 
-            return builder.build();
-            }
+        return builder.build();
+    }
 
-    private double calculateTargetWeight(double currentWeight, com.wello.wellobackend.enums.Goal goal) {
+    private double calculateTargetWeight(double currentWeight, Goal goal) {
         if (goal == null)
             return currentWeight;
         switch (goal) {
@@ -116,22 +118,22 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     @Override
-    public java.util.List<com.wello.wellobackend.model.History> getProfileHistory(int userId) {
+    public List<History> getProfileHistory(int userId) {
         User user = authRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
         return historyRepository.findByUserOrderByRecordedAtDesc(user);
     }
 
     @Override
-    public com.wello.wellobackend.dto.responses.UserVerificationResponse verifyUser(int userId) {
+    public UserVerificationResponse verifyUser(int userId) {
         boolean exists = authRepository.existsById(userId);
         if (exists) {
-            return com.wello.wellobackend.dto.responses.UserVerificationResponse.builder()
+            return UserVerificationResponse.builder()
                     .exists(true)
                     .userId(userId)
                     .build();
         } else {
-            return com.wello.wellobackend.dto.responses.UserVerificationResponse.builder()
+            return UserVerificationResponse.builder()
                     .exists(false)
                     .message("User not found")
                     .build();
@@ -150,7 +152,8 @@ public class ProfileServiceImpl implements ProfileService {
 
         // Convert file to Base64
         byte[] fileContent = file.getBytes();
-        String base64Avatar = "data:" + file.getContentType() + ";base64," + Base64.getEncoder().encodeToString(fileContent);
+        String base64Avatar = "data:" + file.getContentType() + ";base64,"
+                + Base64.getEncoder().encodeToString(fileContent);
 
         // Save avatar to profile
         profile.setAvatarUrl(base64Avatar);
@@ -179,5 +182,46 @@ public class ProfileServiceImpl implements ProfileService {
         profileRepository.save(profile);
 
         System.out.println("Avatar uploaded successfully for user: " + userId);
+    }
+
+    @Override
+    public void updateFcmToken(int userId, String fcmToken) {
+        User user = authRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        user.setFcmToken(fcmToken);
+        authRepository.save(user);
+    }
+
+    @Override
+    public void updateWaterReminderSettings(int userId, boolean enabled, int startHour, int endHour, int interval) {
+        User user = authRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        Profile profile = profileRepository.findByUser(user);
+        if (profile == null) {
+            throw new RuntimeException("Profile not found");
+        }
+
+        profile.setWaterReminderEnabled(enabled);
+        profile.setReminderStartHour(startHour);
+        profile.setReminderEndHour(endHour);
+        profile.setReminderIntervalHours(interval);
+        profileRepository.save(profile);
+    }
+
+    @Override
+    public void testPushNotification(int userId) {
+        User user = authRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        String token = user.getFcmToken();
+        if (token != null && !token.isEmpty()) {
+            fcmService.sendPushNotification(
+                    token,
+                    "Thông báo thử nghiệm",
+                    "Nếu bạn thấy tin nhắn này, Firebase đã hoạt động tốt!");
+        } else {
+            throw new RuntimeException("FCM Token not found for this user");
+        }
     }
 }

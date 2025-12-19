@@ -1,6 +1,9 @@
 package com.wello.wellobackend.controller;
 
+import com.wello.wellobackend.dto.requests.LogFoodRequest;
 import com.wello.wellobackend.dto.responses.DailyNutritionResponse;
+import com.wello.wellobackend.dto.responses.LogFoodResponse;
+import com.wello.wellobackend.dto.responses.MealLogResponse;
 import com.wello.wellobackend.dto.responses.WeeklyOverviewResponse;
 import com.wello.wellobackend.service.NutritionTrackerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/nutrition")
@@ -32,8 +36,15 @@ public class NutritionController {
     }
 
     @PostMapping("/log-food")
-    public ResponseEntity<com.wello.wellobackend.dto.responses.LogFoodResponse> logFood(
-            @RequestBody com.wello.wellobackend.dto.requests.LogFoodRequest request) {
+    public ResponseEntity<LogFoodResponse> logFood(
+            @RequestBody LogFoodRequest request) {
         return ResponseEntity.ok(nutritionTrackerService.logFood(request));
+    }
+
+    @GetMapping("/history")
+    public ResponseEntity<List<MealLogResponse>> getDailyMealHistory(
+            @RequestParam int userId,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+        return ResponseEntity.ok(nutritionTrackerService.getDailyMealHistory(userId, date));
     }
 }

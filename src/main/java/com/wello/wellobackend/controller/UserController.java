@@ -2,10 +2,14 @@ package com.wello.wellobackend.controller;
 
 import com.wello.wellobackend.dto.responses.UserProfileResponse;
 import com.wello.wellobackend.dto.responses.UserInfoResponse;
+import com.wello.wellobackend.dto.responses.UserVerificationResponse;
+import com.wello.wellobackend.model.History;
 import com.wello.wellobackend.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/user")
@@ -20,9 +24,9 @@ public class UserController {
     }
 
     @GetMapping("/verify")
-    public ResponseEntity<com.wello.wellobackend.dto.responses.UserVerificationResponse> verifyUser(
+    public ResponseEntity<UserVerificationResponse> verifyUser(
             @RequestParam int userId) {
-        com.wello.wellobackend.dto.responses.UserVerificationResponse response = profileService.verifyUser(userId);
+        UserVerificationResponse response = profileService.verifyUser(userId);
         if (response.isExists()) {
             return ResponseEntity.ok(response);
         } else {
@@ -36,7 +40,7 @@ public class UserController {
     }
 
     @GetMapping("/profile/history")
-    public ResponseEntity<java.util.List<com.wello.wellobackend.model.History>> getProfileHistory(
+    public ResponseEntity<List<History>> getProfileHistory(
             @RequestParam int userId) {
         return ResponseEntity.ok(profileService.getProfileHistory(userId));
     }

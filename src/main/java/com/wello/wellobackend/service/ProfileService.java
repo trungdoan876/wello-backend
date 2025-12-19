@@ -21,4 +21,10 @@ public interface ProfileService {
     void uploadAvatar(int userId, MultipartFile file) throws IOException;
 
     void uploadAvatarBase64(int userId, String base64Image);
+
+    void updateFcmToken(int userId, String fcmToken);
+
+    void updateWaterReminderSettings(int userId, boolean enabled, int startHour, int endHour, int interval);
+
+    void testPushNotification(int userId);
 }

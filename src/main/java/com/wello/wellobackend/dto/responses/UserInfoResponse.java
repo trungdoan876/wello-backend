@@ -19,6 +19,7 @@ public class UserInfoResponse {
     private String email;
     private AuthProvider authProvider;
     private String googleId;
+    private String fcmToken;
 
     // Profile fields (nullable if profile not created yet)
     private String fullname;
