@@ -1,6 +1,7 @@
 package com.wello.wellobackend.model;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -15,7 +16,10 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class WorkoutTracker extends HealthTracker{
+public class WorkoutTracker extends HealthTracker {
+    @Column(name = "total_calories_burned")
+    private int totalCaloriesBurned;
+
     @OneToMany(mappedBy = "workoutTracker", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<WorkoutDetail> details;
 }

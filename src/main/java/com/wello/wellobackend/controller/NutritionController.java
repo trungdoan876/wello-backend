@@ -30,4 +30,10 @@ public class NutritionController {
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate) {
         return ResponseEntity.ok(nutritionTrackerService.getWeeklyOverview(userId, startDate));
     }
+
+    @PostMapping("/log-food")
+    public ResponseEntity<com.wello.wellobackend.dto.responses.LogFoodResponse> logFood(
+            @RequestBody com.wello.wellobackend.dto.requests.LogFoodRequest request) {
+        return ResponseEntity.ok(nutritionTrackerService.logFood(request));
+    }
 }

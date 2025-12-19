@@ -20,6 +20,9 @@ public class WorkoutDetail implements Serializable {
     @Column(name = "duration_minutes")
     private int durationMinutes;
 
+    @Column(name = "calories_burned")
+    private int caloriesBurned;
+
     @ManyToOne
     @JoinColumn(name = "tracker_id")
     private WorkoutTracker workoutTracker;
