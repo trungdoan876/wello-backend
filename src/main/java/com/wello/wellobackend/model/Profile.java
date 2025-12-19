@@ -50,6 +50,18 @@ public class Profile implements Serializable {
     @Column(name = "survey_date", nullable = false)
     private LocalDateTime surveyDate;
 
+    @Column(name = "water_reminder_enabled", nullable = false)
+    private boolean waterReminderEnabled = false;
+
+    @Column(name = "reminder_start_hour")
+    private int reminderStartHour = 8;
+
+    @Column(name = "reminder_end_hour")
+    private int reminderEndHour = 22;
+
+    @Column(name = "reminder_interval_hours")
+    private int reminderIntervalHours = 1;
+
     @OneToOne
     @JoinColumn(name = "id_user", nullable = false)
     private User user;

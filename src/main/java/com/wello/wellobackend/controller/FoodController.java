@@ -24,4 +24,10 @@ public class FoodController {
     public ResponseEntity<List<FoodResponse>> searchFoods(@RequestParam String query) {
         return ResponseEntity.ok(foodService.searchFoods(query));
     }
+
+    @PostMapping("/preview")
+    public ResponseEntity<com.wello.wellobackend.dto.responses.FoodPreviewResponse> previewFood(
+            @RequestBody com.wello.wellobackend.dto.requests.FoodPreviewRequest request) {
+        return ResponseEntity.ok(foodService.previewFood(request));
+    }
 }
