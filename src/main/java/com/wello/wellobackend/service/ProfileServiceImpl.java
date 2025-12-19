@@ -1,6 +1,7 @@
 package com.wello.wellobackend.service;
 
 import com.wello.wellobackend.dto.responses.UserProfileResponse;
+import com.wello.wellobackend.dto.responses.UserInfoResponse;
 import com.wello.wellobackend.model.NutritionTracker;
 import com.wello.wellobackend.model.Profile;
 import com.wello.wellobackend.model.Target;
@@ -11,10 +12,13 @@ import com.wello.wellobackend.repository.ProfileRepository;
 import com.wello.wellobackend.repository.TargetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Base64;
 
 @Service
 public class ProfileServiceImpl implements ProfileService {
@@ -68,6 +72,35 @@ public class ProfileServiceImpl implements ProfileService {
                 .build();
     }
 
+            @Override
+            public UserInfoResponse getUserInfo(int userId) {
+            User user = authRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+            Profile profile = profileRepository.findByUser(user);
+
+            UserInfoResponse.UserInfoResponseBuilder builder = UserInfoResponse.builder()
+                .userId(user.getIdUser())
+                .email(user.getEmail())
+                .authProvider(user.getAuthProvider())
+                .googleId(user.getGoogleId());
+
+            if (profile != null) {
+                builder
+                    .fullname(profile.getFullname())
+                    .gender(profile.getGender())
+                    .age(profile.getAge())
+                    .height(profile.getHeight())
+                    .weight(profile.getWeight())
+                    .goal(profile.getGoal())
+                    .activityLevel(profile.getActivityLevel())
+                    .avatarUrl(profile.getAvatarUrl())
+                    .surveyDate(profile.getSurveyDate());
+            }
+
+            return builder.build();
+            }
+
     private double calculateTargetWeight(double currentWeight, com.wello.wellobackend.enums.Goal goal) {
         if (goal == null)
             return currentWeight;
@@ -103,5 +136,48 @@ public class ProfileServiceImpl implements ProfileService {
                     .message("User not found")
                     .build();
         }
+    }
+
+    @Override
+    public void uploadAvatar(int userId, MultipartFile file) throws IOException {
+        User user = authRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        Profile profile = profileRepository.findByUser(user);
+        if (profile == null) {
+            throw new RuntimeException("Profile not found for user");
+        }
+
+        // Convert file to Base64
+        byte[] fileContent = file.getBytes();
+        String base64Avatar = "data:" + file.getContentType() + ";base64," + Base64.getEncoder().encodeToString(fileContent);
+
+        // Save avatar to profile
+        profile.setAvatarUrl(base64Avatar);
+        profileRepository.save(profile);
+
+        System.out.println("Avatar uploaded successfully for user: " + userId);
+    }
+
+    @Override
+    public void uploadAvatarBase64(int userId, String base64Image) {
+        User user = authRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        Profile profile = profileRepository.findByUser(user);
+        if (profile == null) {
+            throw new RuntimeException("Profile not found for user");
+        }
+
+        // Validate base64 string
+        if (base64Image == null || base64Image.trim().isEmpty()) {
+            throw new RuntimeException("Base64 image cannot be empty");
+        }
+
+        // Save avatar to profile
+        profile.setAvatarUrl(base64Image);
+        profileRepository.save(profile);
+
+        System.out.println("Avatar uploaded successfully for user: " + userId);
     }
 }

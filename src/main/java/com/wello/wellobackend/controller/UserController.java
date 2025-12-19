@@ -1,6 +1,7 @@
 package com.wello.wellobackend.controller;
 
 import com.wello.wellobackend.dto.responses.UserProfileResponse;
+import com.wello.wellobackend.dto.responses.UserInfoResponse;
 import com.wello.wellobackend.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +30,9 @@ public class UserController {
         }
     }
 
+    @GetMapping("/info")
+    public ResponseEntity<UserInfoResponse> getUserInfo(@RequestParam int userId) {
+        return ResponseEntity.ok(profileService.getUserInfo(userId));
     @GetMapping("/profile/history")
     public ResponseEntity<java.util.List<com.wello.wellobackend.model.History>> getProfileHistory(
             @RequestParam int userId) {
