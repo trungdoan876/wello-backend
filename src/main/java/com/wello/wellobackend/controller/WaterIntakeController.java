@@ -29,4 +29,27 @@ public class WaterIntakeController {
         waterTrackerService.addWaterIntake(request);
         return ResponseEntity.ok("Water intake added successfully");
     }
+
+    @PostMapping("/delete")
+    public ResponseEntity<String> deleteWaterIntake(
+            @RequestBody com.wello.wellobackend.dto.requests.AddWaterIntakeRequest request) {
+        try {
+            waterTrackerService.deleteWaterIntake(request);
+            return ResponseEntity.ok("250ml water intake removed successfully");
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(org.springframework.http.HttpStatus.NOT_FOUND)
+                    .body("Error: " + e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/delete/{waterTrackerId}")
+    public ResponseEntity<String> deleteWaterIntakeById(@PathVariable int waterTrackerId) {
+        try {
+            waterTrackerService.deleteWaterIntakeById(waterTrackerId);
+            return ResponseEntity.ok("Water intake deleted successfully");
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(org.springframework.http.HttpStatus.NOT_FOUND)
+                    .body("Error: " + e.getMessage());
+        }
+    }
 }

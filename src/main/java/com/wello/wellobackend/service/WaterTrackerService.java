@@ -7,4 +7,8 @@ public interface WaterTrackerService {
     DailyNutritionResponse.WaterIntake getDailyWaterIntake(int userId, LocalDate date);
 
     void addWaterIntake(com.wello.wellobackend.dto.requests.AddWaterIntakeRequest request);
+
+    void deleteWaterIntake(com.wello.wellobackend.dto.requests.AddWaterIntakeRequest request);
+
+    void deleteWaterIntakeById(int waterTrackerId);
 }
