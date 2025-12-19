@@ -2,16 +2,19 @@ package com.wello.wellobackend.service;
 
 import com.wello.wellobackend.dto.responses.UserProfileResponse;
 import com.wello.wellobackend.dto.responses.UserInfoResponse;
+import com.wello.wellobackend.dto.responses.UserVerificationResponse;
+import com.wello.wellobackend.model.History;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 public interface ProfileService {
     UserProfileResponse getUserProfile(int userId);
 
-    java.util.List<com.wello.wellobackend.model.History> getProfileHistory(int userId);
+    List<History> getProfileHistory(int userId);
 
-    com.wello.wellobackend.dto.responses.UserVerificationResponse verifyUser(int userId);
+    UserVerificationResponse verifyUser(int userId);
 
     UserInfoResponse getUserInfo(int userId);
 

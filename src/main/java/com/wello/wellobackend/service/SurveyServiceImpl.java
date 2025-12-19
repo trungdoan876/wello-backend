@@ -8,6 +8,7 @@ import com.wello.wellobackend.model.Profile;
 import com.wello.wellobackend.model.Target;
 import com.wello.wellobackend.model.User;
 import com.wello.wellobackend.repository.AuthRepository;
+import com.wello.wellobackend.repository.HistoryRepository;
 import com.wello.wellobackend.repository.ProfileRepository;
 import com.wello.wellobackend.repository.SurveyQuestionRepository;
 import com.wello.wellobackend.repository.TargetRepository;
@@ -37,7 +38,7 @@ public class SurveyServiceImpl implements SurveyService {
     private TargetRepository targetRepository;
 
     @Autowired
-    private com.wello.wellobackend.repository.HistoryRepository historyRepository;
+    private HistoryRepository historyRepository;
 
     @Override
     public List<QuestionResponse> getListSurveyQuestion() {

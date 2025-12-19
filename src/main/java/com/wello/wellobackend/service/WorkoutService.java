@@ -1,13 +1,16 @@
 package com.wello.wellobackend.service;
 
 import com.wello.wellobackend.dto.requests.WorkoutLogRequest;
+import com.wello.wellobackend.dto.responses.ExerciseResponse;
+import com.wello.wellobackend.dto.responses.WorkoutCalculationResponse;
 import com.wello.wellobackend.dto.responses.WorkoutLogResponse;
+
+import java.util.List;
 
 public interface WorkoutService {
     WorkoutLogResponse logWorkout(WorkoutLogRequest request);
 
-    java.util.List<com.wello.wellobackend.dto.responses.ExerciseResponse> getAllExercises();
+    List<ExerciseResponse> getAllExercises();
 
-    com.wello.wellobackend.dto.responses.WorkoutCalculationResponse calculateCalories(int userId, int exerciseId,
-            int durationMinutes);
+    WorkoutCalculationResponse calculateCalories(int userId, int exerciseId, int durationMinutes);
 }
