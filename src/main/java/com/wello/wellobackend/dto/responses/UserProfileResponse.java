@@ -11,6 +11,7 @@ public class UserProfileResponse {
     private int userId;
     private double currentWeight;
     private double targetWeight;
+    private java.time.LocalDate startDate;
     private Goal goalType;
     private int dailyCalorieTarget;
     private int dailyCalorieBurned;

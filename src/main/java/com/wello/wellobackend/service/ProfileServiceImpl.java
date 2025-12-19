@@ -35,6 +35,9 @@ public class ProfileServiceImpl implements ProfileService {
     @Autowired
     private NutritionTrackerRepository nutritionTrackerRepository;
 
+    @Autowired
+    private com.wello.wellobackend.repository.HistoryRepository historyRepository;
+
     @Override
     public UserProfileResponse getUserProfile(int userId) {
         User user = authRepository.findById(userId)
@@ -56,6 +59,7 @@ public class ProfileServiceImpl implements ProfileService {
                 .userId(userId)
                 .currentWeight(currentWeight)
                 .targetWeight(targetWeight)
+                .startDate(target != null && target.getStartDate() != null ? target.getStartDate().toLocalDate() : null)
                 .goalType(profile != null ? profile.getGoal() : null)
                 .dailyCalorieTarget(target != null ? target.getCaloriesTarget() : 0)
                 .dailyCalorieBurned(nutritionTracker.getCaloriesBurned())
@@ -109,6 +113,13 @@ public class ProfileServiceImpl implements ProfileService {
             default:
                 return currentWeight;
         }
+    }
+
+    @Override
+    public java.util.List<com.wello.wellobackend.model.History> getProfileHistory(int userId) {
+        User user = authRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        return historyRepository.findByUserOrderByRecordedAtDesc(user);
     }
 
     @Override

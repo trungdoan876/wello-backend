@@ -9,6 +9,8 @@ import java.io.IOException;
 public interface ProfileService {
     UserProfileResponse getUserProfile(int userId);
 
+    java.util.List<com.wello.wellobackend.model.History> getProfileHistory(int userId);
+
     com.wello.wellobackend.dto.responses.UserVerificationResponse verifyUser(int userId);
 
     UserInfoResponse getUserInfo(int userId);
