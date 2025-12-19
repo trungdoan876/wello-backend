@@ -9,4 +9,7 @@ public interface NutritionTrackerService {
     DailyNutritionResponse getDailySummary(int userId, LocalDate date);
 
     WeeklyOverviewResponse getWeeklyOverview(int userId, LocalDate startDate);
+
+    com.wello.wellobackend.dto.responses.LogFoodResponse logFood(
+            com.wello.wellobackend.dto.requests.LogFoodRequest request);
 }
