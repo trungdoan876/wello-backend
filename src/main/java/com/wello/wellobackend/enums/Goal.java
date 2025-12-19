@@ -5,6 +5,7 @@ public enum Goal {
     LOSE_WEIGHT("Giảm cân"),
     KEEP_FIT("Giữ dáng");
 
+
     private final String moTa;
 
     Goal(String moTa) {

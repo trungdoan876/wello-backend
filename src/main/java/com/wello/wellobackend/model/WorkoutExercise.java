@@ -5,12 +5,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 @Entity
 @Table(name = "workout_exercise")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class WorkoutExercise {
+public class WorkoutExercise implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idExercise;

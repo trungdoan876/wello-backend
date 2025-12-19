@@ -1,4 +1,5 @@
 package com.wello.wellobackend.model;
+
 import jakarta.persistence.*;
 import lombok.*;
 import java.util.Date;
@@ -8,7 +9,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class WaterTracker extends HealthTracker{
-    @Column(name = "amount_liters")
-    private int amountLiters;
+public class WaterTracker extends HealthTracker {
+    @Column(name = "amount_ml")
+    private int amountMl;
 }

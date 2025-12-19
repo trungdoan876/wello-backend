@@ -2,6 +2,8 @@ package com.wello.wellobackend.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
@@ -9,7 +11,7 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Target {
+public class Target implements Serializable {
     @Id
     @Column(name = "id_target")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,6 +31,26 @@ public class Target {
 
     @Column(name = "fat_target", nullable = false)
     private int fatTarget;
+
+    @Column(name = "protein_target", nullable = false)
+    private int proteinTarget;
+
+    // Health metrics
+    @Column(name = "bmi")
+    private double bmi;
+
+    @Column(name = "bmi_status")
+    private String bmiStatus;
+
+    @Column(name = "bmr")
+    private double bmr;
+
+    @Column(name = "tdee")
+    private double tdee;
+
+    // Hydration
+    @Column(name = "water_intake_ml")
+    private int waterIntakeMl;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_user", nullable = false)

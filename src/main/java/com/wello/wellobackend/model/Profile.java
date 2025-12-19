@@ -5,6 +5,8 @@ import com.wello.wellobackend.enums.Gender;
 import com.wello.wellobackend.enums.Goal;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
@@ -12,7 +14,7 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Profile {
+public class Profile implements Serializable {
     @Id
     @Column(name = "id_profile")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,16 +33,19 @@ public class Profile {
     @Column(name = "height", nullable = false)
     private int height;
 
-    @Column(name="weight", nullable = false)
+    @Column(name = "weight", nullable = false)
     private int weight;
 
-    @Column(name="target_goal", nullable = false)
+    @Column(name = "target_goal", nullable = false)
     @Enumerated(EnumType.STRING)
     private Goal goal;
 
-    @Column(name="activity_level",nullable = false)
+    @Column(name = "activity_level", nullable = false)
     @Enumerated(EnumType.STRING)
     private ActivityLevel activityLevel;
+
+    @Column(name = "avatar_url", columnDefinition = "LONGTEXT")
+    private String avatarUrl; // Base64 encoded image
 
     @Column(name = "survey_date", nullable = false)
     private LocalDateTime surveyDate;
