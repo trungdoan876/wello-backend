@@ -1,14 +1,15 @@
 package com.wello.wellobackend.controller;
 
 import com.wello.wellobackend.dto.requests.WorkoutLogRequest;
+import com.wello.wellobackend.dto.responses.ExerciseResponse;
+import com.wello.wellobackend.dto.responses.WorkoutCalculationResponse;
 import com.wello.wellobackend.dto.responses.WorkoutLogResponse;
 import com.wello.wellobackend.service.WorkoutService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/workout")
@@ -22,16 +23,16 @@ public class WorkoutController {
         return ResponseEntity.ok(workoutService.logWorkout(request));
     }
 
-    @org.springframework.web.bind.annotation.GetMapping("/exercises")
-    public ResponseEntity<java.util.List<com.wello.wellobackend.dto.responses.ExerciseResponse>> getAllExercises() {
+    @GetMapping("/exercises")
+    public ResponseEntity<List<ExerciseResponse>> getAllExercises() {
         return ResponseEntity.ok(workoutService.getAllExercises());
     }
 
-    @org.springframework.web.bind.annotation.GetMapping("/calculate")
-    public ResponseEntity<com.wello.wellobackend.dto.responses.WorkoutCalculationResponse> calculateCalories(
-            @org.springframework.web.bind.annotation.RequestParam int userId,
-            @org.springframework.web.bind.annotation.RequestParam int exerciseId,
-            @org.springframework.web.bind.annotation.RequestParam int durationMinutes) {
+    @GetMapping("/calculate")
+    public ResponseEntity<WorkoutCalculationResponse> calculateCalories(
+            @RequestParam int userId,
+            @RequestParam int exerciseId,
+            @RequestParam int durationMinutes) {
         return ResponseEntity.ok(workoutService.calculateCalories(userId, exerciseId, durationMinutes));
     }
 }
