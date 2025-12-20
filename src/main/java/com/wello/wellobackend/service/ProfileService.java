@@ -22,6 +22,19 @@ public interface ProfileService {
 
     void uploadAvatarBase64(int userId, String base64Image);
 
+    void updateFullname(int userId, String fullname);
+
+    void updateGender(int userId, com.wello.wellobackend.enums.Gender gender);
+
+    void updateAge(int userId, int age);
+
+    void updateHeight(int userId, int height);
+
+    void updateWeight(int userId, int weight);
+
+    void updateGoal(int userId, com.wello.wellobackend.enums.Goal goal);
+
+    void updateActivityLevel(int userId, com.wello.wellobackend.enums.ActivityLevel activityLevel);
     void updateFcmToken(int userId, String fcmToken);
 
     void testPushNotification(int userId);

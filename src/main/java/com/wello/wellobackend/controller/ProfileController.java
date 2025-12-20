@@ -1,6 +1,6 @@
 package com.wello.wellobackend.controller;
 
-import com.wello.wellobackend.dto.requests.AvatarUploadRequest;
+import com.wello.wellobackend.dto.requests.*;
 import com.wello.wellobackend.dto.responses.UserInfoResponse;
 import com.wello.wellobackend.dto.responses.UserProfileResponse;
 import com.wello.wellobackend.service.NotificationSettingsService;
@@ -8,13 +8,7 @@ import com.wello.wellobackend.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -79,6 +73,160 @@ public class ProfileController {
             System.err.println("Upload avatar error: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Failed to upload avatar: " + e.getMessage());
+        }
+    }
+
+    @PutMapping("/{userId}/fullname")
+    public ResponseEntity<?> updateFullname(
+            @PathVariable int userId,
+            @RequestBody UpdateFullnameRequest request) {
+        try {
+            if (request == null || request.getFullname() == null || request.getFullname().isBlank()) {
+                return ResponseEntity.badRequest().body("Fullname is required");
+            }
+
+            profileService.updateFullname(userId, request.getFullname());
+            return ResponseEntity.ok("Fullname updated successfully");
+        } catch (RuntimeException e) {
+            System.err.println("Update fullname error: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Error: " + e.getMessage());
+        } catch (Exception e) {
+            System.err.println("Update fullname error: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Failed to update fullname: " + e.getMessage());
+        }
+    }
+
+    @PutMapping("/{userId}/gender")
+    public ResponseEntity<?> updateGender(
+            @PathVariable int userId,
+            @RequestBody UpdateGenderRequest request) {
+        try {
+            if (request == null || request.getGender() == null) {
+                return ResponseEntity.badRequest().body("Gender is required");
+            }
+
+            profileService.updateGender(userId, request.getGender());
+            return ResponseEntity.ok("Gender updated successfully");
+        } catch (RuntimeException e) {
+            System.err.println("Update gender error: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Error: " + e.getMessage());
+        } catch (Exception e) {
+            System.err.println("Update gender error: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Failed to update gender: " + e.getMessage());
+        }
+    }
+
+    @PutMapping("/{userId}/age")
+    public ResponseEntity<?> updateAge(
+            @PathVariable int userId,
+            @RequestBody UpdateAgeRequest request) {
+        try {
+            if (request == null || request.getAge() <= 0) {
+                return ResponseEntity.badRequest().body("Valid age is required");
+            }
+
+            profileService.updateAge(userId, request.getAge());
+            return ResponseEntity.ok("Age updated successfully");
+        } catch (RuntimeException e) {
+            System.err.println("Update age error: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Error: " + e.getMessage());
+        } catch (Exception e) {
+            System.err.println("Update age error: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Failed to update age: " + e.getMessage());
+        }
+    }
+
+    @PutMapping("/{userId}/height")
+    public ResponseEntity<?> updateHeight(
+            @PathVariable int userId,
+            @RequestBody UpdateHeightRequest request) {
+        try {
+            if (request == null || request.getHeight() <= 0) {
+                return ResponseEntity.badRequest().body("Valid height is required");
+            }
+
+            profileService.updateHeight(userId, request.getHeight());
+            return ResponseEntity.ok("Height updated successfully");
+        } catch (RuntimeException e) {
+            System.err.println("Update height error: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Error: " + e.getMessage());
+        } catch (Exception e) {
+            System.err.println("Update height error: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Failed to update height: " + e.getMessage());
+        }
+    }
+
+    @PutMapping("/{userId}/weight")
+    public ResponseEntity<?> updateWeight(
+            @PathVariable int userId,
+            @RequestBody UpdateWeightRequest request) {
+        try {
+            if (request == null || request.getWeight() <= 0) {
+                return ResponseEntity.badRequest().body("Valid weight is required");
+            }
+
+            profileService.updateWeight(userId, request.getWeight());
+            return ResponseEntity.ok("Weight updated successfully");
+        } catch (RuntimeException e) {
+            System.err.println("Update weight error: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Error: " + e.getMessage());
+        } catch (Exception e) {
+            System.err.println("Update weight error: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Failed to update weight: " + e.getMessage());
+        }
+    }
+
+    @PutMapping("/{userId}/goal")
+    public ResponseEntity<?> updateGoal(
+            @PathVariable int userId,
+            @RequestBody UpdateGoalRequest request) {
+        try {
+            if (request == null || request.getGoal() == null) {
+                return ResponseEntity.badRequest().body("Goal is required");
+            }
+
+            profileService.updateGoal(userId, request.getGoal());
+            return ResponseEntity.ok("Goal updated successfully");
+        } catch (RuntimeException e) {
+            System.err.println("Update goal error: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Error: " + e.getMessage());
+        } catch (Exception e) {
+            System.err.println("Update goal error: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Failed to update goal: " + e.getMessage());
+        }
+    }
+
+    @PutMapping("/{userId}/activity-level")
+    public ResponseEntity<?> updateActivityLevel(
+            @PathVariable int userId,
+            @RequestBody UpdateActivityLevelRequest request) {
+        try {
+            if (request == null || request.getActivityLevel() == null) {
+                return ResponseEntity.badRequest().body("Activity level is required");
+            }
+
+            profileService.updateActivityLevel(userId, request.getActivityLevel());
+            return ResponseEntity.ok("Activity level updated successfully");
+        } catch (RuntimeException e) {
+            System.err.println("Update activity level error: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Error: " + e.getMessage());
+        } catch (Exception e) {
+            System.err.println("Update activity level error: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Failed to update activity level: " + e.getMessage());
         }
     }
 
