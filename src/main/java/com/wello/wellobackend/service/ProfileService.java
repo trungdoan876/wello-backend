@@ -24,7 +24,5 @@ public interface ProfileService {
 
     void updateFcmToken(int userId, String fcmToken);
 
-    void updateWaterReminderSettings(int userId, boolean enabled, int startHour, int endHour, int interval);
-
     void testPushNotification(int userId);
 }
