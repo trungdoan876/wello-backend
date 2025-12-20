@@ -37,7 +37,5 @@ public interface ProfileService {
     void updateActivityLevel(int userId, com.wello.wellobackend.enums.ActivityLevel activityLevel);
     void updateFcmToken(int userId, String fcmToken);
 
-    void updateWaterReminderSettings(int userId, boolean enabled, int startHour, int endHour, int interval);
-
     void testPushNotification(int userId);
 }
