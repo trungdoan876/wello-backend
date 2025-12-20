@@ -189,6 +189,25 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Override
     public void updateFullname(int userId, String fullname) {
+        User user = authRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        Profile profile = profileRepository.findByUser(user);
+        if (profile == null) {
+            throw new RuntimeException("Profile not found for user");
+        }
+
+        if (fullname == null || fullname.trim().isEmpty()) {
+            throw new RuntimeException("Fullname cannot be empty");
+        }
+
+        profile.setFullname(fullname);
+        profileRepository.save(profile);
+
+        System.out.println("Fullname updated successfully for user: " + userId);
+    }
+
+    @Override
     public void updateFcmToken(int userId, String fcmToken) {
         User user = authRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
@@ -491,23 +510,6 @@ public class ProfileServiceImpl implements ProfileService {
             default:
                 return (int) tdee;
         }
-    }
-
-    @Override
-    public void updateWaterReminderSettings(int userId, boolean enabled, int startHour, int endHour, int interval) {
-        User user = authRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-
-        Profile profile = profileRepository.findByUser(user);
-        if (profile == null) {
-            throw new RuntimeException("Profile not found");
-        }
-
-        profile.setWaterReminderEnabled(enabled);
-        profile.setReminderStartHour(startHour);
-        profile.setReminderEndHour(endHour);
-        profile.setReminderIntervalHours(interval);
-        profileRepository.save(profile);
     }
 
     @Override
