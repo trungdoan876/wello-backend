@@ -223,6 +223,9 @@ public class ProfileController {
             System.err.println("Update activity level error: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Failed to update activity level: " + e.getMessage());
+        }
+    }
+
     @PostMapping("/{userId}/fcm-token")
     public ResponseEntity<?> updateFcmToken(@PathVariable int userId, @RequestParam String fcmToken) {
         try {

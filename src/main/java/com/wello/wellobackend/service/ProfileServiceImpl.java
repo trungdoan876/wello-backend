@@ -2,11 +2,8 @@ package com.wello.wellobackend.service;
 
 import com.wello.wellobackend.dto.responses.UserProfileResponse;
 import com.wello.wellobackend.dto.responses.UserInfoResponse;
-<<<<<<< HEAD
-=======
 import com.wello.wellobackend.dto.responses.UserVerificationResponse;
 import com.wello.wellobackend.enums.Goal;
->>>>>>> d7887625550abe19bbbdb3df9fc72046fa699cd6
 import com.wello.wellobackend.model.*;
 import com.wello.wellobackend.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,12 +37,9 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Autowired
     private HistoryRepository historyRepository;
-<<<<<<< HEAD
 
     @Autowired
     private TargetCalculationService targetCalculationService;
-=======
->>>>>>> d7887625550abe19bbbdb3df9fc72046fa699cd6
 
     @Override
     public UserProfileResponse getUserProfile(int userId) {
@@ -209,18 +203,14 @@ public class ProfileServiceImpl implements ProfileService {
 
         Profile profile = profileRepository.findByUser(user);
         if (profile == null) {
-<<<<<<< HEAD
-            throw new RuntimeException("Profile not found for user");
+            throw new RuntimeException("Profile not found");
         }
 
-        if (fullname == null || fullname.trim().isEmpty()) {
-            throw new RuntimeException("Fullname cannot be empty");
-        }
-
-        profile.setFullname(fullname);
+        profile.setWaterReminderEnabled(enabled);
+        profile.setReminderStartHour(startHour);
+        profile.setReminderEndHour(endHour);
+        profile.setReminderIntervalHours(interval);
         profileRepository.save(profile);
-
-        System.out.println("Fullname updated successfully for user: " + userId);
     }
 
     @Override
@@ -500,7 +490,16 @@ public class ProfileServiceImpl implements ProfileService {
             case KEEP_FIT:
             default:
                 return (int) tdee;
-=======
+        }
+    }
+
+    @Override
+    public void updateWaterReminderSettings(int userId, boolean enabled, int startHour, int endHour, int interval) {
+        User user = authRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        Profile profile = profileRepository.findByUser(user);
+        if (profile == null) {
             throw new RuntimeException("Profile not found");
         }
 
@@ -524,7 +523,6 @@ public class ProfileServiceImpl implements ProfileService {
                     "Nếu bạn thấy tin nhắn này, Firebase đã hoạt động tốt!");
         } else {
             throw new RuntimeException("FCM Token not found for this user");
->>>>>>> d7887625550abe19bbbdb3df9fc72046fa699cd6
         }
     }
 }
