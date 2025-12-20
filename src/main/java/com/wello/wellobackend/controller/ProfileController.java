@@ -246,9 +246,11 @@ public class ProfileController {
             @RequestParam boolean enabled,
             @RequestParam int startHour,
             @RequestParam int endHour,
-            @RequestParam int interval) {
+            @RequestParam(defaultValue = "1") int intervalHours,
+            @RequestParam(defaultValue = "0") int intervalMinutes) {
         try {
-            notificationSettingsService.updateWaterReminderSettings(userId, enabled, startHour, endHour, interval);
+            notificationSettingsService.updateWaterReminderSettings(userId, enabled, startHour, endHour, intervalHours,
+                    intervalMinutes);
             return ResponseEntity.ok("Water reminder settings updated successfully");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to update reminder settings");
@@ -266,6 +268,16 @@ public class ProfileController {
             }
             profileService.testPushNotification(userId);
             return ResponseEntity.ok("Test notification sent to user " + userId);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error: " + e.getMessage());
+        }
+    }
+
+    @GetMapping("/{userId}/water-reminder-settings")
+    public ResponseEntity<?> getWaterReminderSettings(@PathVariable int userId) {
+        try {
+            // This will be implemented in NotificationSettingsService
+            return ResponseEntity.ok("Feature to get settings - to be implemented");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error: " + e.getMessage());
         }
