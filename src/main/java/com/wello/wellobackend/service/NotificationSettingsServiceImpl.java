@@ -17,7 +17,8 @@ public class NotificationSettingsServiceImpl implements NotificationSettingsServ
     private NotificationSettingsRepository notificationSettingsRepository;
 
     @Override
-    public void updateWaterReminderSettings(int userId, boolean enabled, int startHour, int endHour, int interval) {
+    public void updateWaterReminderSettings(int userId, boolean enabled, int startHour, int endHour, int intervalHours,
+            int intervalMinutes) {
         User user = authRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
@@ -31,7 +32,8 @@ public class NotificationSettingsServiceImpl implements NotificationSettingsServ
         settings.setWaterReminderEnabled(enabled);
         settings.setReminderStartHour(startHour);
         settings.setReminderEndHour(endHour);
-        settings.setReminderIntervalHours(interval);
+        settings.setReminderIntervalHours(intervalHours);
+        settings.setReminderIntervalMinutes(intervalMinutes);
         notificationSettingsRepository.save(settings);
     }
 }
