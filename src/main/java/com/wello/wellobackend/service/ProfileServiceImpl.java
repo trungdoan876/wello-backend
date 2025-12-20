@@ -193,23 +193,6 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     @Override
-    public void updateWaterReminderSettings(int userId, boolean enabled, int startHour, int endHour, int interval) {
-        User user = authRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-
-        Profile profile = profileRepository.findByUser(user);
-        if (profile == null) {
-            throw new RuntimeException("Profile not found");
-        }
-
-        profile.setWaterReminderEnabled(enabled);
-        profile.setReminderStartHour(startHour);
-        profile.setReminderEndHour(endHour);
-        profile.setReminderIntervalHours(interval);
-        profileRepository.save(profile);
-    }
-
-    @Override
     public void testPushNotification(int userId) {
         User user = authRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));

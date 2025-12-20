@@ -1,7 +1,7 @@
 package com.wello.wellobackend.service;
 
-import com.wello.wellobackend.model.Profile;
-import com.wello.wellobackend.repository.ProfileRepository;
+import com.wello.wellobackend.model.NotificationSettings;
+import com.wello.wellobackend.repository.NotificationSettingsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -13,21 +13,21 @@ import java.util.List;
 public class ReminderScheduler {
 
     @Autowired
-    private ProfileRepository profileRepository;
+    private NotificationSettingsRepository notificationSettingsRepository;
 
     @Autowired
     private FcmService fcmService;
 
-    // Run at the beginning of every hour
-    @Scheduled(cron = "0 0 * * * *")
+    // Run every 5 minutes for testing (change back to "0 0 * * * *" for production)
+    @Scheduled(cron = "0 */5 * * * *")
     public void sendWaterReminders() {
         System.out.println("Running water reminder scheduler...");
-        List<Profile> activeProfiles = profileRepository.findByWaterReminderEnabledTrue();
+        List<NotificationSettings> activeSettings = notificationSettingsRepository.findByWaterReminderEnabledTrue();
         int currentHour = LocalTime.now().getHour();
 
-        for (Profile profile : activeProfiles) {
-            if (shouldSendReminder(profile, currentHour)) {
-                String token = profile.getUser().getFcmToken();
+        for (NotificationSettings settings : activeSettings) {
+            if (shouldSendReminder(settings, currentHour)) {
+                String token = settings.getUser().getFcmToken();
                 if (token != null && !token.isEmpty()) {
                     fcmService.sendPushNotification(
                             token,
@@ -38,16 +38,16 @@ public class ReminderScheduler {
         }
     }
 
-    private boolean shouldSendReminder(Profile profile, int currentHour) {
+    private boolean shouldSendReminder(NotificationSettings settings, int currentHour) {
         // 1. Check if within time range
-        if (currentHour < profile.getReminderStartHour() || currentHour > profile.getReminderEndHour()) {
+        if (currentHour < settings.getReminderStartHour() || currentHour > settings.getReminderEndHour()) {
             return false;
         }
 
         // 2. Check interval
         // Simple logic: (currentHour - startHour) % interval == 0
-        int start = profile.getReminderStartHour();
-        int interval = profile.getReminderIntervalHours();
+        int start = settings.getReminderStartHour();
+        int interval = settings.getReminderIntervalHours();
 
         if (interval <= 0)
             interval = 1; // Safeguard
