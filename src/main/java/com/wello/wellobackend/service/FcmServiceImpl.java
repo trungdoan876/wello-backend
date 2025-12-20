@@ -5,6 +5,9 @@ import com.google.firebase.messaging.Message;
 import com.google.firebase.messaging.Notification;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Service
 public class FcmServiceImpl implements FcmService {
 
@@ -19,9 +22,16 @@ public class FcmServiceImpl implements FcmService {
                 .setBody(body)
                 .build();
 
+        // Add data payload for Flutter to identify notification type
+        Map<String, String> data = new HashMap<>();
+        data.put("type", "water_reminder");
+        data.put("title", title);
+        data.put("body", body);
+
         Message message = Message.builder()
                 .setToken(token)
                 .setNotification(notification)
+                .putAllData(data)
                 .build();
 
         try {
