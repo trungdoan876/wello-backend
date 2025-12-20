@@ -31,4 +31,7 @@ public class NotificationSettings implements Serializable {
 
     @Column(name = "reminder_interval_hours")
     private Integer reminderIntervalHours = 1;
+
+    @Column(name = "reminder_interval_minutes")
+    private Integer reminderIntervalMinutes = 0;
 }

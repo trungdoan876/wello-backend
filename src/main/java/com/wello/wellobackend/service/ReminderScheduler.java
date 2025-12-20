@@ -18,8 +18,9 @@ public class ReminderScheduler {
     @Autowired
     private FcmService fcmService;
 
-    // Run every 5 minutes for testing (change back to "0 0 * * * *" for production)
-    @Scheduled(cron = "0 */5 * * * *")
+    // Run every minute for accurate minute-based intervals (change back to "0 0 * *
+    // * *" for production hourly reminders)
+    @Scheduled(cron = "0 * * * * *")
     public void sendWaterReminders() {
         System.out.println("Running water reminder scheduler...");
         List<NotificationSettings> activeSettings = notificationSettingsRepository.findByWaterReminderEnabledTrue();
@@ -44,14 +45,21 @@ public class ReminderScheduler {
             return false;
         }
 
-        // 2. Check interval
-        // Simple logic: (currentHour - startHour) % interval == 0
-        int start = settings.getReminderStartHour();
-        int interval = settings.getReminderIntervalHours();
+        // 2. Calculate total interval in minutes
+        int intervalHours = settings.getReminderIntervalHours() != null ? settings.getReminderIntervalHours() : 0;
+        int intervalMinutes = settings.getReminderIntervalMinutes() != null ? settings.getReminderIntervalMinutes() : 0;
+        int totalIntervalMinutes = (intervalHours * 60) + intervalMinutes;
 
-        if (interval <= 0)
-            interval = 1; // Safeguard
+        if (totalIntervalMinutes <= 0) {
+            totalIntervalMinutes = 60; // Default to 1 hour
+        }
 
-        return (currentHour - start) % interval == 0;
+        // 3. Calculate minutes since start time
+        int startHour = settings.getReminderStartHour();
+        int currentMinute = java.time.LocalTime.now().getMinute();
+        int minutesSinceStart = ((currentHour - startHour) * 60) + currentMinute;
+
+        // 4. Check if current time matches the interval
+        return minutesSinceStart >= 0 && minutesSinceStart % totalIntervalMinutes == 0;
     }
 }
