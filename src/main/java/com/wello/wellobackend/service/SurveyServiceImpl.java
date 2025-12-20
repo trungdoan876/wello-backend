@@ -95,6 +95,15 @@ public class SurveyServiceImpl implements SurveyService {
         profile.setActivityLevel(request.getActivityLevel());
         profile.setSurveyDate(LocalDateTime.now());
 
+        // Lưu targetWeight và tính weightGoalKg
+        if (request.getTargetWeight() != null) {
+            profile.setTargetWeight(request.getTargetWeight());
+            // weightGoalKg = currentWeight - targetWeight
+            // Dương: cần giảm, Âm: cần tăng
+            int weightGoalKg = request.getWeight() - request.getTargetWeight();
+            profile.setWeightGoalKg(weightGoalKg);
+        }
+
         Profile savedProfile = profileRepository.save(profile);
 
         // 2. Lưu vào Lịch sử (Snapshot)

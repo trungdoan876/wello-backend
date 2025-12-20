@@ -8,7 +8,7 @@ import lombok.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-//du lieu tu survey nguoi dung gui ve
+// du lieu tu survey nguoi dung gui ve
 public class SurveyRequest {
     private int userId;
     private String fullname;
@@ -18,4 +18,5 @@ public class SurveyRequest {
     private int weight;
     private Goal goal;
     private ActivityLevel activityLevel;
+    private Integer targetWeight; // Cân nặng mong muốn
 }
