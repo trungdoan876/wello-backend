@@ -50,6 +50,12 @@ public class Profile implements Serializable {
     @Column(name = "survey_date", nullable = false)
     private LocalDateTime surveyDate;
 
+    @Column(name = "target_weight")
+    private Integer targetWeight; // Cân nặng mong muốn (kg)
+
+    @Column(name = "weight_goal_kg")
+    private Integer weightGoalKg; // Mục tiêu tăng/giảm kg (weight - targetWeight)
+
     @OneToOne
     @JoinColumn(name = "id_user", nullable = false)
     private User user;
