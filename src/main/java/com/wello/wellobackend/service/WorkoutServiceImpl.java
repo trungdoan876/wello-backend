@@ -46,10 +46,10 @@ public class WorkoutServiceImpl implements WorkoutService {
         @Transactional
         public WorkoutLogResponse logWorkout(WorkoutLogRequest request) {
                 User user = authRepository.findById(request.getUserId())
-                                .orElseThrow(() -> new RuntimeException("User not found"));
+                                .orElseThrow(() -> new RuntimeException("Người dùng không tồn tại"));
 
                 WorkoutExercise exercise = workoutExerciseRepository.findById(request.getExerciseId())
-                                .orElseThrow(() -> new RuntimeException("Exercise not found"));
+                                .orElseThrow(() -> new RuntimeException("Không tìm thấy bài tập"));
 
                 Profile profile = profileRepository.findByUser(user);
                 double weight = profile != null ? profile.getWeight() : 60.0; // Default weight if profile not found
@@ -120,7 +120,7 @@ public class WorkoutServiceImpl implements WorkoutService {
         public WorkoutCalculationResponse calculateCalories(int userId,
                         int exerciseId, int durationMinutes) {
                 User user = authRepository.findById(userId)
-                                .orElseThrow(() -> new RuntimeException("User not found"));
+                                .orElseThrow(() -> new RuntimeException("Người dùng không tồn tại"));
 
                 WorkoutExercise exercise = workoutExerciseRepository.findById(exerciseId)
                                 .orElseThrow(() -> new RuntimeException("Exercise not found"));
@@ -145,7 +145,7 @@ public class WorkoutServiceImpl implements WorkoutService {
         public DailyWorkoutSummaryResponse getDailyWorkouts(int userId,
                         LocalDate date) {
                 User user = authRepository.findById(userId)
-                                .orElseThrow(() -> new RuntimeException("User not found"));
+                                .orElseThrow(() -> new RuntimeException("Người dùng không tồn tại"));
 
                 LocalDateTime startOfDay = LocalDateTime.of(date, LocalTime.MIN);
                 LocalDateTime endOfDay = LocalDateTime.of(date, LocalTime.MAX);

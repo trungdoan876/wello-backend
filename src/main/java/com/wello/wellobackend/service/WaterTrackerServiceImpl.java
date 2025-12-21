@@ -30,7 +30,7 @@ public class WaterTrackerServiceImpl implements WaterTrackerService {
         @Override
         public DailyNutritionResponse.WaterIntake getDailyWaterIntake(int userId, LocalDate date) {
                 User user = authRepository.findById(userId)
-                                .orElseThrow(() -> new RuntimeException("User not found"));
+                                .orElseThrow(() -> new RuntimeException("Người dùng không tồn tại"));
 
                 LocalDateTime startOfDay = LocalDateTime.of(date, LocalTime.MIN);
                 LocalDateTime endOfDay = LocalDateTime.of(date, LocalTime.MAX);
@@ -51,7 +51,7 @@ public class WaterTrackerServiceImpl implements WaterTrackerService {
         @Override
         public void addWaterIntake(AddWaterIntakeRequest request) {
                 User user = authRepository.findById(request.getUserId())
-                                .orElseThrow(() -> new RuntimeException("User not found"));
+                                .orElseThrow(() -> new RuntimeException("Người dùng không tồn tại"));
 
                 LocalDateTime startOfDay = LocalDateTime.of(request.getDate(), LocalTime.MIN);
                 LocalDateTime endOfDay = LocalDateTime.of(request.getDate(), LocalTime.MAX);
@@ -74,7 +74,7 @@ public class WaterTrackerServiceImpl implements WaterTrackerService {
         @Override
         public void deleteWaterIntake(AddWaterIntakeRequest request) {
                 User user = authRepository.findById(request.getUserId())
-                                .orElseThrow(() -> new RuntimeException("User not found"));
+                                .orElseThrow(() -> new RuntimeException("Người dùng không tồn tại"));
 
                 LocalDateTime startOfDay = LocalDateTime.of(request.getDate(), LocalTime.MIN);
                 LocalDateTime endOfDay = LocalDateTime.of(request.getDate(), LocalTime.MAX);
@@ -83,7 +83,7 @@ public class WaterTrackerServiceImpl implements WaterTrackerService {
                                 .orElse(null);
 
                 if (water == null) {
-                        throw new RuntimeException("Water intake record not found for the given date");
+                        throw new RuntimeException("Không tìm thấy bản ghi lượng nước cho ngày này");
                 } else {
                         int newAmount = water.getAmountMl() - 250;
                         if (newAmount < 0) {
@@ -98,7 +98,7 @@ public class WaterTrackerServiceImpl implements WaterTrackerService {
         @Override
         public void deleteWaterIntakeById(int waterTrackerId) {
                 WaterTracker water = waterTrackerRepository.findById(waterTrackerId)
-                                .orElseThrow(() -> new RuntimeException("Water intake record not found"));
+                                .orElseThrow(() -> new RuntimeException("Không tìm thấy bản ghi lượng nước"));
 
                 waterTrackerRepository.delete(water);
         }

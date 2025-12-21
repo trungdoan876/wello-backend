@@ -39,7 +39,7 @@ public class NutritionTrackerServiceImpl implements NutritionTrackerService {
         @Override
         public DailyNutritionResponse getDailySummary(int userId, LocalDate date) {
                 User user = authRepository.findById(userId)
-                                .orElseThrow(() -> new RuntimeException("User not found"));
+                                .orElseThrow(() -> new RuntimeException("Người dùng không tồn tại"));
 
                 LocalDateTime startOfDay = LocalDateTime.of(date, LocalTime.MIN);
                 LocalDateTime endOfDay = LocalDateTime.of(date, LocalTime.MAX);
@@ -95,7 +95,7 @@ public class NutritionTrackerServiceImpl implements NutritionTrackerService {
         @Override
         public WeeklyOverviewResponse getWeeklyOverview(int userId, LocalDate startDate) {
                 User user = authRepository.findById(userId)
-                                .orElseThrow(() -> new RuntimeException("User not found"));
+                                .orElseThrow(() -> new RuntimeException("Người dùng không tồn tại"));
 
                 LocalDateTime start = LocalDateTime.of(startDate, LocalTime.MIN);
                 LocalDateTime end = LocalDateTime.of(startDate.plusDays(6), LocalTime.MAX);
@@ -131,10 +131,10 @@ public class NutritionTrackerServiceImpl implements NutritionTrackerService {
         @Transactional
         public LogFoodResponse logFood(LogFoodRequest request) {
                 User user = authRepository.findById(request.getUserId())
-                                .orElseThrow(() -> new RuntimeException("User not found"));
+                                .orElseThrow(() -> new RuntimeException("Người dùng không tồn tại"));
 
                 Food food = foodRepository.findById(request.getFoodId())
-                                .orElseThrow(() -> new RuntimeException("Food not found"));
+                                .orElseThrow(() -> new RuntimeException("Không tìm thấy thực phẩm"));
 
                 // Calculate nutrients based on amount (per 100g)
                 double factor = request.getAmountGrams() / 100.0;
@@ -171,7 +171,7 @@ public class NutritionTrackerServiceImpl implements NutritionTrackerService {
         @Override
         public List<MealLogResponse> getDailyMealHistory(int userId, LocalDate date) {
                 User user = authRepository.findById(userId)
-                                .orElseThrow(() -> new RuntimeException("User not found"));
+                                .orElseThrow(() -> new RuntimeException("Người dùng không tồn tại"));
 
                 LocalDateTime startOfDay = LocalDateTime.of(date, LocalTime.MIN);
                 LocalDateTime endOfDay = LocalDateTime.of(date, LocalTime.MAX);

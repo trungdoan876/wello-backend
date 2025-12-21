@@ -60,7 +60,7 @@ public class VerificationTokenServiceImpl implements VerificationTokenService {
 
             // Verify OTP
             if (!tokenOtp.equals(userOtp)) {
-                throw new RuntimeException("Invalid OTP");
+                throw new RuntimeException("Mã OTP không chính xác");
             }
 
             // Return email and hashed password
@@ -70,9 +70,9 @@ public class VerificationTokenServiceImpl implements VerificationTokenService {
             return result;
 
         } catch (io.jsonwebtoken.ExpiredJwtException e) {
-            throw new RuntimeException("OTP has expired. Please request a new one.");
+            throw new RuntimeException("Mã OTP đã hết hạn. Vui lòng yêu cầu mã mới.");
         } catch (Exception e) {
-            throw new RuntimeException("Invalid verification token");
+            throw new RuntimeException("Token xác thực không hợp lệ");
         }
     }
 }
