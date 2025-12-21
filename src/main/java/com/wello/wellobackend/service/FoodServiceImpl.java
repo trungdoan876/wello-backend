@@ -35,7 +35,7 @@ public class FoodServiceImpl implements FoodService {
         public FoodPreviewResponse previewFood(
                         FoodPreviewRequest request) {
                 Food food = foodRepository.findById(request.getFoodId())
-                                .orElseThrow(() -> new RuntimeException("Food not found"));
+                                .orElseThrow(() -> new RuntimeException("Không tìm thấy thực phẩm"));
 
                 double factor = request.getAmountGrams() / 100.0;
 
