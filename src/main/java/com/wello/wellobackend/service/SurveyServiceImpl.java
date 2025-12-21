@@ -76,7 +76,7 @@ public class SurveyServiceImpl implements SurveyService {
 
     private Profile saveProfileFromSurvey(SurveyRequest request) {
         User user = authRepository.findById(request.getUserId())
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException("Người dùng không tồn tại"));
 
         // Kiểm tra xem User đã có Profile chưa, nếu có thì update, chưa thì tạo mới
         Profile profile = profileRepository.findByUser(user);

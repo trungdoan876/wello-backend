@@ -20,7 +20,7 @@ public class NotificationSettingsServiceImpl implements NotificationSettingsServ
     public void updateWaterReminderSettings(int userId, boolean enabled, int startHour, int endHour, int intervalHours,
             int intervalMinutes) {
         User user = authRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException("Người dùng không tồn tại"));
 
         NotificationSettings settings = notificationSettingsRepository.findByUser(user)
                 .orElseGet(() -> {

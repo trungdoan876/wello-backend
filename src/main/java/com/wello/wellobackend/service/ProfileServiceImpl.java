@@ -44,7 +44,7 @@ public class ProfileServiceImpl implements ProfileService {
     @Override
     public UserProfileResponse getUserProfile(int userId) {
         User user = authRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException("Người dùng không tồn tại"));
 
         Profile profile = profileRepository.findByUser(user);
         Target target = targetRepository.findByUser(user);
@@ -79,7 +79,7 @@ public class ProfileServiceImpl implements ProfileService {
     @Override
     public UserInfoResponse getUserInfo(int userId) {
         User user = authRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException("Người dùng không tồn tại"));
 
         Profile profile = profileRepository.findByUser(user);
 
@@ -123,7 +123,7 @@ public class ProfileServiceImpl implements ProfileService {
     @Override
     public List<History> getProfileHistory(int userId) {
         User user = authRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException("Người dùng không tồn tại"));
         return historyRepository.findByUserOrderByRecordedAtDesc(user);
     }
 
@@ -138,7 +138,7 @@ public class ProfileServiceImpl implements ProfileService {
         } else {
             return UserVerificationResponse.builder()
                     .exists(false)
-                    .message("User not found")
+                    .message("Người dùng không tồn tại")
                     .build();
         }
     }
@@ -146,11 +146,11 @@ public class ProfileServiceImpl implements ProfileService {
     @Override
     public void uploadAvatar(int userId, MultipartFile file) throws IOException {
         User user = authRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException("Người dùng không tồn tại"));
 
         Profile profile = profileRepository.findByUser(user);
         if (profile == null) {
-            throw new RuntimeException("Profile not found for user");
+            throw new RuntimeException("Không tìm thấy hồ sơ của người dùng");
         }
 
         // Convert file to Base64
@@ -168,16 +168,16 @@ public class ProfileServiceImpl implements ProfileService {
     @Override
     public void uploadAvatarBase64(int userId, String base64Image) {
         User user = authRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException("Người dùng không tồn tại"));
 
         Profile profile = profileRepository.findByUser(user);
         if (profile == null) {
-            throw new RuntimeException("Profile not found for user");
+            throw new RuntimeException("Không tìm thấy hồ sơ của người dùng");
         }
 
         // Validate base64 string
         if (base64Image == null || base64Image.trim().isEmpty()) {
-            throw new RuntimeException("Base64 image cannot be empty");
+            throw new RuntimeException("Ảnh Base64 không được để trống");
         }
 
         // Save avatar to profile
@@ -190,15 +190,15 @@ public class ProfileServiceImpl implements ProfileService {
     @Override
     public void updateFullname(int userId, String fullname) {
         User user = authRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException("Người dùng không tồn tại"));
 
         Profile profile = profileRepository.findByUser(user);
         if (profile == null) {
-            throw new RuntimeException("Profile not found for user");
+            throw new RuntimeException("Không tìm thấy hồ sơ của người dùng");
         }
 
         if (fullname == null || fullname.trim().isEmpty()) {
-            throw new RuntimeException("Fullname cannot be empty");
+            throw new RuntimeException("Tên không được để trống");
         }
 
         profile.setFullname(fullname);
@@ -210,7 +210,7 @@ public class ProfileServiceImpl implements ProfileService {
     @Override
     public void updateFcmToken(int userId, String fcmToken) {
         User user = authRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException("Người dùng không tồn tại"));
         user.setFcmToken(fcmToken);
         authRepository.save(user);
     }
@@ -218,15 +218,15 @@ public class ProfileServiceImpl implements ProfileService {
     @Override
     public void updateGender(int userId, com.wello.wellobackend.enums.Gender gender) {
         User user = authRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException("Người dùng không tồn tại"));
 
         Profile profile = profileRepository.findByUser(user);
         if (profile == null) {
-            throw new RuntimeException("Profile not found for user");
+            throw new RuntimeException("Không tìm thấy hồ sơ của người dùng");
         }
 
         if (gender == null) {
-            throw new RuntimeException("Gender cannot be null");
+            throw new RuntimeException("Giới tính không được để trống");
         }
 
         profile.setGender(gender);
@@ -244,15 +244,15 @@ public class ProfileServiceImpl implements ProfileService {
     @Override
     public void updateAge(int userId, int age) {
         User user = authRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException("Người dùng không tồn tại"));
 
         Profile profile = profileRepository.findByUser(user);
         if (profile == null) {
-            throw new RuntimeException("Profile not found for user");
+            throw new RuntimeException("Không tìm thấy hồ sơ của người dùng");
         }
 
         if (age <= 0 || age > 150) {
-            throw new RuntimeException("Age must be between 1 and 150");
+            throw new RuntimeException("Tuổi phải từ 1 đến 150");
         }
 
         profile.setAge(age);
@@ -267,15 +267,15 @@ public class ProfileServiceImpl implements ProfileService {
     @Override
     public void updateHeight(int userId, int height) {
         User user = authRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException("Người dùng không tồn tại"));
 
         Profile profile = profileRepository.findByUser(user);
         if (profile == null) {
-            throw new RuntimeException("Profile not found for user");
+            throw new RuntimeException("Không tìm thấy hồ sơ của người dùng");
         }
 
         if (height <= 0 || height > 300) {
-            throw new RuntimeException("Height must be between 1 and 300 cm");
+            throw new RuntimeException("Chiều cao phải từ 1 đến 300 cm");
         }
 
         profile.setHeight(height);
@@ -293,15 +293,15 @@ public class ProfileServiceImpl implements ProfileService {
     @Override
     public void updateWeight(int userId, int weight) {
         User user = authRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException("Người dùng không tồn tại"));
 
         Profile profile = profileRepository.findByUser(user);
         if (profile == null) {
-            throw new RuntimeException("Profile not found for user");
+            throw new RuntimeException("Không tìm thấy hồ sơ của người dùng");
         }
 
         if (weight <= 0 || weight > 500) {
-            throw new RuntimeException("Weight must be between 1 and 500 kg");
+            throw new RuntimeException("Cân nặng phải từ 1 đến 500 kg");
         }
 
         profile.setWeight(weight);
@@ -310,7 +310,8 @@ public class ProfileServiceImpl implements ProfileService {
         // Save to history - weight tracking is important
         saveToHistory(user, profile);
 
-        // Recalculate target (weight affects BMR, TDEE, BMI, water intake, calorie goals)
+        // Recalculate target (weight affects BMR, TDEE, BMI, water intake, calorie
+        // goals)
         recalculateTarget(user, profile);
 
         System.out.println("Weight updated successfully for user: " + userId);
@@ -319,15 +320,15 @@ public class ProfileServiceImpl implements ProfileService {
     @Override
     public void updateGoal(int userId, com.wello.wellobackend.enums.Goal goal) {
         User user = authRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException("Người dùng không tồn tại"));
 
         Profile profile = profileRepository.findByUser(user);
         if (profile == null) {
-            throw new RuntimeException("Profile not found for user");
+            throw new RuntimeException("Không tìm thấy hồ sơ của người dùng");
         }
 
         if (goal == null) {
-            throw new RuntimeException("Goal cannot be null");
+            throw new RuntimeException("Mục tiêu không được để trống");
         }
 
         profile.setGoal(goal);
@@ -345,15 +346,15 @@ public class ProfileServiceImpl implements ProfileService {
     @Override
     public void updateActivityLevel(int userId, com.wello.wellobackend.enums.ActivityLevel activityLevel) {
         User user = authRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException("Người dùng không tồn tại"));
 
         Profile profile = profileRepository.findByUser(user);
         if (profile == null) {
-            throw new RuntimeException("Profile not found for user");
+            throw new RuntimeException("Không tìm thấy hồ sơ của người dùng");
         }
 
         if (activityLevel == null) {
-            throw new RuntimeException("Activity level cannot be null");
+            throw new RuntimeException("Mức độ hoạt động không được để trống");
         }
 
         profile.setActivityLevel(activityLevel);
@@ -410,8 +411,7 @@ public class ProfileServiceImpl implements ProfileService {
                     profile.getWeight(),
                     profile.getHeight(),
                     profile.getAge(),
-                    profile.getGender().toString()
-            );
+                    profile.getGender().toString());
 
             // Get activity multiplier
             double activityMultiplier = getActivityMultiplier(profile.getActivityLevel());
@@ -430,8 +430,7 @@ public class ProfileServiceImpl implements ProfileService {
             // Calculate water intake
             int waterIntake = targetCalculationService.calculateDailyWaterIntake(
                     profile.getWeight(),
-                    activityMultiplier
-            );
+                    activityMultiplier);
 
             // Update target
             target.setBmi(bmi);
@@ -464,9 +463,12 @@ public class ProfileServiceImpl implements ProfileService {
      * Get BMI status based on BMI value
      */
     private String getBMIStatus(double bmi) {
-        if (bmi < 18.5) return "UNDERWEIGHT";
-        if (bmi < 25) return "NORMAL";
-        if (bmi < 30) return "OVERWEIGHT";
+        if (bmi < 18.5)
+            return "UNDERWEIGHT";
+        if (bmi < 25)
+            return "NORMAL";
+        if (bmi < 30)
+            return "OVERWEIGHT";
         return "OBESE";
     }
 
@@ -498,7 +500,7 @@ public class ProfileServiceImpl implements ProfileService {
     @Override
     public void testPushNotification(int userId) {
         User user = authRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException("Người dùng không tồn tại"));
 
         String token = user.getFcmToken();
         if (token != null && !token.isEmpty()) {
@@ -507,7 +509,7 @@ public class ProfileServiceImpl implements ProfileService {
                     "Thông báo thử nghiệm",
                     "Nếu bạn thấy tin nhắn này, Firebase đã hoạt động tốt!");
         } else {
-            throw new RuntimeException("FCM Token not found for this user");
+            throw new RuntimeException("Không tìm thấy FCM Token cho người dùng này");
         }
     }
 }

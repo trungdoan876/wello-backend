@@ -192,4 +192,128 @@ public class AuthController {
                     .body(java.util.Map.of("message", "Failed to resend OTP"));
         }
     }
+
+    @Autowired
+    private com.wello.wellobackend.service.PasswordResetService passwordResetService;
+
+    /**
+     * Step 1: Initiate password reset - Send OTP to email
+     */
+    @PostMapping("/forgot-password")
+    public ResponseEntity<?> forgotPassword(
+            @RequestBody com.wello.wellobackend.dto.requests.ForgotPasswordRequest request) {
+        try {
+            String email = request.getEmail();
+
+            if (email == null || email.isBlank()) {
+                return ResponseEntity.badRequest()
+                        .body(new com.wello.wellobackend.dto.responses.PasswordResetResponse(
+                                false, "Email không được để trống"));
+            }
+
+            // Initiate password reset and send OTP
+            String verificationToken = passwordResetService.initiatePasswordReset(email);
+
+            return ResponseEntity.ok(new com.wello.wellobackend.dto.responses.PasswordResetResponse(
+                    true,
+                    "Mã OTP đã được gửi đến email của bạn",
+                    null,
+                    verificationToken));
+
+        } catch (RuntimeException e) {
+            System.err.println("Forgot password error: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new com.wello.wellobackend.dto.responses.PasswordResetResponse(
+                            false, e.getMessage()));
+        } catch (Exception e) {
+            System.err.println("Forgot password error: " + e.getMessage());
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new com.wello.wellobackend.dto.responses.PasswordResetResponse(
+                            false, "Không thể gửi mã OTP. Vui lòng thử lại sau."));
+        }
+    }
+
+    /**
+     * Step 2: Verify OTP and get reset token
+     */
+    @PostMapping("/verify-reset-otp")
+    public ResponseEntity<?> verifyResetOtp(
+            @RequestBody com.wello.wellobackend.dto.requests.VerifyResetOtpRequest request) {
+        try {
+            String email = request.getEmail();
+            String otp = request.getOtp();
+            String verificationToken = request.getVerificationToken();
+
+            if (email == null || otp == null || verificationToken == null) {
+                return ResponseEntity.badRequest()
+                        .body(new com.wello.wellobackend.dto.responses.PasswordResetResponse(
+                                false, "Email, OTP và verification token không được để trống"));
+            }
+
+            // Verify OTP and get reset token
+            String resetToken = passwordResetService.verifyResetOtp(email, otp, verificationToken);
+
+            return ResponseEntity.ok(new com.wello.wellobackend.dto.responses.PasswordResetResponse(
+                    true,
+                    "OTP xác thực thành công",
+                    resetToken,
+                    null));
+
+        } catch (RuntimeException e) {
+            System.err.println("Verify reset OTP error: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new com.wello.wellobackend.dto.responses.PasswordResetResponse(
+                            false, e.getMessage()));
+        } catch (Exception e) {
+            System.err.println("Verify reset OTP error: " + e.getMessage());
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new com.wello.wellobackend.dto.responses.PasswordResetResponse(
+                            false, "Không thể xác thực OTP. Vui lòng thử lại sau."));
+        }
+    }
+
+    /**
+     * Step 3: Reset password with reset token
+     */
+    @PostMapping("/reset-password")
+    public ResponseEntity<?> resetPassword(
+            @RequestBody com.wello.wellobackend.dto.requests.ResetPasswordRequest request) {
+        try {
+            String resetToken = request.getResetToken();
+            String newPassword = request.getNewPassword();
+
+            if (resetToken == null || newPassword == null || newPassword.isBlank()) {
+                return ResponseEntity.badRequest()
+                        .body(new com.wello.wellobackend.dto.responses.PasswordResetResponse(
+                                false, "Reset token và mật khẩu mới không được để trống"));
+            }
+
+            if (newPassword.length() < 6) {
+                return ResponseEntity.badRequest()
+                        .body(new com.wello.wellobackend.dto.responses.PasswordResetResponse(
+                                false, "Mật khẩu phải có ít nhất 6 ký tự"));
+            }
+
+            // Reset password
+            passwordResetService.resetPassword(resetToken, newPassword);
+
+            return ResponseEntity.ok(new com.wello.wellobackend.dto.responses.PasswordResetResponse(
+                    true,
+                    "Đặt lại mật khẩu thành công! Bạn có thể đăng nhập với mật khẩu mới."));
+
+        } catch (RuntimeException e) {
+            System.err.println("Reset password error: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new com.wello.wellobackend.dto.responses.PasswordResetResponse(
+                            false, e.getMessage()));
+        } catch (Exception e) {
+            System.err.println("Reset password error: " + e.getMessage());
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new com.wello.wellobackend.dto.responses.PasswordResetResponse(
+                            false, "Không thể đặt lại mật khẩu. Vui lòng thử lại sau."));
+        }
+    }
 }
