@@ -1,11 +1,16 @@
 package com.wello.wellobackend.controller;
 
 import com.wello.wellobackend.dto.requests.AuthRequest;
+import com.wello.wellobackend.dto.requests.ForgotPasswordRequest;
 import com.wello.wellobackend.dto.requests.GoogleLoginRequest;
+import com.wello.wellobackend.dto.requests.ResetPasswordRequest;
+import com.wello.wellobackend.dto.requests.VerifyResetOtpRequest;
 import com.wello.wellobackend.dto.responses.AuthResponse;
+import com.wello.wellobackend.dto.responses.PasswordResetResponse;
 import com.wello.wellobackend.service.AuthService;
+import com.wello.wellobackend.service.OtpService;
+import com.wello.wellobackend.service.PasswordResetService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,32 +18,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api")
 public class AuthController {
     @Autowired
     private AuthService authService;
+    @Autowired
+    private OtpService otpService;
 
-    @PostMapping("/register")
-    public ResponseEntity<AuthResponse> register(@RequestBody AuthRequest request) {
-        try {
-            AuthResponse response = authService.register(request);
-
-            if (!response.isSuccess()) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-            }
-
-            return ResponseEntity.ok(response);
-
-        } catch (Exception e) {
-            // Log lỗi để backend biết
-            System.err.println("Register error: " + e.getMessage());
-
-            // Trả message chung chung cho client → AN TOÀN
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new AuthResponse(false, "Đăng ký thất bại!", -1, false));
-        }
-    }
+    @Autowired
+    private PasswordResetService passwordResetService;
 
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest request) {
@@ -71,150 +62,115 @@ public class AuthController {
         }
     }
 
-    @Autowired
-    private com.wello.wellobackend.service.EmailService emailService;
-
-    @Autowired
-    private com.wello.wellobackend.service.VerificationTokenService verificationTokenService;
-
-    @Autowired
-    private com.wello.wellobackend.repository.AuthRepository authRepository;
-
     @PostMapping("/send-otp")
-    public ResponseEntity<?> sendOtp(@RequestBody java.util.Map<String, String> request) {
+    public ResponseEntity<?> sendOtp(@RequestBody Map<String, String> request) {
         try {
             String email = request.get("email");
             String password = request.get("password");
 
-            if (email == null || email.isBlank() || password == null || password.isBlank()) {
-                return ResponseEntity.badRequest().body(java.util.Map.of("message", "Email and password are required"));
-            }
+            // Send OTP via service (includes email existence check)
+            String verificationToken = otpService.sendOtpEmail(email, password);
 
-            // Check if email already exists
-            com.wello.wellobackend.model.User existingUser = authRepository.findByEmail(email);
-            if (existingUser != null) {
-                return ResponseEntity.badRequest().body(java.util.Map.of("message", "Email already registered"));
-            }
-
-            // Generate 6-digit OTP
-            String otp = String.format("%06d", new java.util.Random().nextInt(999999));
-
-            // Create verification token
-            String verificationToken = verificationTokenService.createVerificationToken(email, password, otp);
-
-            // Send OTP email
-            emailService.sendOtpEmail(email, otp);
-
-            return ResponseEntity.ok(java.util.Map.of(
+            return ResponseEntity.ok(Map.of(
+                    "success", true,
                     "verificationToken", verificationToken,
                     "message", "OTP sent to email"));
 
+        } catch (RuntimeException e) {
+            System.err.println("Send OTP error: " + e.getMessage());
+            return ResponseEntity.badRequest()
+                    .body(Map.of(
+                            "success", false,
+                            "message", e.getMessage()));
         } catch (Exception e) {
             System.err.println("Send OTP error: " + e.getMessage());
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(java.util.Map.of("message", "Failed to send OTP"));
+                    .body(Map.of(
+                            "success", false,
+                            "message", "Failed to send OTP"));
         }
     }
 
     @PostMapping("/verify-otp")
-    public ResponseEntity<?> verifyOtp(@RequestBody java.util.Map<String, String> request) {
+    public ResponseEntity<?> verifyOtp(@RequestBody Map<String, String> request) {
         try {
             String verificationToken = request.get("verificationToken");
             String otp = request.get("otp");
 
-            if (verificationToken == null || otp == null) {
-                return ResponseEntity.badRequest().body(java.util.Map.of("message", "Token and OTP are required"));
-            }
+            // Register user with verified OTP
+            Long userId = authService.registerWithOtp(verificationToken, otp);
 
-            // Verify token and OTP
-            java.util.Map<String, String> tokenData = verificationTokenService.verifyToken(verificationToken, otp);
-            String email = tokenData.get("email");
-            String hashedPassword = tokenData.get("hashedPassword");
-
-            // Create user account
-            com.wello.wellobackend.model.User user = new com.wello.wellobackend.model.User();
-            user.setEmail(email);
-            user.setPassword(hashedPassword); // Already hashed in token service
-            user.setAuthProvider(com.wello.wellobackend.enums.AuthProvider.EMAIL);
-
-            user = authRepository.save(user);
-
-            return ResponseEntity.ok(java.util.Map.of(
-                    "userId", user.getIdUser(),
+            return ResponseEntity.ok(Map.of(
+                    "success", true,
+                    "userId", userId,
                     "message", "Registration successful"));
 
         } catch (RuntimeException e) {
             System.err.println("Verify OTP error: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(java.util.Map.of("message", e.getMessage()));
+                    .body(Map.of(
+                            "success", false,
+                            "message", e.getMessage()));
         } catch (Exception e) {
             System.err.println("Verify OTP error: " + e.getMessage());
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(java.util.Map.of("message", "Failed to verify OTP"));
+                    .body(Map.of(
+                            "success", false,
+                            "message", "Failed to verify OTP"));
         }
     }
 
     @PostMapping("/resend-otp")
-    public ResponseEntity<?> resendOtp(@RequestBody java.util.Map<String, String> request) {
+    public ResponseEntity<?> resendOtp(@RequestBody Map<String, String> request) {
         try {
             String email = request.get("email");
             String password = request.get("password");
 
-            if (email == null || email.isBlank() || password == null || password.isBlank()) {
-                return ResponseEntity.badRequest().body(java.util.Map.of("message", "Email and password are required"));
-            }
+            // Send OTP via service (includes email existence check)
+            String verificationToken = otpService.sendOtpEmail(email, password);
 
-            // Check if email already exists
-            com.wello.wellobackend.model.User existingUser = authRepository.findByEmail(email);
-            if (existingUser != null) {
-                return ResponseEntity.badRequest().body(java.util.Map.of("message", "Email already registered"));
-            }
-
-            // Generate new 6-digit OTP
-            String otp = String.format("%06d", new java.util.Random().nextInt(999999));
-
-            // Create new verification token
-            String verificationToken = verificationTokenService.createVerificationToken(email, password, otp);
-
-            // Send OTP email
-            emailService.sendOtpEmail(email, otp);
-
-            return ResponseEntity.ok(java.util.Map.of(
+            return ResponseEntity.ok(Map.of(
+                    "success", true,
                     "verificationToken", verificationToken,
                     "message", "New OTP sent to email"));
 
+        } catch (RuntimeException e) {
+            System.err.println("Resend OTP error: " + e.getMessage());
+            return ResponseEntity.badRequest()
+                    .body(Map.of(
+                            "success", false,
+                            "message", e.getMessage()));
         } catch (Exception e) {
             System.err.println("Resend OTP error: " + e.getMessage());
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(java.util.Map.of("message", "Failed to resend OTP"));
+                    .body(Map.of(
+                            "success", false,
+                            "message", "Failed to resend OTP"));
         }
     }
-
-    @Autowired
-    private com.wello.wellobackend.service.PasswordResetService passwordResetService;
 
     /**
      * Step 1: Initiate password reset - Send OTP to email
      */
     @PostMapping("/forgot-password")
     public ResponseEntity<?> forgotPassword(
-            @RequestBody com.wello.wellobackend.dto.requests.ForgotPasswordRequest request) {
+            @RequestBody ForgotPasswordRequest request) {
         try {
             String email = request.getEmail();
 
             if (email == null || email.isBlank()) {
                 return ResponseEntity.badRequest()
-                        .body(new com.wello.wellobackend.dto.responses.PasswordResetResponse(
+                        .body(new PasswordResetResponse(
                                 false, "Email không được để trống"));
             }
 
             // Initiate password reset and send OTP
             String verificationToken = passwordResetService.initiatePasswordReset(email);
 
-            return ResponseEntity.ok(new com.wello.wellobackend.dto.responses.PasswordResetResponse(
+            return ResponseEntity.ok(new PasswordResetResponse(
                     true,
                     "Mã OTP đã được gửi đến email của bạn",
                     null,
@@ -223,13 +179,13 @@ public class AuthController {
         } catch (RuntimeException e) {
             System.err.println("Forgot password error: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new com.wello.wellobackend.dto.responses.PasswordResetResponse(
+                    .body(new PasswordResetResponse(
                             false, e.getMessage()));
         } catch (Exception e) {
             System.err.println("Forgot password error: " + e.getMessage());
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new com.wello.wellobackend.dto.responses.PasswordResetResponse(
+                    .body(new PasswordResetResponse(
                             false, "Không thể gửi mã OTP. Vui lòng thử lại sau."));
         }
     }
@@ -239,7 +195,7 @@ public class AuthController {
      */
     @PostMapping("/verify-reset-otp")
     public ResponseEntity<?> verifyResetOtp(
-            @RequestBody com.wello.wellobackend.dto.requests.VerifyResetOtpRequest request) {
+            @RequestBody VerifyResetOtpRequest request) {
         try {
             String email = request.getEmail();
             String otp = request.getOtp();
@@ -247,14 +203,14 @@ public class AuthController {
 
             if (email == null || otp == null || verificationToken == null) {
                 return ResponseEntity.badRequest()
-                        .body(new com.wello.wellobackend.dto.responses.PasswordResetResponse(
+                        .body(new PasswordResetResponse(
                                 false, "Email, OTP và verification token không được để trống"));
             }
 
             // Verify OTP and get reset token
             String resetToken = passwordResetService.verifyResetOtp(email, otp, verificationToken);
 
-            return ResponseEntity.ok(new com.wello.wellobackend.dto.responses.PasswordResetResponse(
+            return ResponseEntity.ok(new PasswordResetResponse(
                     true,
                     "OTP xác thực thành công",
                     resetToken,
@@ -269,7 +225,7 @@ public class AuthController {
             System.err.println("Verify reset OTP error: " + e.getMessage());
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new com.wello.wellobackend.dto.responses.PasswordResetResponse(
+                    .body(new PasswordResetResponse(
                             false, "Không thể xác thực OTP. Vui lòng thử lại sau."));
         }
     }
@@ -279,27 +235,27 @@ public class AuthController {
      */
     @PostMapping("/reset-password")
     public ResponseEntity<?> resetPassword(
-            @RequestBody com.wello.wellobackend.dto.requests.ResetPasswordRequest request) {
+            @RequestBody ResetPasswordRequest request) {
         try {
             String resetToken = request.getResetToken();
             String newPassword = request.getNewPassword();
 
             if (resetToken == null || newPassword == null || newPassword.isBlank()) {
                 return ResponseEntity.badRequest()
-                        .body(new com.wello.wellobackend.dto.responses.PasswordResetResponse(
+                        .body(new PasswordResetResponse(
                                 false, "Reset token và mật khẩu mới không được để trống"));
             }
 
             if (newPassword.length() < 6) {
                 return ResponseEntity.badRequest()
-                        .body(new com.wello.wellobackend.dto.responses.PasswordResetResponse(
+                        .body(new PasswordResetResponse(
                                 false, "Mật khẩu phải có ít nhất 6 ký tự"));
             }
 
             // Reset password
             passwordResetService.resetPassword(resetToken, newPassword);
 
-            return ResponseEntity.ok(new com.wello.wellobackend.dto.responses.PasswordResetResponse(
+            return ResponseEntity.ok(new PasswordResetResponse(
                     true,
                     "Đặt lại mật khẩu thành công! Bạn có thể đăng nhập với mật khẩu mới."));
 
@@ -312,7 +268,7 @@ public class AuthController {
             System.err.println("Reset password error: " + e.getMessage());
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new com.wello.wellobackend.dto.responses.PasswordResetResponse(
+                    .body(new PasswordResetResponse(
                             false, "Không thể đặt lại mật khẩu. Vui lòng thử lại sau."));
         }
     }

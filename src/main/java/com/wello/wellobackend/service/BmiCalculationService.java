@@ -1,5 +1,7 @@
 package com.wello.wellobackend.service;
 
+import com.wello.wellobackend.enums.Goal;
+
 public interface BmiCalculationService {
     double calculateBMI(int weight, int height);
 
@@ -7,5 +9,5 @@ public interface BmiCalculationService {
 
     String getBMIStatusText(String status);
 
-    String getGoalWarning(double bmi, com.wello.wellobackend.enums.Goal goal);
+    String getGoalWarning(double bmi, Goal goal);
 }

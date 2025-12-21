@@ -16,6 +16,8 @@ public class AuthServiceImpl implements AuthService {
     private final AuthRepository userRepository;
     private final TargetRepository targetRepository;
     private final GoogleTokenVerifier googleTokenVerifier;
+    @Autowired
+    private VerificationTokenService verificationTokenService;
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Autowired
@@ -24,23 +26,6 @@ public class AuthServiceImpl implements AuthService {
         this.userRepository = userRepository;
         this.targetRepository = targetRepository;
         this.googleTokenVerifier = googleTokenVerifier;
-    }
-
-    @Override
-    public AuthResponse register(AuthRequest request) {
-        if (userRepository.existsByEmail(request.getEmail())) {
-            User user = userRepository.findByEmail(request.getEmail());
-            return new AuthResponse(false, "Email đã tồn tại!", -1, false);
-        }
-        User user = new User();
-        user.setEmail(request.getEmail());
-        user.setAuthProvider(AuthProvider.EMAIL);
-
-        String hashedPassword = passwordEncoder.encode(request.getPassword());
-        user.setPassword(hashedPassword);
-
-        userRepository.save(user);
-        return new AuthResponse(true, "Đăng ký thành công!", user.getIdUser(), false);
     }
 
     @Override
@@ -102,6 +87,24 @@ public class AuthServiceImpl implements AuthService {
                 "Đăng nhập Google thành công!",
                 user.getIdUser(),
                 hasTarget);
+    }
+
+    @Override
+    public Long registerWithOtp(String verificationToken, String otp) {
+        // Verify token and OTP
+        java.util.Map<String, String> tokenData = verificationTokenService.verifyToken(verificationToken, otp);
+        String email = tokenData.get("email");
+        String hashedPassword = tokenData.get("hashedPassword");
+
+        // Create user account
+        User user = new User();
+        user.setEmail(email);
+        user.setPassword(hashedPassword); // Already hashed in token service
+        user.setAuthProvider(AuthProvider.EMAIL);
+
+        user = userRepository.save(user);
+
+        return (long) user.getIdUser();
     }
 
 }
