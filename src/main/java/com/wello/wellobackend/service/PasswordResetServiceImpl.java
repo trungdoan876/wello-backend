@@ -16,7 +16,6 @@ import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.Map;
-import java.util.Random;
 
 @Service
 public class PasswordResetServiceImpl implements PasswordResetService {
@@ -29,6 +28,9 @@ public class PasswordResetServiceImpl implements PasswordResetService {
 
     @Autowired
     private VerificationTokenService verificationTokenService;
+
+    @Autowired
+    private OtpService otpService;
 
     @Value("${jwt.secret}")
     private String jwtSecret;
@@ -46,11 +48,10 @@ public class PasswordResetServiceImpl implements PasswordResetService {
             throw new RuntimeException("Tài khoản Google không thể đặt lại mật khẩu. Vui lòng đăng nhập bằng Google.");
         }
 
-        // Generate 6-digit OTP
-        String otp = String.format("%06d", new Random().nextInt(999999));
+        // Generate OTP
+        String otp = otpService.generateOtp();
 
-        // Create verification token (reuse existing service)
-        // We pass empty password since we're not creating account, just verifying email
+        // Create verification token (pass empty password for password reset)
         String verificationToken = verificationTokenService.createVerificationToken(email, "", otp);
 
         // Send password reset email
