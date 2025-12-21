@@ -136,9 +136,18 @@ public class NutritionTrackerServiceImpl implements NutritionTrackerService {
                 Food food = foodRepository.findById(request.getFoodId())
                                 .orElseThrow(() -> new RuntimeException("Không tìm thấy thực phẩm"));
 
-                // Calculate nutrients based on amount (per 100g)
+                // Allow overriding calories/food name when provided by client
                 double factor = request.getAmountGrams() / 100.0;
-                int calories = (int) (food.getCaloriesPer100g() * factor);
+
+                int calories = request.getCaloriesOverride() != null
+                                ? request.getCaloriesOverride()
+                                : (int) (food.getCaloriesPer100g() * factor);
+
+                String foodName = request.getFoodNameOverride() != null
+                                ? request.getFoodNameOverride()
+                                : food.getFoodName();
+
+                // Keep macro calculations from database values by default
                 double protein = food.getProteinPer100g() * factor;
                 double carbs = food.getCarbsPer100g() * factor;
                 double fat = food.getFatPer100g() * factor;
@@ -151,6 +160,8 @@ public class NutritionTrackerServiceImpl implements NutritionTrackerService {
                 tracker.setAmountGrams(request.getAmountGrams());
                 tracker.setMealType(request.getMealType());
                 tracker.setCaloriesConsumed(calories);
+                tracker.setCaloriesOverride(request.getCaloriesOverride());
+                tracker.setFoodNameOverride(request.getFoodNameOverride());
                 tracker.setProtein((int) Math.round(protein));
                 tracker.setCarbs((int) Math.round(carbs));
                 tracker.setFat((int) Math.round(fat));
@@ -159,7 +170,7 @@ public class NutritionTrackerServiceImpl implements NutritionTrackerService {
                 nutritionTrackerRepository.save(tracker);
 
                 return LogFoodResponse.builder()
-                                .foodName(food.getFoodName())
+                                .foodName(foodName)
                                 .calories(calories)
                                 .protein(protein)
                                 .carbs(carbs)
@@ -183,7 +194,9 @@ public class NutritionTrackerServiceImpl implements NutritionTrackerService {
                                 .filter(log -> log.getFood() != null) // Only food logs, not workout logs
                                 .map(log -> MealLogResponse.builder()
                                                 .id(log.getId())
-                                                .foodName(log.getFood().getFoodName())
+                                                .foodName(log.getFoodNameOverride() != null
+                                                                ? log.getFoodNameOverride()
+                                                                : log.getFood().getFoodName())
                                                 .amountGrams(log.getAmountGrams())
                                                 .calories(log.getCaloriesConsumed())
                                                 .protein(log.getProtein())
