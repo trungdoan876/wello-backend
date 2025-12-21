@@ -8,6 +8,11 @@ public class BmiCalculationServiceImpl implements BmiCalculationService {
 
     @Override
     public double calculateBMI(int weight, int height) {
+        // Validate input
+        if (weight <= 0 || height <= 0) {
+            throw new IllegalArgumentException("Invalid weight or height");
+        }
+
         // BMI = weight(kg) / (height(m))^2
         double heightInMeters = height / 100.0;
         double bmi = weight / (heightInMeters * heightInMeters);
