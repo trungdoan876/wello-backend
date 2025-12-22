@@ -251,9 +251,10 @@ public class ProfileController {
         try {
             notificationSettingsService.updateWaterReminderSettings(userId, enabled, startHour, endHour, intervalHours,
                     intervalMinutes);
-            return ResponseEntity.ok("Water reminder settings updated successfully");
+            return ResponseEntity.ok("Cài đặt thông báo uống nước thành công");
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to update reminder settings");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Không thể cập nhật cài đặt thông báo");
         }
     }
 
