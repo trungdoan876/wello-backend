@@ -50,17 +50,11 @@ public class Profile implements Serializable {
     @Column(name = "survey_date", nullable = false)
     private LocalDateTime surveyDate;
 
-    @Column(name = "water_reminder_enabled", nullable = false)
-    private boolean waterReminderEnabled = false;
+    @Column(name = "target_weight")
+    private Integer targetWeight; // Cân nặng mong muốn (kg)
 
-    @Column(name = "reminder_start_hour")
-    private int reminderStartHour = 8;
-
-    @Column(name = "reminder_end_hour")
-    private int reminderEndHour = 22;
-
-    @Column(name = "reminder_interval_hours")
-    private int reminderIntervalHours = 1;
+    @Column(name = "weight_goal_kg")
+    private Integer weightGoalKg; // Mục tiêu tăng/giảm kg (weight - targetWeight)
 
     @OneToOne
     @JoinColumn(name = "id_user", nullable = false)

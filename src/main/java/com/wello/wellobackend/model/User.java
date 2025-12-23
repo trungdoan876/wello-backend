@@ -36,9 +36,6 @@ public class User implements Serializable {
     private String fcmToken;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Notification> notifications;
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Target> targets;
 
     // mappedBy = "user"
@@ -50,7 +47,4 @@ public class User implements Serializable {
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Profile profile;
-
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    private SurveyProgress surveyProgress;
 }

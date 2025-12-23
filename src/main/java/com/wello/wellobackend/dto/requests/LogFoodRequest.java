@@ -18,4 +18,8 @@ public class LogFoodRequest {
     private int amountGrams;
     private LocalDate date;
     private MealType mealType;
+
+    // Optional overrides when client wants to log a custom name or calories
+    private Integer caloriesOverride;
+    private String foodNameOverride;
 }

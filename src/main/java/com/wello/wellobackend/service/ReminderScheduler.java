@@ -1,7 +1,7 @@
 package com.wello.wellobackend.service;
 
-import com.wello.wellobackend.model.Profile;
-import com.wello.wellobackend.repository.ProfileRepository;
+import com.wello.wellobackend.model.NotificationSettings;
+import com.wello.wellobackend.repository.NotificationSettingsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -13,21 +13,22 @@ import java.util.List;
 public class ReminderScheduler {
 
     @Autowired
-    private ProfileRepository profileRepository;
+    private NotificationSettingsRepository notificationSettingsRepository;
 
     @Autowired
     private FcmService fcmService;
 
-    // Run at the beginning of every hour
-    @Scheduled(cron = "0 0 * * * *")
+    // Run every minute for accurate minute-based intervals (change back to "0 0 * *
+    // * *" for production hourly reminders)
+    @Scheduled(cron = "0 * * * * *")
     public void sendWaterReminders() {
         System.out.println("Running water reminder scheduler...");
-        List<Profile> activeProfiles = profileRepository.findByWaterReminderEnabledTrue();
+        List<NotificationSettings> activeSettings = notificationSettingsRepository.findByWaterReminderEnabledTrue();
         int currentHour = LocalTime.now().getHour();
 
-        for (Profile profile : activeProfiles) {
-            if (shouldSendReminder(profile, currentHour)) {
-                String token = profile.getUser().getFcmToken();
+        for (NotificationSettings settings : activeSettings) {
+            if (shouldSendReminder(settings, currentHour)) {
+                String token = settings.getUser().getFcmToken();
                 if (token != null && !token.isEmpty()) {
                     fcmService.sendPushNotification(
                             token,
@@ -38,20 +39,27 @@ public class ReminderScheduler {
         }
     }
 
-    private boolean shouldSendReminder(Profile profile, int currentHour) {
+    private boolean shouldSendReminder(NotificationSettings settings, int currentHour) {
         // 1. Check if within time range
-        if (currentHour < profile.getReminderStartHour() || currentHour > profile.getReminderEndHour()) {
+        if (currentHour < settings.getReminderStartHour() || currentHour > settings.getReminderEndHour()) {
             return false;
         }
 
-        // 2. Check interval
-        // Simple logic: (currentHour - startHour) % interval == 0
-        int start = profile.getReminderStartHour();
-        int interval = profile.getReminderIntervalHours();
+        // 2. Calculate total interval in minutes
+        int intervalHours = settings.getReminderIntervalHours();
+        int intervalMinutes = settings.getReminderIntervalMinutes();
+        int totalIntervalMinutes = (intervalHours * 60) + intervalMinutes;
 
-        if (interval <= 0)
-            interval = 1; // Safeguard
+        if (totalIntervalMinutes <= 0) {
+            totalIntervalMinutes = 60; // Default to 1 hour
+        }
 
-        return (currentHour - start) % interval == 0;
+        // 3. Calculate minutes since start time
+        int startHour = settings.getReminderStartHour();
+        int currentMinute = java.time.LocalTime.now().getMinute();
+        int minutesSinceStart = ((currentHour - startHour) * 60) + currentMinute;
+
+        // 4. Check if current time matches the interval
+        return minutesSinceStart >= 0 && minutesSinceStart % totalIntervalMinutes == 0;
     }
 }

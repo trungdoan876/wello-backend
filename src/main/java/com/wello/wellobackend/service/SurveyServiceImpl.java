@@ -76,7 +76,7 @@ public class SurveyServiceImpl implements SurveyService {
 
     private Profile saveProfileFromSurvey(SurveyRequest request) {
         User user = authRepository.findById(request.getUserId())
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException("Người dùng không tồn tại"));
 
         // Kiểm tra xem User đã có Profile chưa, nếu có thì update, chưa thì tạo mới
         Profile profile = profileRepository.findByUser(user);
@@ -94,6 +94,15 @@ public class SurveyServiceImpl implements SurveyService {
         profile.setGoal(request.getGoal());
         profile.setActivityLevel(request.getActivityLevel());
         profile.setSurveyDate(LocalDateTime.now());
+
+        // Lưu targetWeight và tính weightGoalKg
+        if (request.getTargetWeight() != null) {
+            profile.setTargetWeight(request.getTargetWeight());
+            // weightGoalKg = currentWeight - targetWeight
+            // Dương: cần giảm, Âm: cần tăng
+            int weightGoalKg = request.getWeight() - request.getTargetWeight();
+            profile.setWeightGoalKg(weightGoalKg);
+        }
 
         Profile savedProfile = profileRepository.save(profile);
 
