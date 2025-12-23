@@ -46,8 +46,8 @@ public class ReminderScheduler {
         }
 
         // 2. Calculate total interval in minutes
-        int intervalHours = settings.getReminderIntervalHours() != null ? settings.getReminderIntervalHours() : 0;
-        int intervalMinutes = settings.getReminderIntervalMinutes() != null ? settings.getReminderIntervalMinutes() : 0;
+        int intervalHours = settings.getReminderIntervalHours();
+        int intervalMinutes = settings.getReminderIntervalMinutes();
         int totalIntervalMinutes = (intervalHours * 60) + intervalMinutes;
 
         if (totalIntervalMinutes <= 0) {

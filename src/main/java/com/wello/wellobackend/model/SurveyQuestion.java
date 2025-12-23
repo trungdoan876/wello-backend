@@ -17,7 +17,7 @@ public class SurveyQuestion implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idQuestion;
 
-    @Column(name = "question",nullable = false)
+    @Column(name = "question", nullable = false)
     private String question;
 
     @Column(name = "question_type", nullable = false)
@@ -34,8 +34,4 @@ public class SurveyQuestion implements Serializable {
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     private List<SurveyAnswer> surveyAnswers;
-
-    @OneToMany(mappedBy = "currentQuestion")
-    private List<SurveyProgress> surveyProgressList;
-
 }

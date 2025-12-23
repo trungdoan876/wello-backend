@@ -47,7 +47,4 @@ public class User implements Serializable {
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Profile profile;
-
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    private SurveyProgress surveyProgress;
 }
