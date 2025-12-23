@@ -23,15 +23,15 @@ public class NotificationSettings implements Serializable {
     @Column(name = "water_reminder_enabled", nullable = false)
     private boolean waterReminderEnabled = false;
 
-    @Column(name = "reminder_start_hour")
-    private Integer reminderStartHour = 8;
+    @Column(name = "reminder_start_hour", nullable = false)
+    private int reminderStartHour = 8;
 
-    @Column(name = "reminder_end_hour")
-    private Integer reminderEndHour = 22;
+    @Column(name = "reminder_end_hour", nullable = false)
+    private int reminderEndHour = 22;
 
-    @Column(name = "reminder_interval_hours")
-    private Integer reminderIntervalHours = 1;
+    @Column(name = "reminder_interval_hours", nullable = false)
+    private int reminderIntervalHours = 1;
 
-    @Column(name = "reminder_interval_minutes")
-    private Integer reminderIntervalMinutes = 0;
+    @Column(name = "reminder_interval_minutes", nullable = false)
+    private int reminderIntervalMinutes = 0;
 }
