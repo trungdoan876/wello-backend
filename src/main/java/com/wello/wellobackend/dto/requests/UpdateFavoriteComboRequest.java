@@ -6,16 +6,16 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class LogFoodRequest {
+public class UpdateFavoriteComboRequest {
     private int userId;
-    private int foodId;
-    private int amountGrams;
-    private LocalDate date;
+    private int favoriteId;
+    private String favoriteName;
     private MealType mealType;
+    private List<AddFavoriteComboRequest.FoodItemRequest> items;
 }
