@@ -1,9 +1,12 @@
 package com.wello.wellobackend.service;
 
 import com.wello.wellobackend.dto.requests.AddFavoriteComboRequest;
+import com.wello.wellobackend.dto.requests.LogFavoriteRequest;
 import com.wello.wellobackend.dto.requests.UpdateFavoriteComboRequest;
 import com.wello.wellobackend.dto.responses.FavoriteComboResponse;
-import com.wello.wellobackend.model.Favorite;
+import com.wello.wellobackend.dto.responses.LogFoodResponse;
+import com.wello.wellobackend.enums.MealType;
+import com.wello.wellobackend.model.*;
 import com.wello.wellobackend.model.FavoriteItem;
 import com.wello.wellobackend.model.Food;
 import com.wello.wellobackend.model.User;
@@ -33,6 +36,9 @@ public class FavoriteServiceImpl implements FavoriteService {
 
         @Autowired
         private AuthRepository authRepository;
+
+        @Autowired
+        private com.wello.wellobackend.repository.NutritionTrackerRepository nutritionTrackerRepository;
 
         @Override
         public List<FavoriteComboResponse> getFavoritesByUser(int userId) {
@@ -151,6 +157,68 @@ public class FavoriteServiceImpl implements FavoriteService {
                 return favoriteRepository.findByUserAndFavoriteNameContainingIgnoreCase(user, query).stream()
                                 .map(this::mapToComboResponse)
                                 .collect(Collectors.toList());
+        }
+
+        @Override
+        @Transactional
+        public LogFoodResponse logFavorite(LogFavoriteRequest request) {
+                User user = authRepository.findById(request.getUserId())
+                                .orElseThrow(() -> new RuntimeException("Người dùng không tồn tại"));
+
+                Favorite favorite = favoriteRepository.findByIdAndUser(request.getFavoriteId(), user)
+                                .orElseThrow(() -> new RuntimeException("Món ăn yêu thích không tồn tại"));
+
+                MealType mealType = request.getMealType() != null ? request.getMealType() : favorite.getMealType();
+                if (mealType == null)
+                        mealType = MealType.BREAKFAST; // Mặc định
+
+                int totalCalories = 0;
+                double totalProtein = 0;
+                double totalCarbs = 0;
+                double totalFat = 0;
+
+                java.time.LocalDateTime logTime = java.time.LocalDateTime.of(request.getDate(),
+                                java.time.LocalTime.now());
+
+                for (FavoriteItem item : favorite.getItems()) {
+                        Food food = item.getFood();
+                        double factor = item.getAmountGrams() / 100.0;
+
+                        int calories = (int) (food.getCaloriesPer100g() * factor);
+                        double protein = food.getProteinPer100g() * factor;
+                        double carbs = food.getCarbsPer100g() * factor;
+                        double fat = food.getFatPer100g() * factor;
+
+                        NutritionTracker tracker = new NutritionTracker();
+                        tracker.setUser(user);
+                        tracker.setDate(logTime);
+                        tracker.setFood(food);
+                        tracker.setAmountGrams(item.getAmountGrams());
+                        tracker.setMealType(mealType);
+                        tracker.setCaloriesConsumed(calories);
+                        tracker.setProtein((int) Math.round(protein));
+                        tracker.setCarbs((int) Math.round(carbs));
+                        tracker.setFat((int) Math.round(fat));
+                        tracker.setCaloriesBurned(0);
+                        tracker.setFavoriteName(favorite.getFavoriteName());
+
+                        nutritionTrackerRepository.save(tracker);
+
+                        totalCalories += calories;
+                        totalProtein += protein;
+                        totalCarbs += carbs;
+                        totalFat += fat;
+                }
+
+                return LogFoodResponse.builder()
+                                .foodName(favorite.getFavoriteName())
+                                .calories(totalCalories)
+                                .protein(Math.round(totalProtein * 10) / 10.0)
+                                .carbs(Math.round(totalCarbs * 10) / 10.0)
+                                .fat(Math.round(totalFat * 10) / 10.0)
+                                .message("Đã ghi nhận " + favorite.getFavoriteName() + " vào nhật ký dinh dưỡng cho "
+                                                + mealType)
+                                .build();
         }
 
         private FavoriteComboResponse mapToComboResponse(Favorite favorite) {
