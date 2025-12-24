@@ -35,4 +35,7 @@ public class NutritionTracker extends HealthTracker {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_food")
     private Food food;
+
+    @Column(name = "favorite_name")
+    private String favoriteName;
 }

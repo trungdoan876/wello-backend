@@ -22,4 +22,7 @@ public class MealLogResponse {
     private int fat;
     private MealType mealType;
     private LocalDateTime loggedAt;
+    private String favoriteName;
+    private int foodId;
+    private String imageUrl;
 }

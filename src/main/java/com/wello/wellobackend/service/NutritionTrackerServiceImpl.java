@@ -192,6 +192,9 @@ public class NutritionTrackerServiceImpl implements NutritionTrackerService {
                                                 .fat(log.getFat())
                                                 .mealType(log.getMealType())
                                                 .loggedAt(log.getDate())
+                                                .favoriteName(log.getFavoriteName())
+                                                .foodId(log.getFood().getId())
+                                                .imageUrl(log.getFood().getImageUrl())
                                                 .build())
                                 .collect(Collectors.toList());
         }

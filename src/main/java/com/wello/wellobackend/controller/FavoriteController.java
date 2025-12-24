@@ -1,8 +1,10 @@
 package com.wello.wellobackend.controller;
 
 import com.wello.wellobackend.dto.requests.AddFavoriteComboRequest;
+import com.wello.wellobackend.dto.requests.LogFavoriteRequest;
 import com.wello.wellobackend.dto.requests.UpdateFavoriteComboRequest;
 import com.wello.wellobackend.dto.responses.FavoriteComboResponse;
+import com.wello.wellobackend.dto.responses.LogFoodResponse;
 import com.wello.wellobackend.service.FavoriteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -40,6 +42,12 @@ public class FavoriteController {
     public ResponseEntity<FavoriteComboResponse> updateFavoriteCombo(
             @RequestBody UpdateFavoriteComboRequest request) {
         return ResponseEntity.ok(favoriteService.updateFavoriteCombo(request));
+    }
+
+    @PostMapping("/log")
+    public ResponseEntity<LogFoodResponse> logFavorite(
+            @RequestBody LogFavoriteRequest request) {
+        return ResponseEntity.ok(favoriteService.logFavorite(request));
     }
 
     @DeleteMapping("/delete/{favoriteId}")
