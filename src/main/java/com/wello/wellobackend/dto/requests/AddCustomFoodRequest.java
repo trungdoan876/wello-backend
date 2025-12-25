@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class AddFavoriteRequest {
+public class AddCustomFoodRequest {
     private int userId;
     private String foodName;
     private int caloriesPer100g;

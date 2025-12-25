@@ -3,7 +3,7 @@ package com.wello.wellobackend.controller;
 import com.wello.wellobackend.dto.requests.LogFoodRequest;
 import com.wello.wellobackend.dto.responses.DailyNutritionResponse;
 import com.wello.wellobackend.dto.responses.LogFoodResponse;
-import com.wello.wellobackend.dto.responses.MealLogResponse;
+import com.wello.wellobackend.dto.responses.FoodLogResponse;
 import com.wello.wellobackend.dto.responses.WeeklyOverviewResponse;
 import com.wello.wellobackend.service.NutritionTrackerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,10 +41,10 @@ public class NutritionController {
         return ResponseEntity.ok(nutritionTrackerService.logFood(request));
     }
 
-    @GetMapping("/history")
-    public ResponseEntity<List<MealLogResponse>> getDailyMealHistory(
+    @GetMapping("/history/food")
+    public ResponseEntity<List<FoodLogResponse>> getDailyFoodHistory(
             @RequestParam int userId,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
-        return ResponseEntity.ok(nutritionTrackerService.getDailyMealHistory(userId, date));
+        return ResponseEntity.ok(nutritionTrackerService.getDailyFoodHistory(userId, date));
     }
 }

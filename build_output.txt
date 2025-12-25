@@ -1,0 +1,648 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] -----------------------< com.wello:wellobackend >-----------------------
+[INFO] Building WelloBackend 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ wellobackend ---
+[INFO] Copying 1 resource from src\main\resources to target\classes
+[INFO] Copying 0 resource from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.14.0:compile (default-compile) @ wellobackend ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 133 source files with javac [debug parameters release 21] to target\classes
+[INFO] Annotation processing is enabled because one or more processors were found
+  on the class path. A future release of javac may disable annotation processing
+  unless at least one processor is specified by name (-processor), or a search
+  path is specified (--processor-path, --processor-module-path), or annotation
+  processing is enabled explicitly (-proc:only, -proc:full).
+  Use -Xlint:-options to suppress this message.
+  Use -proc:none to disable annotation processing.
+[INFO] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/config/FirebaseConfig.java: C:\TrungDoanDayNe\TieuLuanChuyenNganh\wello_backend\src\main\java\com\wello\wellobackend\config\FirebaseConfig.java uses or overrides a deprecated API.
+[INFO] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/config/FirebaseConfig.java: Recompile with -Xlint:deprecation for details.
+[INFO] -------------------------------------------------------------
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/NutritionTrackerServiceImpl.java:[173,9] java.lang.Override is not a repeatable annotation interface
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/AuthController.java:[35,26] cannot find symbol
+  symbol:   method isSuccess()
+  location: variable response of type com.wello.wellobackend.dto.responses.AuthResponse
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/AuthController.java:[44,27] constructor AuthResponse in class com.wello.wellobackend.dto.responses.AuthResponse cannot be applied to given types;
+  required: no arguments
+  found:    boolean,java.lang.String,int,boolean
+  reason: actual and formal argument lists differ in length
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/AuthController.java:[51,72] cannot find symbol
+  symbol:   method getIdToken()
+  location: variable request of type com.wello.wellobackend.dto.requests.GoogleLoginRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/AuthController.java:[57,27] constructor AuthResponse in class com.wello.wellobackend.dto.responses.AuthResponse cannot be applied to given types;
+  required: no arguments
+  found:    boolean,java.lang.String,int,boolean
+  reason: actual and formal argument lists differ in length
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/AuthController.java:[172,35] cannot find symbol
+  symbol:   method getEmail()
+  location: variable request of type com.wello.wellobackend.dto.requests.ForgotPasswordRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/AuthController.java:[183,38] constructor PasswordResetResponse in class com.wello.wellobackend.dto.responses.PasswordResetResponse cannot be applied to given types;
+  required: boolean,java.lang.String
+  found:    boolean,java.lang.String,<nulltype>,java.lang.String
+  reason: actual and formal argument lists differ in length
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/AuthController.java:[209,40] cannot find symbol
+  symbol:   method getResetToken()
+  location: variable request of type com.wello.wellobackend.dto.requests.ResetPasswordRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/AuthController.java:[210,41] cannot find symbol
+  symbol:   method getNewPassword()
+  location: variable request of type com.wello.wellobackend.dto.requests.ResetPasswordRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/HistoryController.java:[53,24] cannot find symbol
+  symbol:   method getWeight()
+  location: variable request of type com.wello.wellobackend.dto.requests.HistoryRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/HistoryController.java:[54,24] cannot find symbol
+  symbol:   method getHeight()
+  location: variable request of type com.wello.wellobackend.dto.requests.HistoryRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/HistoryController.java:[55,24] cannot find symbol
+  symbol:   method getGoal()
+  location: variable request of type com.wello.wellobackend.dto.requests.HistoryRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/HistoryController.java:[56,24] cannot find symbol
+  symbol:   method getActivityLevel()
+  location: variable request of type com.wello.wellobackend.dto.requests.HistoryRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/HistoryController.java:[71,24] cannot find symbol
+  symbol:   method getWeight()
+  location: variable request of type com.wello.wellobackend.dto.requests.HistoryRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/HistoryController.java:[72,24] cannot find symbol
+  symbol:   method getHeight()
+  location: variable request of type com.wello.wellobackend.dto.requests.HistoryRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/ProfileController.java:[62,43] cannot find symbol
+  symbol:   method getBase64Image()
+  location: variable request of type com.wello.wellobackend.dto.requests.AvatarUploadRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/ProfileController.java:[62,79] cannot find symbol
+  symbol:   method getBase64Image()
+  location: variable request of type com.wello.wellobackend.dto.requests.AvatarUploadRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/ProfileController.java:[66,62] cannot find symbol
+  symbol:   method getBase64Image()
+  location: variable request of type com.wello.wellobackend.dto.requests.AvatarUploadRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/ProfileController.java:[84,43] cannot find symbol
+  symbol:   method getFullname()
+  location: variable request of type com.wello.wellobackend.dto.requests.UpdateFullnameRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/ProfileController.java:[84,76] cannot find symbol
+  symbol:   method getFullname()
+  location: variable request of type com.wello.wellobackend.dto.requests.UpdateFullnameRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/ProfileController.java:[88,58] cannot find symbol
+  symbol:   method getFullname()
+  location: variable request of type com.wello.wellobackend.dto.requests.UpdateFullnameRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/ProfileController.java:[106,43] cannot find symbol
+  symbol:   method getGender()
+  location: variable request of type com.wello.wellobackend.dto.requests.UpdateGenderRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/ProfileController.java:[110,56] cannot find symbol
+  symbol:   method getGender()
+  location: variable request of type com.wello.wellobackend.dto.requests.UpdateGenderRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/ProfileController.java:[128,43] cannot find symbol
+  symbol:   method getAge()
+  location: variable request of type com.wello.wellobackend.dto.requests.UpdateAgeRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/ProfileController.java:[132,53] cannot find symbol
+  symbol:   method getAge()
+  location: variable request of type com.wello.wellobackend.dto.requests.UpdateAgeRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/ProfileController.java:[150,43] cannot find symbol
+  symbol:   method getHeight()
+  location: variable request of type com.wello.wellobackend.dto.requests.UpdateHeightRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/ProfileController.java:[154,56] cannot find symbol
+  symbol:   method getHeight()
+  location: variable request of type com.wello.wellobackend.dto.requests.UpdateHeightRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/ProfileController.java:[172,43] cannot find symbol
+  symbol:   method getWeight()
+  location: variable request of type com.wello.wellobackend.dto.requests.UpdateWeightRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/ProfileController.java:[176,56] cannot find symbol
+  symbol:   method getWeight()
+  location: variable request of type com.wello.wellobackend.dto.requests.UpdateWeightRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/ProfileController.java:[194,43] cannot find symbol
+  symbol:   method getGoal()
+  location: variable request of type com.wello.wellobackend.dto.requests.UpdateGoalRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/ProfileController.java:[198,54] cannot find symbol
+  symbol:   method getGoal()
+  location: variable request of type com.wello.wellobackend.dto.requests.UpdateGoalRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/ProfileController.java:[216,43] cannot find symbol
+  symbol:   method getActivityLevel()
+  location: variable request of type com.wello.wellobackend.dto.requests.UpdateActivityLevelRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/ProfileController.java:[220,63] cannot find symbol
+  symbol:   method getActivityLevel()
+  location: variable request of type com.wello.wellobackend.dto.requests.UpdateActivityLevelRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/ProfileController.java:[265,32] cannot find symbol
+  symbol:   method getFcmToken()
+  location: variable user of type com.wello.wellobackend.dto.responses.UserInfoResponse
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/SurveyController.java:[42,68] cannot find symbol
+  symbol:   method getWeight()
+  location: variable request of type com.wello.wellobackend.dto.requests.BmiCalculationRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/SurveyController.java:[42,89] cannot find symbol
+  symbol:   method getHeight()
+  location: variable request of type com.wello.wellobackend.dto.requests.BmiCalculationRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/SurveyController.java:[48,24] cannot find symbol
+  symbol:   method getGoal()
+  location: variable request of type com.wello.wellobackend.dto.requests.BmiCalculationRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/SurveyController.java:[49,76] cannot find symbol
+  symbol:   method getGoal()
+  location: variable request of type com.wello.wellobackend.dto.requests.BmiCalculationRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/SurveyController.java:[52,47] constructor BmiCalculationResponse in class com.wello.wellobackend.dto.responses.BmiCalculationResponse cannot be applied to given types;
+  required: no arguments
+  found:    double,java.lang.String,java.lang.String,java.lang.String
+  reason: actual and formal argument lists differ in length
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/UserController.java:[30,21] cannot find symbol
+  symbol:   method isExists()
+  location: variable response of type com.wello.wellobackend.dto.responses.UserVerificationResponse
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/AuthServiceImpl.java:[121,55] cannot find symbol
+  symbol:   method getEmail()
+  location: variable request of type com.wello.wellobackend.dto.requests.AuthRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/AuthServiceImpl.java:[123,61] cannot find symbol
+  symbol:   method getPassword()
+  location: variable request of type com.wello.wellobackend.dto.requests.AuthRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/AuthServiceImpl.java:[123,81] cannot find symbol
+  symbol:   method getPassword()
+  location: variable user of type com.wello.wellobackend.model.User
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/AuthServiceImpl.java:[124,20] constructor AuthResponse in class com.wello.wellobackend.dto.responses.AuthResponse cannot be applied to given types;
+  required: no arguments
+  found:    boolean,java.lang.String,int,boolean
+  reason: actual and formal argument lists differ in length
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/AuthServiceImpl.java:[132,21] cannot find symbol
+  symbol:   method getIdUser()
+  location: variable user of type com.wello.wellobackend.model.User
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/AuthServiceImpl.java:[151,17] cannot find symbol
+  symbol:   method setGoogleId(java.lang.String)
+  location: variable user of type com.wello.wellobackend.model.User
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/AuthServiceImpl.java:[152,17] cannot find symbol
+  symbol:   method setEmail(java.lang.String)
+  location: variable user of type com.wello.wellobackend.model.User
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/AuthServiceImpl.java:[153,17] cannot find symbol
+  symbol:   method setAuthProvider(com.wello.wellobackend.enums.AuthProvider)
+  location: variable user of type com.wello.wellobackend.model.User
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/AuthServiceImpl.java:[163,21] cannot find symbol
+  symbol:   method getIdUser()
+  location: variable user of type com.wello.wellobackend.model.User
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/AuthServiceImpl.java:[223,13] cannot find symbol
+  symbol:   method setEmail(java.lang.String)
+  location: variable user of type com.wello.wellobackend.model.User
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/AuthServiceImpl.java:[224,13] cannot find symbol
+  symbol:   method setPassword(java.lang.String)
+  location: variable user of type com.wello.wellobackend.model.User
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/AuthServiceImpl.java:[225,13] cannot find symbol
+  symbol:   method setAuthProvider(com.wello.wellobackend.enums.AuthProvider)
+  location: variable user of type com.wello.wellobackend.model.User
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/AuthServiceImpl.java:[229,27] cannot find symbol
+  symbol:   method getIdUser()
+  location: variable user of type com.wello.wellobackend.model.User
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/AuthServiceImpl.java:[243,17] cannot find symbol
+  symbol:   method getAuthProvider()
+  location: variable user of type com.wello.wellobackend.model.User
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/AuthServiceImpl.java:[243,66] cannot find symbol
+  symbol:   method getPassword()
+  location: variable user of type com.wello.wellobackend.model.User
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/AuthServiceImpl.java:[272,38] cannot find symbol
+  symbol:   method getIdUser()
+  location: variable user of type com.wello.wellobackend.model.User
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/AuthServiceImpl.java:[310,17] cannot find symbol
+  symbol:   method setPassword(java.lang.String)
+  location: variable user of type com.wello.wellobackend.model.User
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[71,68] cannot find symbol
+  symbol:   method getUserId()
+  location: variable request of type com.wello.wellobackend.dto.requests.AddFavoriteFoodRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[73,65] cannot find symbol
+  symbol:   method getIdUser()
+  location: variable user of type com.wello.wellobackend.model.User
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[77,33] cannot find symbol
+  symbol:   method setUser(com.wello.wellobackend.model.User)
+  location: variable favorite of type com.wello.wellobackend.model.Favorite
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[78,57] cannot find symbol
+  symbol:   method getFavoriteName()
+  location: variable request of type com.wello.wellobackend.dto.requests.AddFavoriteFoodRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[79,53] cannot find symbol
+  symbol:   method getMealType()
+  location: variable request of type com.wello.wellobackend.dto.requests.AddFavoriteFoodRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[83,78] cannot find symbol
+  symbol:   method getId()
+  location: variable savedFavorite of type com.wello.wellobackend.model.Favorite
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[87,86] cannot find symbol
+  symbol:   method getItems()
+  location: variable request of type com.wello.wellobackend.dto.requests.AddFavoriteFoodRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[88,76] cannot find symbol
+  symbol:   method getFoodId()
+  location: variable itemReq of type com.wello.wellobackend.dto.requests.AddFavoriteFoodRequest.FoodItemRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[90,99] cannot find symbol
+  symbol:   method getFoodId()
+  location: variable itemReq of type com.wello.wellobackend.dto.requests.AddFavoriteFoodRequest.FoodItemRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[93,37] cannot find symbol
+  symbol:   method setFavorite(com.wello.wellobackend.model.Favorite)
+  location: variable item of type com.wello.wellobackend.model.FavoriteItem
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[94,37] cannot find symbol
+  symbol:   method setFood(com.wello.wellobackend.model.Food)
+  location: variable item of type com.wello.wellobackend.model.FavoriteItem
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[95,60] cannot find symbol
+  symbol:   method getAmountGrams()
+  location: variable itemReq of type com.wello.wellobackend.dto.requests.AddFavoriteFoodRequest.FoodItemRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[100,38] cannot find symbol
+  symbol:   method setItems(java.util.List<com.wello.wellobackend.model.FavoriteItem>)
+  location: variable savedFavorite of type com.wello.wellobackend.model.Favorite
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[113,60] cannot find symbol
+  symbol:   method getUserId()
+  location: variable request of type com.wello.wellobackend.dto.requests.UpdateFavoriteFoodRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[116,79] cannot find symbol
+  symbol:   method getFavoriteId()
+  location: variable request of type com.wello.wellobackend.dto.requests.UpdateFavoriteFoodRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[120,49] cannot find symbol
+  symbol:   method getFavoriteName()
+  location: variable request of type com.wello.wellobackend.dto.requests.UpdateFavoriteFoodRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[121,45] cannot find symbol
+  symbol:   method getMealType()
+  location: variable request of type com.wello.wellobackend.dto.requests.UpdateFavoriteFoodRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[124,25] cannot find symbol
+  symbol:   method getItems()
+  location: variable favorite of type com.wello.wellobackend.model.Favorite
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[127,78] cannot find symbol
+  symbol:   method getItems()
+  location: variable request of type com.wello.wellobackend.dto.requests.UpdateFavoriteFoodRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[128,68] cannot find symbol
+  symbol:   method getFoodId()
+  location: variable itemReq of type com.wello.wellobackend.dto.requests.AddFavoriteFoodRequest.FoodItemRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[130,91] cannot find symbol
+  symbol:   method getFoodId()
+  location: variable itemReq of type com.wello.wellobackend.dto.requests.AddFavoriteFoodRequest.FoodItemRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[133,29] cannot find symbol
+  symbol:   method setFavorite(com.wello.wellobackend.model.Favorite)
+  location: variable item of type com.wello.wellobackend.model.FavoriteItem
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[134,29] cannot find symbol
+  symbol:   method setFood(com.wello.wellobackend.model.Food)
+  location: variable item of type com.wello.wellobackend.model.FavoriteItem
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[135,52] cannot find symbol
+  symbol:   method getAmountGrams()
+  location: variable itemReq of type com.wello.wellobackend.dto.requests.AddFavoriteFoodRequest.FoodItemRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[136,33] cannot find symbol
+  symbol:   method getItems()
+  location: variable favorite of type com.wello.wellobackend.model.Favorite
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[165,60] cannot find symbol
+  symbol:   method getUserId()
+  location: variable request of type com.wello.wellobackend.dto.requests.LogFavoriteRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[168,79] cannot find symbol
+  symbol:   method getFavoriteId()
+  location: variable request of type com.wello.wellobackend.dto.requests.LogFavoriteRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[171,44] cannot find symbol
+  symbol:   method getMealType()
+  location: variable request of type com.wello.wellobackend.dto.requests.LogFavoriteRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[171,76] cannot find symbol
+  symbol:   method getMealType()
+  location: variable request of type com.wello.wellobackend.dto.requests.LogFavoriteRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[171,101] cannot find symbol
+  symbol:   method getMealType()
+  location: variable favorite of type com.wello.wellobackend.model.Favorite
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[180,85] cannot find symbol
+  symbol:   method getDate()
+  location: variable request of type com.wello.wellobackend.dto.requests.LogFavoriteRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[183,50] cannot find symbol
+  symbol:   method getItems()
+  location: variable favorite of type com.wello.wellobackend.model.Favorite
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[184,41] cannot find symbol
+  symbol:   method getFood()
+  location: variable item of type com.wello.wellobackend.model.FavoriteItem
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[185,45] cannot find symbol
+  symbol:   method getAmountGrams()
+  location: variable item of type com.wello.wellobackend.model.FavoriteItem
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[187,51] cannot find symbol
+  symbol:   method getCaloriesPer100g()
+  location: variable food of type com.wello.wellobackend.model.Food
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[188,46] cannot find symbol
+  symbol:   method getProteinPer100g()
+  location: variable food of type com.wello.wellobackend.model.Food
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[189,44] cannot find symbol
+  symbol:   method getCarbsPer100g()
+  location: variable food of type com.wello.wellobackend.model.Food
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[190,42] cannot find symbol
+  symbol:   method getFatPer100g()
+  location: variable food of type com.wello.wellobackend.model.Food
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[193,32] cannot find symbol
+  symbol:   method setUser(com.wello.wellobackend.model.User)
+  location: variable tracker of type com.wello.wellobackend.model.NutritionTracker
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[194,32] cannot find symbol
+  symbol:   method setDate(java.time.LocalDateTime)
+  location: variable tracker of type com.wello.wellobackend.model.NutritionTracker
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[195,32] cannot find symbol
+  symbol:   method setFood(com.wello.wellobackend.model.Food)
+  location: variable tracker of type com.wello.wellobackend.model.NutritionTracker
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[196,52] cannot find symbol
+  symbol:   method getAmountGrams()
+  location: variable item of type com.wello.wellobackend.model.FavoriteItem
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[197,32] cannot find symbol
+  symbol:   method setMealType(com.wello.wellobackend.enums.MealType)
+  location: variable tracker of type com.wello.wellobackend.model.NutritionTracker
+[INFO] 100 errors 
+[INFO] -------------------------------------------------------------
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  11.576 s
+[INFO] Finished at: 2025-12-25T13:04:10+07:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.14.0:compile (default-compile) on project wellobackend: Compilation failure: Compilation failure: 
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/NutritionTrackerServiceImpl.java:[173,9] java.lang.Override is not a repeatable annotation interface
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/AuthController.java:[35,26] cannot find symbol
+[ERROR]   symbol:   method isSuccess()
+[ERROR]   location: variable response of type com.wello.wellobackend.dto.responses.AuthResponse
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/AuthController.java:[44,27] constructor AuthResponse in class com.wello.wellobackend.dto.responses.AuthResponse cannot be applied to given types;
+[ERROR]   required: no arguments
+[ERROR]   found:    boolean,java.lang.String,int,boolean
+[ERROR]   reason: actual and formal argument lists differ in length
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/AuthController.java:[51,72] cannot find symbol
+[ERROR]   symbol:   method getIdToken()
+[ERROR]   location: variable request of type com.wello.wellobackend.dto.requests.GoogleLoginRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/AuthController.java:[57,27] constructor AuthResponse in class com.wello.wellobackend.dto.responses.AuthResponse cannot be applied to given types;
+[ERROR]   required: no arguments
+[ERROR]   found:    boolean,java.lang.String,int,boolean
+[ERROR]   reason: actual and formal argument lists differ in length
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/AuthController.java:[172,35] cannot find symbol
+[ERROR]   symbol:   method getEmail()
+[ERROR]   location: variable request of type com.wello.wellobackend.dto.requests.ForgotPasswordRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/AuthController.java:[183,38] constructor PasswordResetResponse in class com.wello.wellobackend.dto.responses.PasswordResetResponse cannot be applied to given types;
+[ERROR]   required: boolean,java.lang.String
+[ERROR]   found:    boolean,java.lang.String,<nulltype>,java.lang.String
+[ERROR]   reason: actual and formal argument lists differ in length
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/AuthController.java:[209,40] cannot find symbol
+[ERROR]   symbol:   method getResetToken()
+[ERROR]   location: variable request of type com.wello.wellobackend.dto.requests.ResetPasswordRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/AuthController.java:[210,41] cannot find symbol
+[ERROR]   symbol:   method getNewPassword()
+[ERROR]   location: variable request of type com.wello.wellobackend.dto.requests.ResetPasswordRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/HistoryController.java:[53,24] cannot find symbol
+[ERROR]   symbol:   method getWeight()
+[ERROR]   location: variable request of type com.wello.wellobackend.dto.requests.HistoryRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/HistoryController.java:[54,24] cannot find symbol
+[ERROR]   symbol:   method getHeight()
+[ERROR]   location: variable request of type com.wello.wellobackend.dto.requests.HistoryRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/HistoryController.java:[55,24] cannot find symbol
+[ERROR]   symbol:   method getGoal()
+[ERROR]   location: variable request of type com.wello.wellobackend.dto.requests.HistoryRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/HistoryController.java:[56,24] cannot find symbol
+[ERROR]   symbol:   method getActivityLevel()
+[ERROR]   location: variable request of type com.wello.wellobackend.dto.requests.HistoryRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/HistoryController.java:[71,24] cannot find symbol
+[ERROR]   symbol:   method getWeight()
+[ERROR]   location: variable request of type com.wello.wellobackend.dto.requests.HistoryRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/HistoryController.java:[72,24] cannot find symbol
+[ERROR]   symbol:   method getHeight()
+[ERROR]   location: variable request of type com.wello.wellobackend.dto.requests.HistoryRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/ProfileController.java:[62,43] cannot find symbol
+[ERROR]   symbol:   method getBase64Image()
+[ERROR]   location: variable request of type com.wello.wellobackend.dto.requests.AvatarUploadRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/ProfileController.java:[62,79] cannot find symbol
+[ERROR]   symbol:   method getBase64Image()
+[ERROR]   location: variable request of type com.wello.wellobackend.dto.requests.AvatarUploadRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/ProfileController.java:[66,62] cannot find symbol
+[ERROR]   symbol:   method getBase64Image()
+[ERROR]   location: variable request of type com.wello.wellobackend.dto.requests.AvatarUploadRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/ProfileController.java:[84,43] cannot find symbol
+[ERROR]   symbol:   method getFullname()
+[ERROR]   location: variable request of type com.wello.wellobackend.dto.requests.UpdateFullnameRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/ProfileController.java:[84,76] cannot find symbol
+[ERROR]   symbol:   method getFullname()
+[ERROR]   location: variable request of type com.wello.wellobackend.dto.requests.UpdateFullnameRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/ProfileController.java:[88,58] cannot find symbol
+[ERROR]   symbol:   method getFullname()
+[ERROR]   location: variable request of type com.wello.wellobackend.dto.requests.UpdateFullnameRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/ProfileController.java:[106,43] cannot find symbol
+[ERROR]   symbol:   method getGender()
+[ERROR]   location: variable request of type com.wello.wellobackend.dto.requests.UpdateGenderRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/ProfileController.java:[110,56] cannot find symbol
+[ERROR]   symbol:   method getGender()
+[ERROR]   location: variable request of type com.wello.wellobackend.dto.requests.UpdateGenderRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/ProfileController.java:[128,43] cannot find symbol
+[ERROR]   symbol:   method getAge()
+[ERROR]   location: variable request of type com.wello.wellobackend.dto.requests.UpdateAgeRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/ProfileController.java:[132,53] cannot find symbol
+[ERROR]   symbol:   method getAge()
+[ERROR]   location: variable request of type com.wello.wellobackend.dto.requests.UpdateAgeRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/ProfileController.java:[150,43] cannot find symbol
+[ERROR]   symbol:   method getHeight()
+[ERROR]   location: variable request of type com.wello.wellobackend.dto.requests.UpdateHeightRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/ProfileController.java:[154,56] cannot find symbol
+[ERROR]   symbol:   method getHeight()
+[ERROR]   location: variable request of type com.wello.wellobackend.dto.requests.UpdateHeightRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/ProfileController.java:[172,43] cannot find symbol
+[ERROR]   symbol:   method getWeight()
+[ERROR]   location: variable request of type com.wello.wellobackend.dto.requests.UpdateWeightRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/ProfileController.java:[176,56] cannot find symbol
+[ERROR]   symbol:   method getWeight()
+[ERROR]   location: variable request of type com.wello.wellobackend.dto.requests.UpdateWeightRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/ProfileController.java:[194,43] cannot find symbol
+[ERROR]   symbol:   method getGoal()
+[ERROR]   location: variable request of type com.wello.wellobackend.dto.requests.UpdateGoalRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/ProfileController.java:[198,54] cannot find symbol
+[ERROR]   symbol:   method getGoal()
+[ERROR]   location: variable request of type com.wello.wellobackend.dto.requests.UpdateGoalRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/ProfileController.java:[216,43] cannot find symbol
+[ERROR]   symbol:   method getActivityLevel()
+[ERROR]   location: variable request of type com.wello.wellobackend.dto.requests.UpdateActivityLevelRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/ProfileController.java:[220,63] cannot find symbol
+[ERROR]   symbol:   method getActivityLevel()
+[ERROR]   location: variable request of type com.wello.wellobackend.dto.requests.UpdateActivityLevelRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/ProfileController.java:[265,32] cannot find symbol
+[ERROR]   symbol:   method getFcmToken()
+[ERROR]   location: variable user of type com.wello.wellobackend.dto.responses.UserInfoResponse
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/SurveyController.java:[42,68] cannot find symbol
+[ERROR]   symbol:   method getWeight()
+[ERROR]   location: variable request of type com.wello.wellobackend.dto.requests.BmiCalculationRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/SurveyController.java:[42,89] cannot find symbol
+[ERROR]   symbol:   method getHeight()
+[ERROR]   location: variable request of type com.wello.wellobackend.dto.requests.BmiCalculationRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/SurveyController.java:[48,24] cannot find symbol
+[ERROR]   symbol:   method getGoal()
+[ERROR]   location: variable request of type com.wello.wellobackend.dto.requests.BmiCalculationRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/SurveyController.java:[49,76] cannot find symbol
+[ERROR]   symbol:   method getGoal()
+[ERROR]   location: variable request of type com.wello.wellobackend.dto.requests.BmiCalculationRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/SurveyController.java:[52,47] constructor BmiCalculationResponse in class com.wello.wellobackend.dto.responses.BmiCalculationResponse cannot be applied to given types;
+[ERROR]   required: no arguments
+[ERROR]   found:    double,java.lang.String,java.lang.String,java.lang.String
+[ERROR]   reason: actual and formal argument lists differ in length
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/controller/UserController.java:[30,21] cannot find symbol
+[ERROR]   symbol:   method isExists()
+[ERROR]   location: variable response of type com.wello.wellobackend.dto.responses.UserVerificationResponse
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/AuthServiceImpl.java:[121,55] cannot find symbol
+[ERROR]   symbol:   method getEmail()
+[ERROR]   location: variable request of type com.wello.wellobackend.dto.requests.AuthRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/AuthServiceImpl.java:[123,61] cannot find symbol
+[ERROR]   symbol:   method getPassword()
+[ERROR]   location: variable request of type com.wello.wellobackend.dto.requests.AuthRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/AuthServiceImpl.java:[123,81] cannot find symbol
+[ERROR]   symbol:   method getPassword()
+[ERROR]   location: variable user of type com.wello.wellobackend.model.User
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/AuthServiceImpl.java:[124,20] constructor AuthResponse in class com.wello.wellobackend.dto.responses.AuthResponse cannot be applied to given types;
+[ERROR]   required: no arguments
+[ERROR]   found:    boolean,java.lang.String,int,boolean
+[ERROR]   reason: actual and formal argument lists differ in length
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/AuthServiceImpl.java:[132,21] cannot find symbol
+[ERROR]   symbol:   method getIdUser()
+[ERROR]   location: variable user of type com.wello.wellobackend.model.User
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/AuthServiceImpl.java:[151,17] cannot find symbol
+[ERROR]   symbol:   method setGoogleId(java.lang.String)
+[ERROR]   location: variable user of type com.wello.wellobackend.model.User
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/AuthServiceImpl.java:[152,17] cannot find symbol
+[ERROR]   symbol:   method setEmail(java.lang.String)
+[ERROR]   location: variable user of type com.wello.wellobackend.model.User
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/AuthServiceImpl.java:[153,17] cannot find symbol
+[ERROR]   symbol:   method setAuthProvider(com.wello.wellobackend.enums.AuthProvider)
+[ERROR]   location: variable user of type com.wello.wellobackend.model.User
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/AuthServiceImpl.java:[163,21] cannot find symbol
+[ERROR]   symbol:   method getIdUser()
+[ERROR]   location: variable user of type com.wello.wellobackend.model.User
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/AuthServiceImpl.java:[223,13] cannot find symbol
+[ERROR]   symbol:   method setEmail(java.lang.String)
+[ERROR]   location: variable user of type com.wello.wellobackend.model.User
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/AuthServiceImpl.java:[224,13] cannot find symbol
+[ERROR]   symbol:   method setPassword(java.lang.String)
+[ERROR]   location: variable user of type com.wello.wellobackend.model.User
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/AuthServiceImpl.java:[225,13] cannot find symbol
+[ERROR]   symbol:   method setAuthProvider(com.wello.wellobackend.enums.AuthProvider)
+[ERROR]   location: variable user of type com.wello.wellobackend.model.User
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/AuthServiceImpl.java:[229,27] cannot find symbol
+[ERROR]   symbol:   method getIdUser()
+[ERROR]   location: variable user of type com.wello.wellobackend.model.User
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/AuthServiceImpl.java:[243,17] cannot find symbol
+[ERROR]   symbol:   method getAuthProvider()
+[ERROR]   location: variable user of type com.wello.wellobackend.model.User
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/AuthServiceImpl.java:[243,66] cannot find symbol
+[ERROR]   symbol:   method getPassword()
+[ERROR]   location: variable user of type com.wello.wellobackend.model.User
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/AuthServiceImpl.java:[272,38] cannot find symbol
+[ERROR]   symbol:   method getIdUser()
+[ERROR]   location: variable user of type com.wello.wellobackend.model.User
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/AuthServiceImpl.java:[310,17] cannot find symbol
+[ERROR]   symbol:   method setPassword(java.lang.String)
+[ERROR]   location: variable user of type com.wello.wellobackend.model.User
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[71,68] cannot find symbol
+[ERROR]   symbol:   method getUserId()
+[ERROR]   location: variable request of type com.wello.wellobackend.dto.requests.AddFavoriteFoodRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[73,65] cannot find symbol
+[ERROR]   symbol:   method getIdUser()
+[ERROR]   location: variable user of type com.wello.wellobackend.model.User
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[77,33] cannot find symbol
+[ERROR]   symbol:   method setUser(com.wello.wellobackend.model.User)
+[ERROR]   location: variable favorite of type com.wello.wellobackend.model.Favorite
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[78,57] cannot find symbol
+[ERROR]   symbol:   method getFavoriteName()
+[ERROR]   location: variable request of type com.wello.wellobackend.dto.requests.AddFavoriteFoodRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[79,53] cannot find symbol
+[ERROR]   symbol:   method getMealType()
+[ERROR]   location: variable request of type com.wello.wellobackend.dto.requests.AddFavoriteFoodRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[83,78] cannot find symbol
+[ERROR]   symbol:   method getId()
+[ERROR]   location: variable savedFavorite of type com.wello.wellobackend.model.Favorite
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[87,86] cannot find symbol
+[ERROR]   symbol:   method getItems()
+[ERROR]   location: variable request of type com.wello.wellobackend.dto.requests.AddFavoriteFoodRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[88,76] cannot find symbol
+[ERROR]   symbol:   method getFoodId()
+[ERROR]   location: variable itemReq of type com.wello.wellobackend.dto.requests.AddFavoriteFoodRequest.FoodItemRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[90,99] cannot find symbol
+[ERROR]   symbol:   method getFoodId()
+[ERROR]   location: variable itemReq of type com.wello.wellobackend.dto.requests.AddFavoriteFoodRequest.FoodItemRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[93,37] cannot find symbol
+[ERROR]   symbol:   method setFavorite(com.wello.wellobackend.model.Favorite)
+[ERROR]   location: variable item of type com.wello.wellobackend.model.FavoriteItem
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[94,37] cannot find symbol
+[ERROR]   symbol:   method setFood(com.wello.wellobackend.model.Food)
+[ERROR]   location: variable item of type com.wello.wellobackend.model.FavoriteItem
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[95,60] cannot find symbol
+[ERROR]   symbol:   method getAmountGrams()
+[ERROR]   location: variable itemReq of type com.wello.wellobackend.dto.requests.AddFavoriteFoodRequest.FoodItemRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[100,38] cannot find symbol
+[ERROR]   symbol:   method setItems(java.util.List<com.wello.wellobackend.model.FavoriteItem>)
+[ERROR]   location: variable savedFavorite of type com.wello.wellobackend.model.Favorite
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[113,60] cannot find symbol
+[ERROR]   symbol:   method getUserId()
+[ERROR]   location: variable request of type com.wello.wellobackend.dto.requests.UpdateFavoriteFoodRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[116,79] cannot find symbol
+[ERROR]   symbol:   method getFavoriteId()
+[ERROR]   location: variable request of type com.wello.wellobackend.dto.requests.UpdateFavoriteFoodRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[120,49] cannot find symbol
+[ERROR]   symbol:   method getFavoriteName()
+[ERROR]   location: variable request of type com.wello.wellobackend.dto.requests.UpdateFavoriteFoodRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[121,45] cannot find symbol
+[ERROR]   symbol:   method getMealType()
+[ERROR]   location: variable request of type com.wello.wellobackend.dto.requests.UpdateFavoriteFoodRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[124,25] cannot find symbol
+[ERROR]   symbol:   method getItems()
+[ERROR]   location: variable favorite of type com.wello.wellobackend.model.Favorite
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[127,78] cannot find symbol
+[ERROR]   symbol:   method getItems()
+[ERROR]   location: variable request of type com.wello.wellobackend.dto.requests.UpdateFavoriteFoodRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[128,68] cannot find symbol
+[ERROR]   symbol:   method getFoodId()
+[ERROR]   location: variable itemReq of type com.wello.wellobackend.dto.requests.AddFavoriteFoodRequest.FoodItemRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[130,91] cannot find symbol
+[ERROR]   symbol:   method getFoodId()
+[ERROR]   location: variable itemReq of type com.wello.wellobackend.dto.requests.AddFavoriteFoodRequest.FoodItemRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[133,29] cannot find symbol
+[ERROR]   symbol:   method setFavorite(com.wello.wellobackend.model.Favorite)
+[ERROR]   location: variable item of type com.wello.wellobackend.model.FavoriteItem
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[134,29] cannot find symbol
+[ERROR]   symbol:   method setFood(com.wello.wellobackend.model.Food)
+[ERROR]   location: variable item of type com.wello.wellobackend.model.FavoriteItem
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[135,52] cannot find symbol
+[ERROR]   symbol:   method getAmountGrams()
+[ERROR]   location: variable itemReq of type com.wello.wellobackend.dto.requests.AddFavoriteFoodRequest.FoodItemRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[136,33] cannot find symbol
+[ERROR]   symbol:   method getItems()
+[ERROR]   location: variable favorite of type com.wello.wellobackend.model.Favorite
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[165,60] cannot find symbol
+[ERROR]   symbol:   method getUserId()
+[ERROR]   location: variable request of type com.wello.wellobackend.dto.requests.LogFavoriteRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[168,79] cannot find symbol
+[ERROR]   symbol:   method getFavoriteId()
+[ERROR]   location: variable request of type com.wello.wellobackend.dto.requests.LogFavoriteRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[171,44] cannot find symbol
+[ERROR]   symbol:   method getMealType()
+[ERROR]   location: variable request of type com.wello.wellobackend.dto.requests.LogFavoriteRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[171,76] cannot find symbol
+[ERROR]   symbol:   method getMealType()
+[ERROR]   location: variable request of type com.wello.wellobackend.dto.requests.LogFavoriteRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[171,101] cannot find symbol
+[ERROR]   symbol:   method getMealType()
+[ERROR]   location: variable favorite of type com.wello.wellobackend.model.Favorite
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[180,85] cannot find symbol
+[ERROR]   symbol:   method getDate()
+[ERROR]   location: variable request of type com.wello.wellobackend.dto.requests.LogFavoriteRequest
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[183,50] cannot find symbol
+[ERROR]   symbol:   method getItems()
+[ERROR]   location: variable favorite of type com.wello.wellobackend.model.Favorite
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[184,41] cannot find symbol
+[ERROR]   symbol:   method getFood()
+[ERROR]   location: variable item of type com.wello.wellobackend.model.FavoriteItem
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[185,45] cannot find symbol
+[ERROR]   symbol:   method getAmountGrams()
+[ERROR]   location: variable item of type com.wello.wellobackend.model.FavoriteItem
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[187,51] cannot find symbol
+[ERROR]   symbol:   method getCaloriesPer100g()
+[ERROR]   location: variable food of type com.wello.wellobackend.model.Food
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[188,46] cannot find symbol
+[ERROR]   symbol:   method getProteinPer100g()
+[ERROR]   location: variable food of type com.wello.wellobackend.model.Food
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[189,44] cannot find symbol
+[ERROR]   symbol:   method getCarbsPer100g()
+[ERROR]   location: variable food of type com.wello.wellobackend.model.Food
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[190,42] cannot find symbol
+[ERROR]   symbol:   method getFatPer100g()
+[ERROR]   location: variable food of type com.wello.wellobackend.model.Food
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[193,32] cannot find symbol
+[ERROR]   symbol:   method setUser(com.wello.wellobackend.model.User)
+[ERROR]   location: variable tracker of type com.wello.wellobackend.model.NutritionTracker
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[194,32] cannot find symbol
+[ERROR]   symbol:   method setDate(java.time.LocalDateTime)
+[ERROR]   location: variable tracker of type com.wello.wellobackend.model.NutritionTracker
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[195,32] cannot find symbol
+[ERROR]   symbol:   method setFood(com.wello.wellobackend.model.Food)
+[ERROR]   location: variable tracker of type com.wello.wellobackend.model.NutritionTracker
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[196,52] cannot find symbol
+[ERROR]   symbol:   method getAmountGrams()
+[ERROR]   location: variable item of type com.wello.wellobackend.model.FavoriteItem
+[ERROR] /C:/TrungDoanDayNe/TieuLuanChuyenNganh/wello_backend/src/main/java/com/wello/wellobackend/service/FavoriteServiceImpl.java:[197,32] cannot find symbol
+[ERROR]   symbol:   method setMealType(com.wello.wellobackend.enums.MealType)
+[ERROR]   location: variable tracker of type com.wello.wellobackend.model.NutritionTracker
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
