@@ -3,7 +3,7 @@ package com.wello.wellobackend.service;
 import com.wello.wellobackend.dto.requests.LogFoodRequest;
 import com.wello.wellobackend.dto.responses.DailyNutritionResponse;
 import com.wello.wellobackend.dto.responses.LogFoodResponse;
-import com.wello.wellobackend.dto.responses.MealLogResponse;
+import com.wello.wellobackend.dto.responses.FoodLogResponse;
 import com.wello.wellobackend.dto.responses.WeeklyOverviewResponse;
 import com.wello.wellobackend.model.*;
 import com.wello.wellobackend.repository.*;
@@ -170,7 +170,7 @@ public class NutritionTrackerServiceImpl implements NutritionTrackerService {
         }
 
         @Override
-        public List<MealLogResponse> getDailyMealHistory(int userId, LocalDate date) {
+        public List<FoodLogResponse> getDailyFoodHistory(int userId, LocalDate date) {
                 User user = authRepository.findById(userId)
                                 .orElseThrow(() -> new RuntimeException("Người dùng không tồn tại"));
 
@@ -182,7 +182,7 @@ public class NutritionTrackerServiceImpl implements NutritionTrackerService {
 
                 return logs.stream()
                                 .filter(log -> log.getFood() != null) // Only food logs, not workout logs
-                                .map(log -> MealLogResponse.builder()
+                                .map(log -> FoodLogResponse.builder()
                                                 .id(log.getId())
                                                 .foodName(log.getFood().getFoodName())
                                                 .amountGrams(log.getAmountGrams())

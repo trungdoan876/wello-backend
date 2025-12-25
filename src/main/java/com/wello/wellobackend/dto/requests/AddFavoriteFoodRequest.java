@@ -12,10 +12,9 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UpdateFavoriteComboRequest {
+public class AddFavoriteFoodRequest {
     private int userId;
-    private int favoriteId;
     private String favoriteName;
     private MealType mealType;
-    private List<AddFavoriteComboRequest.FoodItemRequest> items;
+    private List<FoodItemRequest> items;
 }

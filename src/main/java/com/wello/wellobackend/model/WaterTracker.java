@@ -2,7 +2,6 @@ package com.wello.wellobackend.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import java.util.Date;
 
 @Entity
 @Table(name = "water_tracker")
