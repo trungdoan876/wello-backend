@@ -1,24 +1,19 @@
 package com.wello.wellobackend.repository;
 
 import com.wello.wellobackend.model.Favorite;
-import com.wello.wellobackend.model.User;
+import com.wello.wellobackend.model.FavoriteItem;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
-public interface FavoriteRepository extends JpaRepository<Favorite, Integer> {
-    List<Favorite> findByUser(User user);
-
-    List<Favorite> findByUserAndFavoriteNameContainingIgnoreCase(User user, String favoriteName);
+public interface FavoriteItemRepository extends JpaRepository<FavoriteItem, Integer> {
+    List<FavoriteItem> findByFavorite(Favorite favorite);
 
     @Transactional
     @Modifying
-    void deleteByIdAndUser(int id, User user);
-
-    Optional<Favorite> findByIdAndUser(int id, User user);
+    void deleteByFavorite(Favorite favorite);
 }

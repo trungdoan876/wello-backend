@@ -12,10 +12,9 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class LogFoodRequest {
+public class LogFavoriteRequest {
     private int userId;
-    private int foodId;
-    private int amountGrams;
+    private int favoriteId;
     private LocalDate date;
-    private MealType mealType;
+    private MealType mealType; // Nếu null sẽ dùng mealType mặc định của món yêu thích
 }

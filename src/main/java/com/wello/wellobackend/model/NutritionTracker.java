@@ -32,14 +32,10 @@ public class NutritionTracker extends HealthTracker {
     @Column(name = "meal_type")
     private MealType mealType;
 
-    // Optional overrides when logging from favorites or manual edits
-    @Column(name = "food_name_override")
-    private String foodNameOverride;
-
-    @Column(name = "calories_override")
-    private Integer caloriesOverride;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_food")
     private Food food;
+
+    @Column(name = "favorite_name")
+    private String favoriteName;
 }

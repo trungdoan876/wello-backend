@@ -1,7 +1,10 @@
 package com.wello.wellobackend.controller;
 
-import com.wello.wellobackend.dto.requests.AddFavoriteRequest;
-import com.wello.wellobackend.dto.responses.FavoriteResponse;
+import com.wello.wellobackend.dto.requests.AddFavoriteComboRequest;
+import com.wello.wellobackend.dto.requests.LogFavoriteRequest;
+import com.wello.wellobackend.dto.requests.UpdateFavoriteComboRequest;
+import com.wello.wellobackend.dto.responses.FavoriteComboResponse;
+import com.wello.wellobackend.dto.responses.LogFoodResponse;
 import com.wello.wellobackend.service.FavoriteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,15 +20,34 @@ public class FavoriteController {
     private FavoriteService favoriteService;
 
     @GetMapping("/my-favorites")
-    public ResponseEntity<List<FavoriteResponse>> getMyFavorites(
+    public ResponseEntity<List<FavoriteComboResponse>> getMyFavorites(
             @RequestParam int userId) {
         return ResponseEntity.ok(favoriteService.getFavoritesByUser(userId));
     }
 
-    @PostMapping("/add")
-    public ResponseEntity<FavoriteResponse> addFavorite(
-            @RequestBody AddFavoriteRequest request) {
-        return ResponseEntity.ok(favoriteService.addFavorite(request));
+    @GetMapping("/{favoriteId}")
+    public ResponseEntity<FavoriteComboResponse> getFavoriteById(
+            @RequestParam int userId,
+            @PathVariable int favoriteId) {
+        return ResponseEntity.ok(favoriteService.getFavoriteById(userId, favoriteId));
+    }
+
+    @PostMapping("/add-combo")
+    public ResponseEntity<FavoriteComboResponse> addFavoriteCombo(
+            @RequestBody AddFavoriteComboRequest request) {
+        return ResponseEntity.ok(favoriteService.addFavoriteCombo(request));
+    }
+
+    @PutMapping("/update-combo")
+    public ResponseEntity<FavoriteComboResponse> updateFavoriteCombo(
+            @RequestBody UpdateFavoriteComboRequest request) {
+        return ResponseEntity.ok(favoriteService.updateFavoriteCombo(request));
+    }
+
+    @PostMapping("/log")
+    public ResponseEntity<LogFoodResponse> logFavorite(
+            @RequestBody LogFavoriteRequest request) {
+        return ResponseEntity.ok(favoriteService.logFavorite(request));
     }
 
     @DeleteMapping("/delete/{favoriteId}")
@@ -37,7 +59,7 @@ public class FavoriteController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<FavoriteResponse>> searchFavorites(
+    public ResponseEntity<List<FavoriteComboResponse>> searchFavorites(
             @RequestParam int userId,
             @RequestParam String query) {
         return ResponseEntity.ok(favoriteService.searchFavorites(userId, query));
