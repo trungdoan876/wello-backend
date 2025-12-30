@@ -1,5 +1,7 @@
 package com.wello.wellobackend.controller;
 
+import com.wello.wellobackend.dto.requests.FoodPreviewRequest;
+import com.wello.wellobackend.dto.responses.FoodPreviewResponse;
 import com.wello.wellobackend.dto.responses.FoodResponse;
 import com.wello.wellobackend.service.FoodService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +28,8 @@ public class FoodController {
     }
 
     @PostMapping("/preview")
-    public ResponseEntity<com.wello.wellobackend.dto.responses.FoodPreviewResponse> previewFood(
-            @RequestBody com.wello.wellobackend.dto.requests.FoodPreviewRequest request) {
+    public ResponseEntity<FoodPreviewResponse> previewFood(
+            @RequestBody FoodPreviewRequest request) {
         return ResponseEntity.ok(foodService.previewFood(request));
     }
 }
