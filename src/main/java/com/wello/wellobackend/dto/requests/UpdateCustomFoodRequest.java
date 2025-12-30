@@ -1,4 +1,4 @@
-package com.wello.wellobackend.dto.responses;
+package com.wello.wellobackend.dto.requests;
 
 import com.wello.wellobackend.enums.MealType;
 import lombok.AllArgsConstructor;
@@ -10,12 +10,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class FavoriteResponse {
-    private int id;
+public class UpdateCustomFoodRequest {
+    private int userId;
+    private int favoriteId;
     private String foodName;
-    private int calories;
-    private double protein;
-    private double carbs;
-    private double fat;
+    private int caloriesPer100g;
+    private double proteinPer100g;
+    private double carbsPer100g;
+    private double fatPer100g;
     private MealType mealType;
 }

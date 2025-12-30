@@ -6,16 +6,16 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class AddFavoriteRequest {
+public class UpdateFavoriteFoodRequest {
     private int userId;
-    private String foodName;
-    private int caloriesPer100g;
-    private double proteinPer100g;
-    private double carbsPer100g;
-    private double fatPer100g;
+    private int favoriteId;
+    private String favoriteName;
     private MealType mealType;
+    private List<FoodItemRequest> items;
 }

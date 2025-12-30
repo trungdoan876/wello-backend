@@ -7,6 +7,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "favorites")
@@ -22,22 +25,21 @@ public class Favorite implements Serializable {
     @JoinColumn(name = "id_user", nullable = false)
     private User user;
 
-    @Column(name = "food_name", nullable = false)
-    private String foodName;
+    @Column(name = "favorite_name", nullable = false)
+    private String favoriteName;
 
-    @Column(name = "calories_per_100g")
-    private int caloriesPer100g;
-
-    @Column(name = "protein_per_100g")
-    private double proteinPer100g;
-
-    @Column(name = "carbs_per_100g")
-    private double carbsPer100g;
-
-    @Column(name = "fat_per_100g")
-    private double fatPer100g;
+    @OneToMany(mappedBy = "favorite", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<FavoriteItem> items = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
     @Column(name = "meal_type")
     private MealType mealType;
+
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+    }
 }
