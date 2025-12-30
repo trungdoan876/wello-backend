@@ -3,7 +3,7 @@ package com.wello.wellobackend.service;
 import com.wello.wellobackend.dto.requests.LogFoodRequest;
 import com.wello.wellobackend.dto.responses.DailyNutritionResponse;
 import com.wello.wellobackend.dto.responses.LogFoodResponse;
-import com.wello.wellobackend.dto.responses.MealLogResponse;
+import com.wello.wellobackend.dto.responses.FoodLogResponse;
 import com.wello.wellobackend.dto.responses.WeeklyOverviewResponse;
 
 import java.time.LocalDate;
@@ -16,5 +16,5 @@ public interface NutritionTrackerService {
 
         LogFoodResponse logFood(LogFoodRequest request);
 
-        List<MealLogResponse> getDailyMealHistory(int userId, LocalDate date);
+        List<FoodLogResponse> getDailyFoodHistory(int userId, LocalDate date);
 }

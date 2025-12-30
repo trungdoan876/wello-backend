@@ -6,16 +6,18 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class FavoriteResponse {
+public class FavoriteFoodDetailResponse {
     private int id;
-    private String foodName;
-    private int calories;
-    private double protein;
-    private double carbs;
-    private double fat;
+    private String favoriteName;
     private MealType mealType;
+    private List<FoodItemDetail> items;
+    private NutritionSummary totalNutrition;
+    private LocalDateTime createdAt;
 }

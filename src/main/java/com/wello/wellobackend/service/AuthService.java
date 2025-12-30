@@ -4,10 +4,7 @@ import com.wello.wellobackend.dto.requests.AuthRequest;
 import com.wello.wellobackend.dto.responses.AuthResponse;
 import com.wello.wellobackend.dto.responses.OtpVerificationResult;
 
-import java.util.Map;
-
 public interface AuthService {
-    // ============ LOGIN ============
     AuthResponse login(AuthRequest request);
 
     AuthResponse loginWithGoogle(String idToken) throws Exception;
