@@ -14,7 +14,7 @@ public interface ProfileService {
 
     List<History> getProfileHistory(int userId);
 
-    UserVerificationResponse verifyUser(int userId);
+    UserVerificationResponse verifyUser(int userId, String email);
 
     UserInfoResponse getUserInfo(int userId);
 
@@ -35,6 +35,7 @@ public interface ProfileService {
     void updateGoal(int userId, com.wello.wellobackend.enums.Goal goal);
 
     void updateActivityLevel(int userId, com.wello.wellobackend.enums.ActivityLevel activityLevel);
+
     void updateFcmToken(int userId, String fcmToken);
 
     void testPushNotification(int userId);
