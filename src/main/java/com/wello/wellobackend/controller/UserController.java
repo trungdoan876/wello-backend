@@ -25,8 +25,9 @@ public class UserController {
 
     @GetMapping("/verify")
     public ResponseEntity<UserVerificationResponse> verifyUser(
-            @RequestParam int userId) {
-        UserVerificationResponse response = profileService.verifyUser(userId);
+            @RequestParam int userId,
+            @RequestParam String email) {
+        UserVerificationResponse response = profileService.verifyUser(userId, email);
         if (response.isExists()) {
             return ResponseEntity.ok(response);
         } else {

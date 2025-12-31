@@ -128,19 +128,27 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     @Override
-    public UserVerificationResponse verifyUser(int userId) {
-        boolean exists = authRepository.existsById(userId);
-        if (exists) {
-            return UserVerificationResponse.builder()
-                    .exists(true)
-                    .userId(userId)
-                    .build();
-        } else {
+    public UserVerificationResponse verifyUser(int userId, String email) {
+        // Kiểm tra xem userId có tồn tại không
+        boolean userExists = authRepository.existsById(userId);
+
+        if (!userExists) {
             return UserVerificationResponse.builder()
                     .exists(false)
                     .message("Người dùng không tồn tại")
                     .build();
         }
+
+        // Kiểm tra xem email có khớp với userId không (sử dụng query tồn tại để tránh
+        // fetching toàn bộ object)
+        boolean isValid = authRepository.existsByIdUserAndEmailIgnoreCase(userId, email);
+
+        return UserVerificationResponse.builder()
+                .exists(true)
+                .userId(userId)
+                .valid(isValid)
+                .message(isValid ? "UserId và email khớp" : "UserId và email không khớp")
+                .build();
     }
 
     @Override
