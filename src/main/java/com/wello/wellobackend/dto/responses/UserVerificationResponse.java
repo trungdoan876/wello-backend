@@ -10,6 +10,7 @@ import lombok.*;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserVerificationResponse {
     private boolean exists;
+    private Boolean valid; // Kiểm tra userId và email có khớp không
     private Integer userId;
     private String message;
 }

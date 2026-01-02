@@ -9,4 +9,6 @@ public interface AuthRepository extends JpaRepository<User, Integer> {
     User findByEmail(String email);
 
     User findByGoogleId(String googleId);
+
+    boolean existsByIdUserAndEmailIgnoreCase(int idUser, String email);
 }
