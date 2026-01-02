@@ -56,6 +56,16 @@ public class Profile implements Serializable {
     @Column(name = "weight_goal_kg")
     private Integer weightGoalKg; // Mục tiêu tăng/giảm kg (weight - targetWeight)
 
+    // Sleep goals (user preferences)
+    @Column(name = "sleep_target_hours")
+    private Double sleepTargetHours;
+
+    @Column(name = "sleep_bedtime_target")
+    private java.time.LocalTime sleepBedtimeTarget;
+
+    @Column(name = "sleep_wake_time_target")
+    private java.time.LocalTime sleepWakeTimeTarget;
+
     @OneToOne
     @JoinColumn(name = "id_user", nullable = false)
     private User user;
