@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -14,4 +15,7 @@ public interface WaterTrackerRepository extends JpaRepository<WaterTracker, Inte
 
     @Query("SELECT w FROM WaterTracker w WHERE w.user = :user AND w.date >= :startDate AND w.date < :endDate")
     Optional<WaterTracker> findByUserAndDate(User user, LocalDateTime startDate, LocalDateTime endDate);
+
+    @Query("SELECT w FROM WaterTracker w WHERE w.user = :user AND w.date >= :startDate AND w.date <= :endDate ORDER BY w.date")
+    List<WaterTracker> findByUserAndDateRange(User user, LocalDateTime startDate, LocalDateTime endDate);
 }
