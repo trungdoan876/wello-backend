@@ -2,6 +2,8 @@ package com.wello.wellobackend.dto.responses;
 
 import lombok.*;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -51,4 +53,10 @@ public class SevenDayStatsResponse {
     // === Metadata ===
     private String startDate;             // Ngày bắt đầu thống kê
     private String endDate;               // Ngày kết thúc thống kê
+
+    // === Dữ liệu chi tiết theo ngày ===
+    private List<Double> dailyWaterMl;              // Lượng nước từng ngày (ml)
+    private List<Double> dailyCaloriesConsumed;     // Calo nạp từng ngày
+    private List<Double> dailyCaloriesBurned;       // Calo đốt từng ngày
+    private List<String> dates;                     // Nhãn ngày (yyyy-MM-dd)
 }

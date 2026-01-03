@@ -74,11 +74,13 @@ public class StatsServiceImpl implements StatsService {
         List<Double> dailyCaloriesList = new ArrayList<>();
         List<Double> dailyCaloriesBurnedList = new ArrayList<>();
         List<Double> dailyWaterList = new ArrayList<>();
+        List<String> dateLabels = new ArrayList<>();
 
         // Duyệt qua từng ngày trong 7 ngày
         for (LocalDate date = sevenDaysAgo; !date.isAfter(today); date = date.plusDays(1)) {
             LocalDateTime dayStart = date.atStartOfDay();
             LocalDateTime dayEnd = date.atTime(LocalTime.MAX);
+            dateLabels.add(date.toString());
 
             // === XỬ LÝ NƯỚC ===
             double dayWaterMl = getDailyWaterTotal(user, dayStart, dayEnd);
@@ -200,6 +202,12 @@ public class StatsServiceImpl implements StatsService {
                 // === Metadata ===
                 .startDate(sevenDaysAgo.toString())
                 .endDate(today.toString())
+
+                // === Dữ liệu chi tiết theo ngày ===
+                .dailyWaterMl(dailyWaterList)
+                .dailyCaloriesConsumed(dailyCaloriesList)
+                .dailyCaloriesBurned(dailyCaloriesBurnedList)
+                .dates(dateLabels)
                 .build();
     }
 
