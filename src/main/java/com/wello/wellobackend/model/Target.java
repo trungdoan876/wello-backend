@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Entity
 @Table(name = "target")
@@ -51,6 +52,16 @@ public class Target implements Serializable {
     // Hydration
     @Column(name = "water_intake_ml")
     private int waterIntakeMl;
+
+    // Sleep goals
+    @Column(name = "sleep_target_hours")
+    private Double sleepTargetHours;
+
+    @Column(name = "sleep_bedtime_target")
+    private LocalTime sleepBedtimeTarget;
+
+    @Column(name = "sleep_wake_time_target")
+    private LocalTime sleepWakeTimeTarget;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_user", nullable = false)

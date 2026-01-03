@@ -42,6 +42,9 @@ public class SurveyServiceImpl implements SurveyService {
     @Autowired
     private HistoryRepository historyRepository;
 
+    @Autowired
+    private SleepRecommendationService sleepRecommendationService;
+
     @Override
     public List<QuestionResponse> getListSurveyQuestion() {
         return surveyQuestionRepository.findAll()
@@ -98,11 +101,26 @@ public class SurveyServiceImpl implements SurveyService {
         // Lưu targetWeight và tính weightGoalKg
         if (request.getTargetWeight() != null) {
             profile.setTargetWeight(request.getTargetWeight());
-            // weightGoalKg = currentWeight - targetWeight
             // Dương: cần giảm, Âm: cần tăng
             int weightGoalKg = request.getWeight() - request.getTargetWeight();
             profile.setWeightGoalKg(weightGoalKg);
         }
+
+        // ========== ALWAYS UPDATE SLEEP GOALS BASED ON CURRENT AGE ==========
+        // Lấy recommendation theo tuổi hiện tại
+        com.wello.wellobackend.dto.responses.SleepRecommendation sleepRec = sleepRecommendationService
+                .getRecommendationByAge(request.getAge());
+        SleepRecommendationService.SleepTimeRecommendation sleepTime = sleepRecommendationService
+                .getOptimalSleepTime(request.getAge());
+
+        // Set sleep goals (luôn update theo tuổi mới)
+        profile.setSleepTargetHours(sleepRec.getOptimalHours());
+        profile.setSleepBedtimeTarget(sleepTime.getBedtime());
+        profile.setSleepWakeTimeTarget(sleepTime.getWakeTime());
+
+        System.out.println("Survey: Set sleep goals for age " + request.getAge() +
+                " -> " + sleepRec.getOptimalHours() + " hours");
+        // =====================================================================
 
         Profile savedProfile = profileRepository.save(profile);
 
@@ -160,6 +178,16 @@ public class SurveyServiceImpl implements SurveyService {
                 profile.getWeight(),
                 activityMultiplier);
 
+        // --- 7. Lấy Sleep Goals từ Profile (đã được auto-initialized) ---
+        String bedtime = null;
+        String wakeTime = null;
+        if (profile.getSleepBedtimeTarget() != null) {
+            bedtime = profile.getSleepBedtimeTarget().toString(); // "22:30"
+        }
+        if (profile.getSleepWakeTimeTarget() != null) {
+            wakeTime = profile.getSleepWakeTimeTarget().toString(); // "06:30"
+        }
+
         return TargetResponse.builder()
                 .bmi(Math.round(bmi * 10.0) / 10.0)
                 .bmiStatus(bmiStatus)
@@ -170,6 +198,9 @@ public class SurveyServiceImpl implements SurveyService {
                 .carbsGram(carbs)
                 .fatGram(fat)
                 .waterIntakeMl(waterIntake)
+                .sleepTargetHours(profile.getSleepTargetHours())
+                .sleepBedtimeTarget(bedtime)
+                .sleepWakeTimeTarget(wakeTime)
                 .build();
     }
 
@@ -223,6 +254,15 @@ public class SurveyServiceImpl implements SurveyService {
         target.setCarbTarget(targetResponse.getCarbsGram());
         target.setFatTarget(targetResponse.getFatGram());
         target.setWaterIntakeMl(targetResponse.getWaterIntakeMl());
+
+        // Copy sleep goals từ TargetResponse (đã được set từ Profile)
+        target.setSleepTargetHours(targetResponse.getSleepTargetHours());
+        target.setSleepBedtimeTarget(targetResponse.getSleepBedtimeTarget() != null
+                ? java.time.LocalTime.parse(targetResponse.getSleepBedtimeTarget())
+                : null);
+        target.setSleepWakeTimeTarget(targetResponse.getSleepWakeTimeTarget() != null
+                ? java.time.LocalTime.parse(targetResponse.getSleepWakeTimeTarget())
+                : null);
 
         targetRepository.save(target);
     }
