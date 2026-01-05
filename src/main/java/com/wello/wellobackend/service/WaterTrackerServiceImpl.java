@@ -5,6 +5,7 @@ import com.wello.wellobackend.dto.responses.DailyNutritionResponse;
 import com.wello.wellobackend.model.Target;
 import com.wello.wellobackend.model.User;
 import com.wello.wellobackend.model.WaterTracker;
+import com.wello.wellobackend.service.StreakService;
 import com.wello.wellobackend.repository.AuthRepository;
 import com.wello.wellobackend.repository.TargetRepository;
 import com.wello.wellobackend.repository.WaterTrackerRepository;
@@ -26,6 +27,10 @@ public class WaterTrackerServiceImpl implements WaterTrackerService {
 
         @Autowired
         private TargetRepository targetRepository;
+
+        @Autowired
+        private StreakService streakService;
+
 
         @Override
         public DailyNutritionResponse.WaterIntake getDailyWaterIntake(int userId, LocalDate date) {
@@ -64,7 +69,11 @@ public class WaterTrackerServiceImpl implements WaterTrackerService {
                         water.setUser(user);
                         water.setDate(request.getDate().atStartOfDay());
                         water.setAmountMl(request.getAmountMl());
-                } else {
+
+                        // Ghi nhận vào streak ly nước đầu tiên trong ngày
+                        streakService.recordWater(user, request.getDate());
+                }
+                else {
                         water.setAmountMl(water.getAmountMl() + request.getAmountMl());
                 }
 
@@ -85,10 +94,11 @@ public class WaterTrackerServiceImpl implements WaterTrackerService {
                 if (water == null) {
                         throw new RuntimeException("Không tìm thấy bản ghi lượng nước cho ngày này");
                 } else {
-                        int newAmount = water.getAmountMl() - 250;
-                        if (newAmount < 0) {
-                                newAmount = 0;
+                        if (water.getAmountMl() <= 250) {
+                                throw new RuntimeException("Không thể xóa ly nước đầu tiên trong ngày");
                         }
+
+                        int newAmount = water.getAmountMl() - 250;
                         water.setAmountMl(newAmount);
                 }
 
