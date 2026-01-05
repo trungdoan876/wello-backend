@@ -21,4 +21,9 @@ public class TargetResponse {
 
     // Phần Water Intake
     private int waterIntakeMl; // Lượng nước khuyến nghị (ml/ngày)
+
+    // Phần Sleep Goals (NEW)
+    private Double sleepTargetHours; // Số giờ ngủ mục tiêu
+    private String sleepBedtimeTarget; // Giờ đi ngủ lý tưởng (HH:mm format)
+    private String sleepWakeTimeTarget; // Giờ thức dậy lý tưởng (HH:mm format)
 }

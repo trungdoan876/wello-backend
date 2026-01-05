@@ -41,6 +41,9 @@ public class ProfileServiceImpl implements ProfileService {
     @Autowired
     private TargetCalculationService targetCalculationService;
 
+    @Autowired
+    private SleepRecommendationService sleepRecommendationService;
+
     @Override
     public UserProfileResponse getUserProfile(int userId) {
         User user = authRepository.findById(userId)
@@ -100,7 +103,10 @@ public class ProfileServiceImpl implements ProfileService {
                     .goal(profile.getGoal())
                     .activityLevel(profile.getActivityLevel())
                     .avatarUrl(profile.getAvatarUrl())
-                    .surveyDate(profile.getSurveyDate());
+                    .surveyDate(profile.getSurveyDate())
+                    .sleepTargetHours(profile.getSleepTargetHours())
+                    .sleepBedtimeTarget(profile.getSleepBedtimeTarget())
+                    .sleepWakeTimeTarget(profile.getSleepWakeTimeTarget());
         }
 
         return builder.build();
@@ -439,6 +445,29 @@ public class ProfileServiceImpl implements ProfileService {
             int waterIntake = targetCalculationService.calculateDailyWaterIntake(
                     profile.getWeight(),
                     activityMultiplier);
+
+            // ========== AUTO-INITIALIZE SLEEP GOALS ==========
+            if (profile.getSleepTargetHours() == null ||
+                    profile.getSleepBedtimeTarget() == null ||
+                    profile.getSleepWakeTimeTarget() == null) {
+
+                // Lấy recommendation theo tuổi
+                com.wello.wellobackend.dto.responses.SleepRecommendation sleepRec = sleepRecommendationService
+                        .getRecommendationByAge(profile.getAge());
+                SleepRecommendationService.SleepTimeRecommendation sleepTime = sleepRecommendationService
+                        .getOptimalSleepTime(profile.getAge());
+
+                // Set sleep goals vào profile
+                profile.setSleepTargetHours(sleepRec.getOptimalHours());
+                profile.setSleepBedtimeTarget(sleepTime.getBedtime());
+                profile.setSleepWakeTimeTarget(sleepTime.getWakeTime());
+
+                profileRepository.save(profile);
+
+                System.out.println("Initialized sleep goals for user " + user.getIdUser() +
+                        ": " + sleepRec.getOptimalHours() + " hours");
+            }
+            // ==================================================
 
             // Update target
             target.setBmi(bmi);

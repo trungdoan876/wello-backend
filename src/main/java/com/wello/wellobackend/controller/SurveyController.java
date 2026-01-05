@@ -32,7 +32,27 @@ public class SurveyController {
     // nhan ket qua tu fe va tinh toan luong target
     @PostMapping("/submit")
     public ResponseEntity<TargetResponse> submitSurvey(@RequestBody SurveyRequest request) {
+        // DEBUG: Log request từ frontend
+        System.out.println("========== SURVEY REQUEST FROM FRONTEND ==========");
+        System.out.println("userId: " + request.getUserId());
+        System.out.println("fullname: " + request.getFullname());
+        System.out.println("gender: " + request.getGender());
+        System.out.println("age: " + request.getAge());
+        System.out.println("height: " + request.getHeight());
+        System.out.println("weight: " + request.getWeight());
+        System.out.println("goal: " + request.getGoal());
+        System.out.println("activityLevel: " + request.getActivityLevel());
+        System.out.println("==================================================");
+
         TargetResponse result = surveyService.processSurvey(request);
+
+        // DEBUG: Log response gửi về frontend
+        System.out.println("========== SURVEY RESPONSE TO FRONTEND ==========");
+        System.out.println("sleepTargetHours: " + result.getSleepTargetHours());
+        System.out.println("sleepBedtimeTarget: " + result.getSleepBedtimeTarget());
+        System.out.println("sleepWakeTimeTarget: " + result.getSleepWakeTimeTarget());
+        System.out.println("=================================================");
+
         return ResponseEntity.ok(result);
     }
 

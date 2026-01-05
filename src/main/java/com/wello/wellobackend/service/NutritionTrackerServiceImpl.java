@@ -36,6 +36,9 @@ public class NutritionTrackerServiceImpl implements NutritionTrackerService {
         @Autowired
         private FoodRepository foodRepository;
 
+        @Autowired
+        private StreakService streakService;
+
         @Override
         public DailyNutritionResponse getDailySummary(int userId, LocalDate date) {
                 User user = authRepository.findById(userId)
@@ -158,6 +161,9 @@ public class NutritionTrackerServiceImpl implements NutritionTrackerService {
                 tracker.setCaloriesBurned(0);
 
                 nutritionTrackerRepository.save(tracker);
+
+                // Ghi nhận streak ăn
+                streakService.recordMeal(user, request.getDate());
 
                 return LogFoodResponse.builder()
                                 .foodName(food.getFoodName())

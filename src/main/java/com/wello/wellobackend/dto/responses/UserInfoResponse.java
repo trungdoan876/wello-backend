@@ -8,6 +8,7 @@ import com.wello.wellobackend.enums.AuthProvider;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Data
 @NoArgsConstructor
@@ -31,4 +32,9 @@ public class UserInfoResponse {
     private ActivityLevel activityLevel;
     private String avatarUrl;
     private LocalDateTime surveyDate;
+
+    // Sleep goals (nullable if not set)
+    private Double sleepTargetHours;
+    private LocalTime sleepBedtimeTarget;
+    private LocalTime sleepWakeTimeTarget;
 }
